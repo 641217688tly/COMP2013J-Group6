@@ -5,7 +5,7 @@
 <configuration>
     <!--起别名-->
     <typeAliases>
-        <package name="com.liyantao.pojo"/>
+        <package name="ie/ucd/comp2013J/pojo"/>
     </typeAliases>
 
     <environments default="development">
@@ -13,7 +13,7 @@
             <transactionManager type="JDBC"/>
             <dataSource type="POOLED">
                 <property name="driver" value="com.mysql.jdbc.Driver"/>
-                <property name="url" value="jdbc:mysql:///db1?useSSL=false&amp;useServerPrepStmts=TRUE"/>
+                <property name="url" value="jdbc:mysql:///classroom_management_system?useSSL=false&amp;useServerPrepStmts=TRUE"/>
                 <property name="username" value="root"/>
                 <property name="password" value="20030207TLY"/>
             </dataSource>
@@ -21,6 +21,6 @@
     </environments>
     <mappers>
         <!--扫描mapper-->
-        <package name="com.liyantao.mapper"/>
+        <package name="ie/ucd/comp2013J/mapper"/>
     </mappers>
 </configuration>
