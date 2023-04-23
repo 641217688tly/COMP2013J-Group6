@@ -58,19 +58,6 @@
 
   <build>
     <finalName>No.4_Teaching_Building_Classroom_Management_System</finalName>
-    <plugins>
-      <!--Tomcat插件-->
-      <plugin>
-        <groupId>org.apache.tomcat.maven</groupId>
-        <artifactId>tomcat7-maven-plugin</artifactId>
-        <version>2.2</version>
-        <configuration>
-          <port>80</port>
-          <path>/servlet.ServletDemo</path>
-        </configuration>
-      </plugin>
-    </plugins>
-    <!--Tomcat插件-->
 
   </build>
 
