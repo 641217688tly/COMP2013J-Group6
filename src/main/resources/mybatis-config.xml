@@ -13,7 +13,8 @@
             <transactionManager type="JDBC"/>
             <dataSource type="POOLED">
                 <property name="driver" value="com.mysql.jdbc.Driver"/>
-                <property name="url" value="jdbc:mysql:///classroom_management_system?useSSL=false&amp;useServerPrepStmts=TRUE"/>
+                <property name="url"
+                          value="jdbc:mysql:///classroommanagement?useSSL=false&amp;useServerPrepStmts=TRUE"/>
                 <property name="username" value="root"/>
                 <property name="password" value="20030207TLY"/>
             </dataSource>

@@ -1,14 +1,43 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ie.ucd.comp2013J.mapper.ClassroomMapper">
+    <resultMap id="ClassroomResult" type="ie.ucd.comp2013J.pojo.Classroom">
+        <id column="id" property="id"/>
+        <result column="number" property="number"/>
+        <result column="floor" property="floor"/>
+        <result column="capacity" property="capacity"/>
+        <result column="status" property="status"/>
+    </resultMap>
 
-<!--    <resultMap id="brandResultMap" type="">
-        <result column="" property=""></result>
-        <result column="" property=""></result>
-    </resultMap>-->
+    <insert id="insert" parameterType="ie.ucd.comp2013J.pojo.Classroom">
+        INSERT INTO classrooms (number, floor, capacity, status)
+        VALUES (#{number}, #{floor}, #{capacity}, #{status})
+    </insert>
 
+    <update id="update" parameterType="ie.ucd.comp2013J.pojo.Classroom">
+        UPDATE classrooms
+        SET number   = #{number},
+            floor    = #{floor},
+            capacity = #{capacity},
+            status   = #{status}
+        WHERE id = #{id}
+    </update>
 
+    <delete id="delete" parameterType="int">
+        DELETE
+        FROM classrooms
+        WHERE id = #{id}
+    </delete>
+
+    <select id="selectById" parameterType="int" resultMap="ClassroomResult">
+        SELECT *
+        FROM classrooms
+        WHERE id = #{id}
+    </select>
+
+    <select id="selectAll" resultMap="ClassroomResult">
+        SELECT *
+        FROM classrooms
+    </select>
 </mapper>
+

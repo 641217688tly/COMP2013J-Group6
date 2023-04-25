@@ -1,5 +1,17 @@
 package ie.ucd.comp2013J.mapper;
 
-//Mybatis映射接口,用于定义所有的mysql语句
+import ie.ucd.comp2013J.pojo.Classroom;
+
+import java.util.List;
+
 public interface ClassroomMapper {
+    int insert(Classroom classroom);
+
+    int update(Classroom classroom);
+
+    int delete(Integer id);
+
+    Classroom selectById(Integer id);
+
+    List<Classroom> selectAll();
 }

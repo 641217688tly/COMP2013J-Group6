@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ie.ucd.comp2013J.mapper.ClassroomCourseMapper">
+    <resultMap id="ClassroomCourseResult" type="ie.ucd.comp2013J.pojo.ClassroomCourse">
+        <id column="id" property="id"/>
+        <result column="classroom_id" property="classroom_id"/>
+        <result column="course_id" property="course_id"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="ie.ucd.comp2013J.pojo.ClassroomCourse">
+        INSERT INTO classroom_course (classroom_id, course_id)
+        VALUES (#{classroomId}, #{courseId})
+    </insert>
+
+    <update id="update" parameterType="ie.ucd.comp2013J.pojo.ClassroomCourse">
+        UPDATE classroom_course
+        SET classroom_id = #{classroomId},
+            course_id    = #{courseId}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        DELETE
+        FROM classroom_course
+        WHERE id = #{id}
+    </delete>
+
+    <select id="selectById" parameterType="int" resultMap="ClassroomCourseResult">
+        SELECT *
+        FROM classroom_course
+        WHERE id = #{id}
+    </select>
+
+    <select id="selectAll" resultMap="ClassroomCourseResult">
+        SELECT *
+        FROM classroom_course
+    </select>
+</mapper>

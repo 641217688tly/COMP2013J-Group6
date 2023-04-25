@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ie.ucd.comp2013J.mapper.CourseMapper">
+    <resultMap id="CourseResult" type="ie.ucd.comp2013J.pojo.Course">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="week_day" property="week_day"/>
+        <result column="time" property="time"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="ie.ucd.comp2013J.pojo.Course">
+        INSERT INTO courses (name, week_day, time)
+        VALUES (#{name}, #{week_day}, #{time})
+    </insert>
+
+    <update id="update" parameterType="ie.ucd.comp2013J.pojo.Course">
+        UPDATE courses
+        SET name     = #{name},
+            week_day = #{week_day},
+            time     = #{time}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM courses WHERE id = #{id}
+    </delete>
+
+    <select id="selectById" parameterType="int" resultMap="CourseResult">
+        SELECT * FROM courses WHERE id = #{id}
+    </select>
+
+    <select id="selectAll" resultMap="CourseResult">
+        SELECT * FROM courses
+    </select>
+</mapper>
