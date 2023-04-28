@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ie.ucd.comp2013J.mapper.ReservationMapper">
-    <resultMap id="ReservationResult" type="ie.ucd.comp2013J.pojo.Reservation">
+    <resultMap id="ReservationResultMap" type="ie.ucd.comp2013J.pojo.Reservation">
         <id column="id" property="id"/>
         <result column="user_id" property="user_id"/>
         <result column="classroom_id" property="classroom_id"/>
@@ -30,13 +30,13 @@
         WHERE id = #{id}
     </delete>
 
-    <select id="selectById" parameterType="int" resultMap="ReservationResult">
+    <select id="selectById" parameterType="int" resultMap="ReservationResultMap">
         SELECT *
         FROM reservations
         WHERE id = #{id}
     </select>
 
-    <select id="selectAll" resultMap="ReservationResult">
+    <select id="selectAll" resultMap="ReservationResultMap">
         SELECT *
         FROM reservations
     </select>

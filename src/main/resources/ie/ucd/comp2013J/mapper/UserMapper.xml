@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ie.ucd.comp2013J.mapper.UserMapper">
-    <resultMap id="UserResult" type="ie.ucd.comp2013J.pojo.User">
+
+    <resultMap id="UserResultMap" type="ie.ucd.comp2013J.pojo.User">
         <id column="id" property="id"/>
         <result column="username" property="username"/>
         <result column="password" property="password"/>
@@ -9,9 +10,9 @@
         <result column="role" property="role"/>
     </resultMap>
 
-    <insert id="insert" parameterType="ie.ucd.comp2013J.pojo.User">
-        INSERT INTO users (username, password, email, role)
-        VALUES (#{username}, #{password}, #{email}, #{role})
+    <insert id="addUser" parameterType="ie.ucd.comp2013J.pojo.User" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO users (id, username, password, email, role)
+        VALUES (null, #{username}, #{password}, #{email}, #{role});
     </insert>
 
     <update id="update" parameterType="ie.ucd.comp2013J.pojo.User">
@@ -27,11 +28,18 @@
         DELETE FROM users WHERE id = #{id}
     </delete>
 
-    <select id="selectById" parameterType="int" resultMap="UserResult">
+    <select id="selectById" parameterType="int" resultMap="UserResultMap">
         SELECT * FROM users WHERE id = #{id}
     </select>
 
-    <select id="selectAll" resultMap="UserResult">
+    <select id="selectAll" resultMap="UserResultMap">
         SELECT * FROM users
+    </select>
+
+    <select id="selectByUserNamePassword" resultType="ie.ucd.comp2013J.pojo.User" resultMap="UserResultMap">
+        select *
+        from users
+        where username = #{username}
+          and password = #{password};
     </select>
 </mapper>

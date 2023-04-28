@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ie.ucd.comp2013J.mapper.CourseMapper">
-    <resultMap id="CourseResult" type="ie.ucd.comp2013J.pojo.Course">
+
+    <resultMap id="CourseResultMap" type="ie.ucd.comp2013J.pojo.Course">
         <id column="id" property="id"/>
         <result column="name" property="name"/>
         <result column="week_day" property="week_day"/>
@@ -25,11 +26,11 @@
         DELETE FROM courses WHERE id = #{id}
     </delete>
 
-    <select id="selectById" parameterType="int" resultMap="CourseResult">
+    <select id="selectById" parameterType="int" resultMap="CourseResultMap">
         SELECT * FROM courses WHERE id = #{id}
     </select>
 
-    <select id="selectAll" resultMap="CourseResult">
+    <select id="selectAll" resultMap="CourseResultMap">
         SELECT * FROM courses
     </select>
 </mapper>

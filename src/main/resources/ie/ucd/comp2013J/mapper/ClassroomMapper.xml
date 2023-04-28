@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ie.ucd.comp2013J.mapper.ClassroomMapper">
-    <resultMap id="ClassroomResult" type="ie.ucd.comp2013J.pojo.Classroom">
+
+    <resultMap id="ClassroomResultMap" type="ie.ucd.comp2013J.pojo.Classroom">
         <id column="id" property="id"/>
         <result column="number" property="number"/>
         <result column="floor" property="floor"/>
@@ -29,13 +30,13 @@
         WHERE id = #{id}
     </delete>
 
-    <select id="selectById" parameterType="int" resultMap="ClassroomResult">
+    <select id="selectById" parameterType="int" resultMap="ClassroomResultMap">
         SELECT *
         FROM classrooms
         WHERE id = #{id}
     </select>
 
-    <select id="selectAll" resultMap="ClassroomResult">
+    <select id="selectAll" resultMap="ClassroomResultMap">
         SELECT *
         FROM classrooms
     </select>
