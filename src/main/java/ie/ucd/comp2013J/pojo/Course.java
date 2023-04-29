@@ -5,6 +5,7 @@ public class Course {
     private String name;
     private Integer week_day;
     private Integer time;
+    private String detail;
 
     public Integer getId() {
         return id;
@@ -36,6 +37,14 @@ public class Course {
 
     public void setTime(Integer time) {
         this.time = time;
+    }
+
+    public String getDetail() {
+        return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
     }
 }
 

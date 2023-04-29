@@ -12,6 +12,8 @@ public interface UserMapper {
 
     int update(User user);
 
+    void upgradeRole(User user);
+
     int delete(Integer id);
 
     User selectById(Integer id);

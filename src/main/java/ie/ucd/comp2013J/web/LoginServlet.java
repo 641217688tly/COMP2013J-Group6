@@ -21,6 +21,7 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("utf-8");
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         User user = service.login(username, password);
@@ -37,7 +38,7 @@ public class LoginServlet extends HttpServlet {
             HttpSession session = request.getSession();
             session.setAttribute("user", user); //将本次登录的用户的对象存储在session中,以便于在整个对话期间都可以访问该用户对象的信息
             String contextPath = request.getContextPath();
-            response.sendRedirect(contextPath + "/selectAllServlet此处的Servlet名称待定,但要转发到负责呈现最初课程信息的Servlet里");
+            response.sendRedirect(contextPath + "/showTableServlet");
         } else {
             request.setAttribute("login_msg", "用户名或密码错误");
             request.getRequestDispatcher("/login.jsp").forward(request, response);

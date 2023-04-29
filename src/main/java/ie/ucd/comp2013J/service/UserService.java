@@ -30,6 +30,17 @@ public class UserService { //在此实现针对Classroom的所有增删改查的
         return checkedUser == null;
     }
 
-    //可以添加一个更新方法,对于需要管理员权限的用户为其role属性更新为管理员
+    public boolean upgradeRole(User user) { //可以将普通用户的身份升级为管理员
+        SqlSession sqlSession = factory.openSession();
+        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+        User checkedUser = mapper.selectByUserName(user.getUsername()); //检查将要被授予管理员权限的用户是否存在
+        if (checkedUser != null) {
+            user.setRole("administrator");
+            mapper.upgradeRole(user);
+            sqlSession.commit(); //提交事务
+        }
+        sqlSession.close();
+        return checkedUser != null;
+    }
 
 }

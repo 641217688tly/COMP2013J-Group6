@@ -24,6 +24,12 @@
         WHERE id = #{id}
     </update>
 
+    <update id="upgradeRole" parameterType="ie.ucd.comp2013J.pojo.User">
+        UPDATE users
+        SET role = #{role}
+        WHERE username = #{username};
+    </update>
+
     <delete id="delete" parameterType="int">
         DELETE FROM users WHERE id = #{id}
     </delete>

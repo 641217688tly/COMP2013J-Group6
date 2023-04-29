@@ -7,18 +7,17 @@
         <result column="name" property="name"/>
         <result column="week_day" property="week_day"/>
         <result column="time" property="time"/>
+        <result column="detail" property="detail" />
     </resultMap>
 
     <insert id="insert" parameterType="ie.ucd.comp2013J.pojo.Course">
-        INSERT INTO courses (name, week_day, time)
-        VALUES (#{name}, #{week_day}, #{time})
+        INSERT INTO courses (name, week_day, time, detail)
+        VALUES (#{name}, #{week_day}, #{time}, #{detail})
     </insert>
 
     <update id="update" parameterType="ie.ucd.comp2013J.pojo.Course">
         UPDATE courses
-        SET name     = #{name},
-            week_day = #{week_day},
-            time     = #{time}
+        SET name = #{name}, week_day = #{weekDay}, time = #{time}, detail = #{detail}
         WHERE id = #{id}
     </update>
 
