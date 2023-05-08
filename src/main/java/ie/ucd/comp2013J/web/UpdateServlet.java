@@ -1,7 +1,9 @@
 package ie.ucd.comp2013J.web;
 
 
+import ie.ucd.comp2013J.service.ClassroomCourseService;
 import ie.ucd.comp2013J.service.ClassroomService;
+import ie.ucd.comp2013J.service.CourseService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,17 +15,19 @@ import java.io.IOException;
 
 @WebServlet(urlPatterns = "/updateServlet")
 public class UpdateServlet extends HttpServlet {
-    private ClassroomService service = new ClassroomService();
+    private final ClassroomService classroomservice = new ClassroomService();
+    private final CourseService courseService = new CourseService();
+    private final ClassroomCourseService classroomCourseService = new ClassroomCourseService();
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        this.doGet(request,response);
+        this.doGet(request, response);
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
-        //接收Excel文件
+        //判断接收的是Excel文件还是Course的信息?
 
     }
 

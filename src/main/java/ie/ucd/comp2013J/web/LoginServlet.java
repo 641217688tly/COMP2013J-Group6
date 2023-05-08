@@ -12,7 +12,7 @@ import java.io.IOException;
 
 @WebServlet(urlPatterns = "/loginServlet")
 public class LoginServlet extends HttpServlet {
-    private UserService service = new UserService();
+    private final UserService service = new UserService();
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
