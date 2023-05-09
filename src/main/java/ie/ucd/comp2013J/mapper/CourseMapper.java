@@ -5,7 +5,9 @@ import ie.ucd.comp2013J.pojo.Course;
 import java.util.List;
 
 public interface CourseMapper {
-    int insert(Course course);
+    int insertCourse(Course course);
+
+    Course selectCourseByNameStartWeekEndWeekSchooltime(Course course);
 
     int update(Course course);
 

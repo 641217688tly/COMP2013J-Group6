@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ie.ucd.comp2013J.mapper.ClassroomMapper">
 
-    <resultMap id="ClassroomResultMap" type="ie.ucd.comp2013J.pojo.Classroom">
+    <resultMap id="ClassroomResultMap" type="Classroom">
         <id column="id" property="id"/>
         <result column="number" property="number"/>
         <result column="floor" property="floor"/>
@@ -10,12 +10,12 @@
         <result column="status" property="status"/>
     </resultMap>
 
-    <insert id="insert" parameterType="ie.ucd.comp2013J.pojo.Classroom">
+    <insert id="insert" parameterType="Classroom">
         INSERT INTO classrooms (number, floor, capacity, status)
         VALUES (#{number}, #{floor}, #{capacity}, #{status})
     </insert>
 
-    <update id="update" parameterType="ie.ucd.comp2013J.pojo.Classroom">
+    <update id="update" parameterType="Classroom">
         UPDATE classrooms
         SET number   = #{number},
             floor    = #{floor},

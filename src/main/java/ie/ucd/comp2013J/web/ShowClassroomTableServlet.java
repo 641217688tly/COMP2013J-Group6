@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 //该Servlet用于向前端页面发送一个List<Course>或者List<Classroom>
-@WebServlet(urlPatterns = "/showTableServlet")
-public class ShowTableServlet extends HttpServlet {
+@WebServlet(urlPatterns = "/showClassroomTableServlet")
+public class ShowClassroomTableServlet extends HttpServlet {
     private final ClassroomService classroomservice = new ClassroomService();
     private final CourseService courseService = new CourseService();
     private final ClassroomCourseService classroomCourseService = new ClassroomCourseService();

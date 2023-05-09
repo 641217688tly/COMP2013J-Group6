@@ -2,18 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ie.ucd.comp2013J.mapper.ClassroomCourseMapper">
 
-    <resultMap id="ClassroomCourseResultMap" type="ie.ucd.comp2013J.pojo.ClassroomCourse">
+    <resultMap id="ClassroomCourseResultMap" type="ClassroomCourse">
         <id column="id" property="id"/>
         <result column="classroom_id" property="classroom_id"/>
         <result column="course_id" property="course_id"/>
     </resultMap>
 
-    <insert id="insert" parameterType="ie.ucd.comp2013J.pojo.ClassroomCourse">
+    <insert id="insert" parameterType="ClassroomCourse">
         INSERT INTO classroom_course (classroom_id, course_id)
         VALUES (#{classroomId}, #{courseId})
     </insert>
 
-    <update id="update" parameterType="ie.ucd.comp2013J.pojo.ClassroomCourse">
+    <update id="update" parameterType="ClassroomCourse">
         UPDATE classroom_course
         SET classroom_id = #{classroomId},
             course_id    = #{courseId}

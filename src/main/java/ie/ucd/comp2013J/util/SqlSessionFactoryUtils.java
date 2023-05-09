@@ -13,7 +13,6 @@ public class SqlSessionFactoryUtils {
 
     static {
         //静态代码块会随着类的加载而自动执行，且只执行一次
-
         try {
             String resource = "mybatis-config.xml";
             InputStream inputStream = Resources.getResourceAsStream(resource);
@@ -22,7 +21,6 @@ public class SqlSessionFactoryUtils {
             e.printStackTrace();
         }
     }
-
 
     public static SqlSessionFactory getSqlSessionFactory(){
         return sqlSessionFactory;

@@ -79,8 +79,10 @@ DROP TABLE IF EXISTS `courses`;
 CREATE TABLE `courses` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `start_week` int NOT NULL,
+  `end_week` int NOT NULL,
   `week_day` int NOT NULL,
-  `time` int NOT NULL,
+  `schooltime` int NOT NULL,
   `detail` text COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -164,4 +166,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-04-29 17:28:58
+-- Dump completed on 2023-05-09 18:42:05

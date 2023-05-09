@@ -1,35 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 <mapper namespace="ie.ucd.comp2013J.mapper.CourseMapper">
 
-    <resultMap id="CourseResultMap" type="ie.ucd.comp2013J.pojo.Course">
+    <resultMap id="CourseResult" type="Course">
         <id column="id" property="id"/>
         <result column="name" property="name"/>
-        <result column="week_day" property="week_day"/>
-        <result column="time" property="time"/>
-        <result column="detail" property="detail" />
+        <result column="start_week" property="startWeek"/>
+        <result column="end_week" property="endWeek"/>
+        <result column="week_day" property="weekDay"/>
+        <result column="schooltime" property="schooltime"/>
+        <result column="detail" property="detail"/>
     </resultMap>
 
-    <insert id="insert" parameterType="ie.ucd.comp2013J.pojo.Course">
-        INSERT INTO courses (name, week_day, time, detail)
-        VALUES (#{name}, #{week_day}, #{time}, #{detail})
+
+    <insert id="insertCourse" parameterType="Course">
+        INSERT INTO courses (name, start_week, end_week, week_day, schooltime, detail)
+        VALUES (#{name}, #{startWeek}, #{endWeek}, #{weekDay}, #{schooltime}, #{detail})
     </insert>
 
-    <update id="update" parameterType="ie.ucd.comp2013J.pojo.Course">
+    <update id="update" parameterType="Course">
         UPDATE courses
-        SET name = #{name}, week_day = #{weekDay}, time = #{time}, detail = #{detail}
+        SET name       = #{name},
+            start_week = #{startWeek},
+            end_week   = #{endWeek},
+            week_day   = #{weekDay},
+            schooltime = #{schooltime},
+            detail     = #{detail}
         WHERE id = #{id}
     </update>
 
     <delete id="delete" parameterType="int">
-        DELETE FROM courses WHERE id = #{id}
+        DELETE
+        FROM courses
+        WHERE id = #{id}
     </delete>
 
-    <select id="selectById" parameterType="int" resultMap="CourseResultMap">
-        SELECT * FROM courses WHERE id = #{id}
+    <select id="selectById" parameterType="int" resultMap="CourseResult">
+        SELECT *
+        FROM courses
+        WHERE id = #{id}
     </select>
 
-    <select id="selectAll" resultMap="CourseResultMap">
-        SELECT * FROM courses
+    <select id="selectAll" resultMap="CourseResult">
+        SELECT *
+        FROM courses
+    </select>
+
+    <select id="selectCourseByNameStartWeekEndWeekSchooltime" resultType="Course">
+        SELECT *
+        FROM courses
+        WHERE name = #{name} AND start_week = #{startWeek} AND end_week = #{endWeek} AND schooltime = #{schooltime}
     </select>
 </mapper>

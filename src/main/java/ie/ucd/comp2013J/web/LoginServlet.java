@@ -38,7 +38,7 @@ public class LoginServlet extends HttpServlet {
             HttpSession session = request.getSession();
             session.setAttribute("user", user); //将本次登录的用户的对象存储在session中,以便于在整个对话期间都可以访问该用户对象的信息
             String contextPath = request.getContextPath();
-            response.sendRedirect(contextPath + "/showTableServlet");
+            response.sendRedirect(contextPath + "/showCourseTableServlet");
         } else {
             request.setAttribute("login_msg", "用户名或密码错误");
             request.getRequestDispatcher("/login.jsp").forward(request, response);
