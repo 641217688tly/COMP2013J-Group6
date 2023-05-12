@@ -7,7 +7,7 @@ import java.util.List;
 public interface CourseMapper {
     int insertCourse(Course course);
 
-    Course selectCourseByNameStartWeekEndWeekSchooltime(Course course);
+    Course selectCourseByNameStartWeekEndWeekWeekDaySchooltime(Course course);
 
     int update(Course course);
 

@@ -5,13 +5,15 @@ import ie.ucd.comp2013J.pojo.ClassroomCourse;
 import java.util.List;
 
 public interface ClassroomCourseMapper {
-    int insert(ClassroomCourse classroomCourse);
+    void insertClassroomCourse(ClassroomCourse classroomCourse);
 
-    int update(ClassroomCourse classroomCourse);
+    void deleteClassroomCourseById(Integer id);
 
-    int delete(Integer id);
+    void updateClassroomCourse(ClassroomCourse classroomCourse);
 
-    ClassroomCourse selectById(Integer id);
+    ClassroomCourse selectByCourseIDAndClassroomID(ClassroomCourse classroomCourse);
 
-    List<ClassroomCourse> selectAll();
+    ClassroomCourse selectClassroomCourseById(Integer id);
+
+    List<ClassroomCourse> selectAllClassroomCourses();
 }

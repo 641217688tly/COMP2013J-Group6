@@ -4,36 +4,43 @@
 
     <resultMap id="ClassroomCourseResultMap" type="ClassroomCourse">
         <id column="id" property="id"/>
-        <result column="classroom_id" property="classroom_id"/>
-        <result column="course_id" property="course_id"/>
+        <result column="classroom_id" property="classroomId"/>
+        <result column="course_id" property="courseId"/>
     </resultMap>
 
-    <insert id="insert" parameterType="ClassroomCourse">
+    <insert id="insertClassroomCourse" parameterType="ClassroomCourse" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO classroom_course (classroom_id, course_id)
         VALUES (#{classroomId}, #{courseId})
     </insert>
 
-    <update id="update" parameterType="ClassroomCourse">
+    <delete id="deleteClassroomCourseById" parameterType="int">
+        DELETE
+        FROM classroom_course
+        WHERE id = #{id}
+    </delete>
+
+    <update id="updateClassroomCourse" parameterType="ClassroomCourse">
         UPDATE classroom_course
         SET classroom_id = #{classroomId},
             course_id    = #{courseId}
         WHERE id = #{id}
     </update>
 
-    <delete id="delete" parameterType="int">
-        DELETE
-        FROM classroom_course
-        WHERE id = #{id}
-    </delete>
-
-    <select id="selectById" parameterType="int" resultMap="ClassroomCourseResultMap">
+    <select id="selectClassroomCourseById" parameterType="int" resultMap="ClassroomCourseResultMap">
         SELECT *
         FROM classroom_course
         WHERE id = #{id}
     </select>
 
-    <select id="selectAll" resultMap="ClassroomCourseResultMap">
+    <select id="selectAllClassroomCourses" resultMap="ClassroomCourseResultMap">
         SELECT *
         FROM classroom_course
+    </select>
+
+    <select id ="selectByCourseIDAndClassroomID" resultType="ClassroomCourse">
+        SELECT *
+        FROM classroom_course
+        WHERE classroom_id = #{classroomId}
+          AND course_id = #{courseId};
     </select>
 </mapper>

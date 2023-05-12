@@ -5,7 +5,9 @@ import ie.ucd.comp2013J.pojo.Classroom;
 import java.util.List;
 
 public interface ClassroomMapper {
-    int insert(Classroom classroom);
+    int insertClassroom(Classroom classroom);
+
+    Classroom selectByNumber(Integer number);
 
     int update(Classroom classroom);
 

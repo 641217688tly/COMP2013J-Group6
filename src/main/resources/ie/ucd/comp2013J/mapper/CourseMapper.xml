@@ -14,7 +14,7 @@
     </resultMap>
 
 
-    <insert id="insertCourse" parameterType="Course">
+    <insert id="insertCourse" parameterType="Course" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO courses (name, start_week, end_week, week_day, schooltime, detail)
         VALUES (#{name}, #{startWeek}, #{endWeek}, #{weekDay}, #{schooltime}, #{detail})
     </insert>
@@ -47,9 +47,9 @@
         FROM courses
     </select>
 
-    <select id="selectCourseByNameStartWeekEndWeekSchooltime" resultType="Course">
+    <select id="selectCourseByNameStartWeekEndWeekWeekDaySchooltime" resultType="Course">
         SELECT *
         FROM courses
-        WHERE name = #{name} AND start_week = #{startWeek} AND end_week = #{endWeek} AND schooltime = #{schooltime}
+        WHERE name = #{name} AND start_week = #{startWeek} AND end_week = #{endWeek} AND week_day = #{weekDay} AND schooltime = #{schooltime}
     </select>
 </mapper>

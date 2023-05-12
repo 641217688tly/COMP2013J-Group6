@@ -10,7 +10,7 @@
         <result column="status" property="status"/>
     </resultMap>
 
-    <insert id="insert" parameterType="Classroom">
+    <insert id="insertClassroom" parameterType="Classroom" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO classrooms (number, floor, capacity, status)
         VALUES (#{number}, #{floor}, #{capacity}, #{status})
     </insert>
@@ -39,6 +39,12 @@
     <select id="selectAll" resultMap="ClassroomResultMap">
         SELECT *
         FROM classrooms
+    </select>
+
+    <select id="selectByNumber" resultType="Classroom">
+        SELECT *
+        FROM classrooms
+        WHERE number = #{number};
     </select>
 </mapper>
 

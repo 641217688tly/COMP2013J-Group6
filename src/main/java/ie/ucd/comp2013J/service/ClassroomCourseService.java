@@ -1,24 +1,69 @@
 package ie.ucd.comp2013J.service;
 
+import ie.ucd.comp2013J.mapper.ClassroomCourseMapper;
 import ie.ucd.comp2013J.pojo.Classroom;
-import ie.ucd.comp2013J.util.ExcelFileHandleUtils;
+import ie.ucd.comp2013J.pojo.ClassroomCourse;
+import ie.ucd.comp2013J.pojo.Course;
 import ie.ucd.comp2013J.util.SqlSessionFactoryUtils;
+import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
+
+import java.util.ArrayList;
 
 //pojo实体类
 public class ClassroomCourseService { //在此实现针对Classroom的所有增删改查的方法
     SqlSessionFactory factory = SqlSessionFactoryUtils.getSqlSessionFactory();
-    ExcelFileHandleUtils excelFileHandleUtil= new ExcelFileHandleUtils();
 
-    //TODO 需要编写一个方法,其参数为一个Excel课表文件,它能够处理该Excel课表文件,提出去所有classroom和course的参数,之后将所有ClassroomCourse都插入到表中
-    public boolean insertExcelFile() {
-        //处理Excel文件的方法在工具包Util下新建一个工具类去完成
-        return true;
+    public boolean insertExcelFile(ArrayList<Course> courses, ArrayList<Classroom> classrooms) {
+        if (courses.size() != classrooms.size()) {
+            throw new IllegalArgumentException("Excel课表文件解析存在错误");
+        }
+        try {
+            for (int i = 0; i < courses.size(); i++) {
+                insertClassroomCourse2(courses.get(i), classrooms.get(i));
+            }
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
-    //TODO 需要编写一个方法,它能够将被用到的教室插入到数据库中
-    public boolean insertClassroom(Classroom classroom) {
+    public boolean insertClassroomCourse1(Course course, Classroom classroom) {
+        try (SqlSession sqlSession = factory.openSession()) {
+            ClassroomCourseMapper mapper = sqlSession.getMapper(ClassroomCourseMapper.class);
 
-        return true;
+            ClassroomCourse classroomCourse = new ClassroomCourse();
+            classroomCourse.setCourseId(course.getId());
+            classroomCourse.setClassroomId(classroom.getId());
+
+            ClassroomCourse existingClassroomCourse = mapper.selectByCourseIDAndClassroomID(classroomCourse);
+            if (existingClassroomCourse != null) { //已经存在该课程
+                return false;
+            } else { //尚未存在该课程
+                mapper.insertClassroomCourse(classroomCourse);
+                sqlSession.commit();
+                return true;
+            }
+        }
+    }
+
+    public ClassroomCourse insertClassroomCourse2(Course course, Classroom classroom) {
+        try (SqlSession sqlSession = factory.openSession()) {
+            ClassroomCourseMapper mapper = sqlSession.getMapper(ClassroomCourseMapper.class);
+
+            ClassroomCourse classroomCourse = new ClassroomCourse();
+            classroomCourse.setCourseId(course.getId());
+            classroomCourse.setClassroomId(classroom.getId());
+
+            ClassroomCourse existingClassroomCourse = mapper.selectByCourseIDAndClassroomID(classroomCourse);
+            if (existingClassroomCourse != null) { //已经存在该课程
+                return existingClassroomCourse;
+            } else { //尚未存在该课程
+                mapper.insertClassroomCourse(classroomCourse);
+                sqlSession.commit();
+                return classroomCourse;
+            }
+        }
     }
 }

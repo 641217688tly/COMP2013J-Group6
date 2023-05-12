@@ -30,7 +30,7 @@ public class ShowClassroomTableServlet extends HttpServlet {
         //当用户登录后,将其request信息转发到此Servlet中进行处理
         //该Servlet能够为用户呈现最初状态下的课程和教室信息表
         //TODO 先共同设计前端页面上该以怎样的形式来呈现课表和教室,以及应该设计哪些筛选条件?(Step3)
-        //TODO 需要在ClassroomService,CourseService和ClassroomCourseService中分别添加对应的查询方法来帮助呈现课程和教室信息(step4)
+
     }
 
 
