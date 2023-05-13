@@ -25,7 +25,7 @@ ${register_msg}
 
 <div class="form-div">
     <div class="reg-content">
-        <h1>欢迎注册</h1>
+        <h1><b>欢迎注册</b></h1>
         <span>已有帐号？</span> <a href="login.jsp">登录</a>
     </div>
     <form id="reg-form" action="registerServlet" method="post">

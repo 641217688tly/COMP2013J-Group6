@@ -63,9 +63,10 @@ public class ExcelFileHandleUtils {
 
     private void parseCourseAndClassroomInfo(String cellValue, int row, int col) {
         // Updated regular expression to match the special cases
-        Pattern pattern = Pattern.compile("(.+?)/(\\w+)/(\\(\\d+-\\d+节\\)\\d+-\\d+周)(.*?)(?:/(.*))?/(.*)?");
+        //Pattern pattern = Pattern.compile("(.+?)/(\\w+)/(\\(\\d+-\\d+节\\)\\d+-\\d+周)(.*?)(?:/(.*))?/(.*)?");
+        Pattern pattern = Pattern.compile("(.+?)/(\\w+)/(\\(\\d+-\\d+节\\)\\d+-\\d+周)/(.+?)/(.+?)/(.+)");
         Matcher matcher = pattern.matcher(cellValue);
-
+        //TODO 正则表达式存在BUG,会导致Course的name无法被正确提取而产生null,最后在sql语句中造成报错
         if (matcher.find()) {
             String courseInfo = matcher.group(1).trim() + "/" + matcher.group(2).trim();
 
@@ -98,6 +99,4 @@ public class ExcelFileHandleUtils {
             }
         }
     }
-
-
 }

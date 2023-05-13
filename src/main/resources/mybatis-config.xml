@@ -17,7 +17,7 @@
             <dataSource type="POOLED">
                 <property name="driver" value="com.mysql.jdbc.Driver"/>
                 <property name="url"
-                          value="jdbc:mysql:///classroommanagement?useSSL=false&amp;useServerPrepStmts=TRUE"/>
+                          value="jdbc:mysql:///classroommanagement?useSSL=false&amp;useServerPrepStmts=TRUE&amp;allowPublicKeyRetrieval=true"/>
                 <property name="username" value="root"/>
                 <property name="password" value="20030207TLY"/>
             </dataSource>
