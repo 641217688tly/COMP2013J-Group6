@@ -21,10 +21,10 @@ ${register_msg}
     <link href="css/login.css" rel="stylesheet">
 </head>
 
-<body>
+<body style = "background-image: url(img/1.png);">>
 <div id="loginDiv" style="height: 350px">
     <form action="loginServlet" id="form">
-        <h1 id="loginMsg">LOGIN IN</h1>
+        <h1 id="loginMsg"><b>LOGIN IN</b></h1>
         <div id="errorMsg">${login_msg} ${register_msg}</div>
         <p>Username:<input id="username" name="username" value="${cookie.username.value}" type="text"></p>
 
