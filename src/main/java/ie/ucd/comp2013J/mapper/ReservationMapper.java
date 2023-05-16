@@ -5,6 +5,9 @@ import ie.ucd.comp2013J.pojo.Reservation;
 import java.util.List;
 
 public interface ReservationMapper {
+
+
+    //以下方法暂未用到:
     int insert(Reservation reservation);
 
     int update(Reservation reservation);

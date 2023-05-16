@@ -8,39 +8,25 @@
         <result column="course_id" property="courseId"/>
     </resultMap>
 
+
     <insert id="insertClassroomCourse" parameterType="ClassroomCourse" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO classroom_course (classroom_id, course_id)
         VALUES (#{classroomId}, #{courseId})
     </insert>
 
-    <delete id="deleteClassroomCourseById" parameterType="int">
-        DELETE
-        FROM classroom_course
-        WHERE id = #{id}
-    </delete>
-
-    <update id="updateClassroomCourse" parameterType="ClassroomCourse">
-        UPDATE classroom_course
-        SET classroom_id = #{classroomId},
-            course_id    = #{courseId}
-        WHERE id = #{id}
-    </update>
-
-    <select id="selectClassroomCourseById" parameterType="int" resultMap="ClassroomCourseResultMap">
-        SELECT *
-        FROM classroom_course
-        WHERE id = #{id}
-    </select>
-
-    <select id="selectAllClassroomCourses" resultMap="ClassroomCourseResultMap">
-        SELECT *
-        FROM classroom_course
-    </select>
-
-    <select id ="selectByCourseIDAndClassroomID" resultType="ClassroomCourse">
+    <select id="selectByCourseIDAndClassroomID" resultType="ClassroomCourse">
         SELECT *
         FROM classroom_course
         WHERE classroom_id = #{classroomId}
           AND course_id = #{courseId};
     </select>
+
+    <select id="selectClassroomCoursesByCourseIds" resultType="ClassroomCourse" resultMap="ClassroomCourseResultMap">
+        SELECT * FROM classroom_course
+        WHERE course_id IN
+        <foreach collection="courseList" item="course" open="(" separator="," close=")">
+            #{course.id}
+        </foreach>
+    </select>
+
 </mapper>

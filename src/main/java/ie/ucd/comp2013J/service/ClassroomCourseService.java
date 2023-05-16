@@ -57,7 +57,6 @@ public class ClassroomCourseService { //在此实现针对Classroom的所有增�
             if (course == null || classroom == null) { //course或classroom插入失败
                 return false;
             }
-
             classroomCourse.setCourseId(course.getId());
             classroomCourse.setClassroomId(classroom.getId());
 
@@ -74,11 +73,11 @@ public class ClassroomCourseService { //在此实现针对Classroom的所有增�
         }
     }
 
-    public List<ClassroomCourse> selectAllClassroomCourse() {
-        SqlSession sqlSession = factory.openSession();
-        ClassroomCourseMapper mapper = sqlSession.getMapper(ClassroomCourseMapper.class);
-        return mapper.selectAllClassroomCourses();
+    public List<ClassroomCourse> getByCourses(List<Course> courseList) {
+        try (SqlSession sqlSession = factory.openSession()) {
+            ClassroomCourseMapper mapper = sqlSession.getMapper(ClassroomCourseMapper.class);
+            return mapper.selectClassroomCoursesByCourseIds(courseList);
+        }
     }
-
 
 }

@@ -15,32 +15,11 @@
         VALUES (null, #{username}, #{password}, #{email}, #{role});
     </insert>
 
-    <update id="update" parameterType="ie.ucd.comp2013J.pojo.User">
-        UPDATE users
-        SET username = #{username},
-            password = #{password},
-            email    = #{email},
-            role     = #{role}
-        WHERE id = #{id}
-    </update>
-
     <update id="upgradeRole" parameterType="ie.ucd.comp2013J.pojo.User">
         UPDATE users
         SET role = #{role}
         WHERE username = #{username};
     </update>
-
-    <delete id="delete" parameterType="int">
-        DELETE FROM users WHERE id = #{id}
-    </delete>
-
-    <select id="selectById" parameterType="int" resultMap="UserResultMap">
-        SELECT * FROM users WHERE id = #{id}
-    </select>
-
-    <select id="selectAll" resultMap="UserResultMap">
-        SELECT * FROM users
-    </select>
 
     <select id="selectByUserNamePassword" resultType="ie.ucd.comp2013J.pojo.User" resultMap="UserResultMap">
         select *

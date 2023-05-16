@@ -1,19 +1,16 @@
 package ie.ucd.comp2013J.mapper;
 
 import ie.ucd.comp2013J.pojo.ClassroomCourse;
+import ie.ucd.comp2013J.pojo.Course;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
 public interface ClassroomCourseMapper {
+    List<ClassroomCourse> selectClassroomCoursesByCourseIds(@Param("courseList") List<Course> courseList);
+
     void insertClassroomCourse(ClassroomCourse classroomCourse);
-
-    void deleteClassroomCourseById(Integer id);
-
-    void updateClassroomCourse(ClassroomCourse classroomCourse);
 
     ClassroomCourse selectByCourseIDAndClassroomID(ClassroomCourse classroomCourse);
 
-    ClassroomCourse selectClassroomCourseById(Integer id);
-
-    List<ClassroomCourse> selectAllClassroomCourses();
 }

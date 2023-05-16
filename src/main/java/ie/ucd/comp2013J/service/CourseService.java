@@ -16,7 +16,6 @@ import java.util.List;
 public class CourseService { //在此实现针对Classroom的所有增删改查的方法
     SqlSessionFactory factory = SqlSessionFactoryUtils.getSqlSessionFactory();
     ExcelFileHandleUtils excelFileHandleUtil = new ExcelFileHandleUtils();
-    private static final int PAGE_SIZE = 5;
 
     public ArrayList<Course> insertExcelFile(InputStream inputStream) {
         ArrayList<Course> courses = excelFileHandleUtil.getCoursesFromExcel(inputStream);
@@ -48,14 +47,23 @@ public class CourseService { //在此实现针对Classroom的所有增删改查�
         }
     }
 
-    public ArrayList<Course> selectAllCourse(List<ClassroomCourse> classroomCourseList) {
-        SqlSession sqlSession = factory.openSession();
-        CourseMapper mapper = sqlSession.getMapper(CourseMapper.class);
-        ArrayList<Course> coursesList = new ArrayList<>();
-        for (int i = 0; i < classroomCourseList.size(); i++) {
-            coursesList.add(i, mapper.selectById(classroomCourseList.get(i).getCourseId()));
+    //得到第pageNumber页的Course对象(每页呈现pageSize个Course的信息)
+    public List<Course> getCoursesForPage(int pageNumber, int pageSize) {
+        try (SqlSession sqlSession = factory.openSession()) {
+            CourseMapper mapper = sqlSession.getMapper(CourseMapper.class);
+            // 计算从哪个索引开始获取课程
+            int startIndex = (pageNumber - 1) * pageSize;
+            return mapper.selectCoursesByPage(startIndex, pageSize);
         }
-        return coursesList;
     }
+
+    //获取所有课程的总数量
+    public int getTotalCourses() {
+        try (SqlSession sqlSession = factory.openSession()) {
+            CourseMapper mapper = sqlSession.getMapper(CourseMapper.class);
+            return mapper.selectTotalCourses();
+        }
+    }
+
 
 }

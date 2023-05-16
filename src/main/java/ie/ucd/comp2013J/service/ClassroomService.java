@@ -56,17 +56,6 @@ public class ClassroomService { //在此实现针对Classroom的所有增删改�
         }
     }
 
-    public ArrayList<Classroom> selectAllClassroom(List<ClassroomCourse> classroomCourseList) {
-        SqlSession sqlSession = factory.openSession();
-        ClassroomMapper mapper = sqlSession.getMapper(ClassroomMapper.class);
-        ArrayList<Classroom> classroomsList = new ArrayList<>();
-        for (int i = 0; i < classroomCourseList.size(); i++) {
-            classroomsList.add(i, mapper.selectById(classroomCourseList.get(i).getCourseId()));
-        }
-        return classroomsList;
-    }
-
-
     private String decideCapacity(int classroomNumber) {
         String stringNumber = String.valueOf(classroomNumber);
         String lastTwoDigits = stringNumber.substring(1);
@@ -81,5 +70,14 @@ public class ClassroomService { //在此实现针对Classroom的所有增删改�
         }
     }
 
-
+    public List<Classroom> getByClassroomCourses(List<ClassroomCourse> classroomCourseList) {
+        try (SqlSession sqlSession = factory.openSession()) {
+            ClassroomMapper mapper = sqlSession.getMapper(ClassroomMapper.class);
+            List<Classroom> classroomList = new ArrayList<>();
+            for (int i = 0; i < classroomCourseList.size(); i++) {
+                classroomList.add(i, mapper.selectById(classroomCourseList.get(i).getClassroomId()));
+            }
+            return classroomList;
+        }
+    }
 }

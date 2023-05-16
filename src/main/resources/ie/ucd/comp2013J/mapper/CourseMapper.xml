@@ -14,42 +14,26 @@
     </resultMap>
 
 
-    <insert id="insertCourse" parameterType="Course" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertCourse" parameterType="Course" useGeneratedKeys="true" keyProperty="id" >
         INSERT INTO courses (name, start_week, end_week, week_day, schooltime, detail)
         VALUES (#{name}, #{startWeek}, #{endWeek}, #{weekDay}, #{schooltime}, #{detail})
     </insert>
 
-    <update id="update" parameterType="Course">
-        UPDATE courses
-        SET name       = #{name},
-            start_week = #{startWeek},
-            end_week   = #{endWeek},
-            week_day   = #{weekDay},
-            schooltime = #{schooltime},
-            detail     = #{detail}
-        WHERE id = #{id}
-    </update>
-
-    <delete id="delete" parameterType="int">
-        DELETE
-        FROM courses
-        WHERE id = #{id}
-    </delete>
-
-    <select id="selectById" parameterType="int" resultMap="CourseResult">
-        SELECT *
-        FROM courses
-        WHERE id = #{id}
-    </select>
-
-    <select id="selectAll" resultMap="CourseResult">
-        SELECT *
-        FROM courses
-    </select>
-
-    <select id="selectCourseByNameStartWeekEndWeekWeekDaySchooltime" resultType="Course">
+    <select id="selectCourseByNameStartWeekEndWeekWeekDaySchooltime" resultType="Course" resultMap="CourseResult">
         SELECT *
         FROM courses
         WHERE name = #{name} AND start_week = #{startWeek} AND end_week = #{endWeek} AND week_day = #{weekDay} AND schooltime = #{schooltime}
     </select>
+
+    <select id="selectTotalCourses" resultType="java.lang.Integer" >
+        SELECT COUNT(*) FROM courses;
+    </select>
+
+    <select id="selectCoursesByPage" resultType="Course" resultMap="CourseResult">
+        SELECT *
+        FROM courses
+        LIMIT #{startIndex}, #{pageSize};
+    </select>
+
+
 </mapper>

@@ -1,36 +1,41 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page isELIgnored="false" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
+
 <html>
-<head>
-    <title>Show Course Table</title>
-</head>
 <body>
-<table>
+<table border="1">
     <tr>
-        <th>Course Id</th>
         <th>Course Name</th>
         <th>Start Week</th>
         <th>End Week</th>
         <th>Week Day</th>
         <th>School Time</th>
+        <th>Classroom Number</th>
+        <th>Detail</th>
     </tr>
-    <%-- Iterate over the courses and create a table row for each one --%>
-    <c:forEach var="course" items="${courses}">
+    <!-- 遍历课程并显示 -->
+    <c:forEach var="i" begin="0" end="${fn:length(coursesList)-1}">
         <tr>
-            <td>${course.id}</td>
-            <td>${course.name}</td>
-            <td>${course.startWeek}</td>
-            <td>${course.endWeek}</td>
-            <td>${course.weekDay}</td>
-            <td>${course.schoolTime}</td>
+            <td>${coursesList[i].name}</td>
+            <td>${coursesList[i].startWeek}</td>
+            <td>${coursesList[i].endWeek}</td>
+            <td>${coursesList[i].weekDay}</td>
+            <td>${coursesList[i].schooltime}</td>
+            <td>${classroomsList[i].number}</td>
+            <td>${coursesList[i].detail}</td>
         </tr>
     </c:forEach>
-</table>
 
-<%-- Links to previous and next pages --%>
-<a href="showCourseTableServlet?page=${page - 1}">Previous</a>
-<a href="showCourseTableServlet?page=${page + 1}">Next</a>
+    </table>
+    <!-- 添加导航链接 -->
+    <div class="pagination">
+        <a href="?page=1">First</a>
+        <c:forEach var="i" begin="1" end="${totalPageNumber}">
+            <a href="?page=${i}">${i}</a>
+        </c:forEach>
+        <a href="?page=${totalPageNumber}">Last</a>
+    </div>
 </body>
 </html>
-
-

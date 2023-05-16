@@ -15,36 +15,16 @@
         VALUES (#{number}, #{floor}, #{capacity}, #{status})
     </insert>
 
-    <update id="update" parameterType="Classroom">
-        UPDATE classrooms
-        SET number   = #{number},
-            floor    = #{floor},
-            capacity = #{capacity},
-            status   = #{status}
-        WHERE id = #{id}
-    </update>
-
-    <delete id="delete" parameterType="int">
-        DELETE
-        FROM classrooms
-        WHERE id = #{id}
-    </delete>
-
-    <select id="selectById" parameterType="int" resultMap="ClassroomResultMap">
-        SELECT *
-        FROM classrooms
-        WHERE id = #{id}
-    </select>
-
-    <select id="selectAll" resultMap="ClassroomResultMap">
-        SELECT *
-        FROM classrooms
-    </select>
-
     <select id="selectByNumber" resultType="Classroom">
         SELECT *
         FROM classrooms
         WHERE number = #{number};
     </select>
+
+    <select id="selectById" resultType="Classroom" resultMap="ClassroomResultMap">
+        SELECT * FROM classrooms WHERE id = #{id};
+    </select>
+
+
 </mapper>
 

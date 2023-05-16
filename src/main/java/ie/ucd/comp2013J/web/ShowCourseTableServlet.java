@@ -9,6 +9,7 @@ import ie.ucd.comp2013J.service.ClassroomCourseService;
 import ie.ucd.comp2013J.service.ClassroomService;
 import ie.ucd.comp2013J.service.CourseService;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,7 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 //该Servlet用于向前端页面发送一个List<Course>或者List<Classroom>
@@ -25,6 +25,7 @@ public class ShowCourseTableServlet extends HttpServlet {
     private final ClassroomService classroomservice = new ClassroomService();
     private final CourseService courseService = new CourseService();
     private final ClassroomCourseService classroomCourseService = new ClassroomCourseService();
+    private static final int PAGE_SIZE = 5;  // 定义一个常量，用于表示每页的大小
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -39,11 +40,30 @@ public class ShowCourseTableServlet extends HttpServlet {
         if (user == null) { // 检查用户是否已登录，否则重定向到index.jsp
             response.sendRedirect("login.jsp");
         }
-        // 为了初始化当前页面,我需要先获取所有的Course+对应Classroom的信息
-        List<ClassroomCourse> classroomCoursesList = classroomCourseService.selectAllClassroomCourse();
-        ArrayList<Course> coursesList = courseService.selectAllCourse(classroomCoursesList);
-        ArrayList<Classroom> classroomsList = classroomservice.selectAllClassroom(classroomCoursesList);
 
+        // 获取请求的页数，默认为1
+        int pageNumber = 1;
+        String pageStr = request.getParameter("page");
+        if (pageStr != null && !pageStr.isEmpty()) {
+            pageNumber = Integer.parseInt(pageStr);
+        }
+
+        // 获取这一页的课程
+        List<Course> coursesForPage = courseService.getCoursesForPage(pageNumber, 5);
+        List<Classroom> classroomsForPage = classroomservice.getByClassroomCourses(classroomCourseService.getByCourses(coursesForPage));
+
+        // 将coursesForPage添加到请求属性中
+        request.setAttribute("coursesList", coursesForPage);
+        request.setAttribute("classroomsList", classroomsForPage);
+
+        // 计算总页数并添加到请求属性中
+        int totalCourses = courseService.getTotalCourses();
+        int totalPageNumber = (int) Math.ceil((double) totalCourses / PAGE_SIZE);
+        request.setAttribute("totalPageNumber", totalPageNumber);
+
+        // 使用请求转发器将请求转发到JSP页面
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/showCourseTable.jsp");
+        dispatcher.forward(request, response);
     }
 
 
