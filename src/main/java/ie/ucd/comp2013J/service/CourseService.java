@@ -1,6 +1,7 @@
 package ie.ucd.comp2013J.service;
 
 import ie.ucd.comp2013J.mapper.CourseMapper;
+import ie.ucd.comp2013J.pojo.ClassroomCourse;
 import ie.ucd.comp2013J.pojo.Course;
 import ie.ucd.comp2013J.util.ExcelFileHandleUtils;
 import ie.ucd.comp2013J.util.SqlSessionFactoryUtils;
@@ -9,11 +10,13 @@ import org.apache.ibatis.session.SqlSessionFactory;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 //pojo实体类
 public class CourseService { //在此实现针对Classroom的所有增删改查的方法
     SqlSessionFactory factory = SqlSessionFactoryUtils.getSqlSessionFactory();
     ExcelFileHandleUtils excelFileHandleUtil = new ExcelFileHandleUtils();
+    private static final int PAGE_SIZE = 5;
 
     public ArrayList<Course> insertExcelFile(InputStream inputStream) {
         ArrayList<Course> courses = excelFileHandleUtil.getCoursesFromExcel(inputStream);
@@ -38,5 +41,14 @@ public class CourseService { //在此实现针对Classroom的所有增删改查�
         }
     }
 
+    public ArrayList<Course> selectAllCourse(List<ClassroomCourse> classroomCourseList) {
+        SqlSession sqlSession = factory.openSession();
+        CourseMapper mapper = sqlSession.getMapper(CourseMapper.class);
+        ArrayList<Course> coursesList = new ArrayList<>();
+        for (int i = 0; i < classroomCourseList.size(); i++) {
+            coursesList.add(i, mapper.selectById(classroomCourseList.get(i).getCourseId()));
+        }
+        return coursesList;
+    }
 
 }

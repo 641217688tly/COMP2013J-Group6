@@ -1,6 +1,10 @@
 package ie.ucd.comp2013J.web;
 
 
+import ie.ucd.comp2013J.pojo.Classroom;
+import ie.ucd.comp2013J.pojo.ClassroomCourse;
+import ie.ucd.comp2013J.pojo.Course;
+import ie.ucd.comp2013J.pojo.User;
 import ie.ucd.comp2013J.service.ClassroomCourseService;
 import ie.ucd.comp2013J.service.ClassroomService;
 import ie.ucd.comp2013J.service.CourseService;
@@ -10,7 +14,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 //该Servlet用于向前端页面发送一个List<Course>或者List<Classroom>
 @WebServlet(urlPatterns = "/showCourseTableServlet")
@@ -27,9 +34,15 @@ public class ShowCourseTableServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
-        //当用户登录后,将其request信息转发到此Servlet中进行处理
-        //该Servlet能够为用户呈现最初状态下的课程和教室信息表
-        //TODO 先共同设计前端页面上该以怎样的形式来呈现课表和教室,以及应该设计哪些筛选条件?(Step1)
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        if (user == null) { // 检查用户是否已登录，否则重定向到index.jsp
+            response.sendRedirect("login.jsp");
+        }
+        // 为了初始化当前页面,我需要先获取所有的Course+对应Classroom的信息
+        List<ClassroomCourse> classroomCoursesList = classroomCourseService.selectAllClassroomCourse();
+        ArrayList<Course> coursesList = courseService.selectAllCourse(classroomCoursesList);
+        ArrayList<Classroom> classroomsList = classroomservice.selectAllClassroom(classroomCoursesList);
 
     }
 

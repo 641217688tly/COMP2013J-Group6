@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
 import java.util.ArrayList;
+import java.util.List;
 
 //pojo实体类
 public class ClassroomCourseService { //在此实现针对Classroom的所有增删改查的方法
@@ -29,7 +30,26 @@ public class ClassroomCourseService { //在此实现针对Classroom的所有增�
         }
     }
 
-    public boolean insertClassroomCourse1(Course course, Classroom classroom) {
+    private ClassroomCourse insertClassroomCourse2(Course course, Classroom classroom) { //该insert方法为insertExcelFile提供调用
+        try (SqlSession sqlSession = factory.openSession()) {
+            ClassroomCourseMapper mapper = sqlSession.getMapper(ClassroomCourseMapper.class);
+
+            ClassroomCourse classroomCourse = new ClassroomCourse();
+            classroomCourse.setCourseId(course.getId());
+            classroomCourse.setClassroomId(classroom.getId());
+
+            ClassroomCourse existingClassroomCourse = mapper.selectByCourseIDAndClassroomID(classroomCourse);
+            if (existingClassroomCourse != null) { //已经存在该课程
+                return existingClassroomCourse;
+            } else { //尚未存在该课程
+                mapper.insertClassroomCourse(classroomCourse);
+                sqlSession.commit();
+                return classroomCourse;
+            }
+        }
+    }
+
+    public boolean insertClassroomCourse1(Course course, Classroom classroom) { //该insert方法在插入单个课表信息时被调用
         try (SqlSession sqlSession = factory.openSession()) {
             ClassroomCourseMapper mapper = sqlSession.getMapper(ClassroomCourseMapper.class);
 
@@ -48,22 +68,11 @@ public class ClassroomCourseService { //在此实现针对Classroom的所有增�
         }
     }
 
-    public ClassroomCourse insertClassroomCourse2(Course course, Classroom classroom) {
-        try (SqlSession sqlSession = factory.openSession()) {
-            ClassroomCourseMapper mapper = sqlSession.getMapper(ClassroomCourseMapper.class);
-
-            ClassroomCourse classroomCourse = new ClassroomCourse();
-            classroomCourse.setCourseId(course.getId());
-            classroomCourse.setClassroomId(classroom.getId());
-
-            ClassroomCourse existingClassroomCourse = mapper.selectByCourseIDAndClassroomID(classroomCourse);
-            if (existingClassroomCourse != null) { //已经存在该课程
-                return existingClassroomCourse;
-            } else { //尚未存在该课程
-                mapper.insertClassroomCourse(classroomCourse);
-                sqlSession.commit();
-                return classroomCourse;
-            }
-        }
+    public List<ClassroomCourse> selectAllClassroomCourse(){
+        SqlSession sqlSession = factory.openSession();
+        ClassroomCourseMapper mapper = sqlSession.getMapper(ClassroomCourseMapper.class);
+        return mapper.selectAllClassroomCourses();
     }
+
+
 }

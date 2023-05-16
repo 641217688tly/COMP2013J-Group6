@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <link href="css/insert.css" rel="stylesheet">
 </head>
-<body style = "background-image: url(img/1.png);">
+<body style = "background-image: url(imgs/1.jpg);">
 <%--TODO jsp前端页面渲染--%>
 <!-- 一.用户可以上传一个课程的信息 -->
 <h2><b>Upload Single Course Information</b></h2>

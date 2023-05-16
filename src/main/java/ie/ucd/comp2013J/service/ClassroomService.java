@@ -2,6 +2,7 @@ package ie.ucd.comp2013J.service;
 
 import ie.ucd.comp2013J.mapper.ClassroomMapper;
 import ie.ucd.comp2013J.pojo.Classroom;
+import ie.ucd.comp2013J.pojo.ClassroomCourse;
 import ie.ucd.comp2013J.util.ExcelFileHandleUtils;
 import ie.ucd.comp2013J.util.SqlSessionFactoryUtils;
 import org.apache.ibatis.session.SqlSession;
@@ -9,6 +10,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 //pojo实体类
 public class ClassroomService { //在此实现针对Classroom的所有增删改查的方法
@@ -47,6 +49,17 @@ public class ClassroomService { //在此实现针对Classroom的所有增删改�
         }
     }
 
+    public ArrayList<Classroom> selectAllClassroom(List<ClassroomCourse> classroomCourseList) {
+        SqlSession sqlSession = factory.openSession();
+        ClassroomMapper mapper = sqlSession.getMapper(ClassroomMapper.class);
+        ArrayList<Classroom> classroomsList = new ArrayList<>();
+        for (int i = 0; i < classroomCourseList.size(); i++) {
+            classroomsList.add(i, mapper.selectById(classroomCourseList.get(i).getCourseId()));
+        }
+        return classroomsList;
+    }
+
+
     private String decideCapacity(int classroomNumber) {
         String stringNumber = String.valueOf(classroomNumber);
         String lastTwoDigits = stringNumber.substring(1);
@@ -60,4 +73,6 @@ public class ClassroomService { //在此实现针对Classroom的所有增删改�
             return "中";
         }
     }
+
+
 }
