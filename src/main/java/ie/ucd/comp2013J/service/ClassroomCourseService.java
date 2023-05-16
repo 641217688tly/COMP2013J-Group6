@@ -21,7 +21,7 @@ public class ClassroomCourseService { //在此实现针对Classroom的所有增�
         }
         try {
             for (int i = 0; i < courses.size(); i++) {
-                insertClassroomCourse2(courses.get(i), classrooms.get(i));
+                insertClassroomCourse(courses.get(i), classrooms.get(i));
             }
             return true;
         } catch (Exception e) {
@@ -30,7 +30,7 @@ public class ClassroomCourseService { //在此实现针对Classroom的所有增�
         }
     }
 
-    private ClassroomCourse insertClassroomCourse2(Course course, Classroom classroom) { //该insert方法为insertExcelFile提供调用
+    private ClassroomCourse insertClassroomCourse(Course course, Classroom classroom) { //该insert方法为insertExcelFile提供调用
         try (SqlSession sqlSession = factory.openSession()) {
             ClassroomCourseMapper mapper = sqlSession.getMapper(ClassroomCourseMapper.class);
 
@@ -49,26 +49,32 @@ public class ClassroomCourseService { //在此实现针对Classroom的所有增�
         }
     }
 
-    public boolean insertClassroomCourse1(Course course, Classroom classroom) { //该insert方法在插入单个课表信息时被调用
+    public boolean insertSingleClassroomCourse(Course course, Classroom classroom) { //该insert方法在插入单个课表信息时被调用
         try (SqlSession sqlSession = factory.openSession()) {
             ClassroomCourseMapper mapper = sqlSession.getMapper(ClassroomCourseMapper.class);
 
             ClassroomCourse classroomCourse = new ClassroomCourse();
+            if (course == null || classroom == null) { //course或classroom插入失败
+                return false;
+            }
+
             classroomCourse.setCourseId(course.getId());
             classroomCourse.setClassroomId(classroom.getId());
 
             ClassroomCourse existingClassroomCourse = mapper.selectByCourseIDAndClassroomID(classroomCourse);
             if (existingClassroomCourse != null) { //已经存在该课程
-                return false;
+                //不插入
+                return true;
             } else { //尚未存在该课程
                 mapper.insertClassroomCourse(classroomCourse);
                 sqlSession.commit();
+                sqlSession.close();
                 return true;
             }
         }
     }
 
-    public List<ClassroomCourse> selectAllClassroomCourse(){
+    public List<ClassroomCourse> selectAllClassroomCourse() {
         SqlSession sqlSession = factory.openSession();
         ClassroomCourseMapper mapper = sqlSession.getMapper(ClassroomCourseMapper.class);
         return mapper.selectAllClassroomCourses();

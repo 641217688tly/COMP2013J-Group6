@@ -28,14 +28,21 @@ public class CourseService { //在此实现针对Classroom的所有增删改查�
     }
 
     public Course insertCourse(Course course) {
+        //插入成功的情况:插入了已经存在的课程;插入了尚未存在的课程;此时返回一个id不为空的course对象
+        //插入失败的情况:name;startWeek;endWeek;weekDay;schooltime这些必须值中有没有被上传的,此时返回null
         try (SqlSession sqlSession = factory.openSession()) {
             CourseMapper mapper = sqlSession.getMapper(CourseMapper.class);
             Course existingCourse = mapper.selectCourseByNameStartWeekEndWeekWeekDaySchooltime(course);
             if (existingCourse != null) { //已经存在该课程
                 return existingCourse;
             } else { //尚未存在该课程
-                mapper.insertCourse(course);
-                sqlSession.commit();
+                int i = mapper.insertCourse(course);
+                if (i > 0) { //插入成功
+                    sqlSession.commit();
+                } else { //插入失败
+                    return null;
+                }
+                sqlSession.close();
                 return course;
             }
         }

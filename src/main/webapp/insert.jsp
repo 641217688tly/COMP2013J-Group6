@@ -7,14 +7,14 @@
     <meta charset="UTF-8">
     <link href="css/insert.css" rel="stylesheet">
 </head>
-<body style = "background-image: url(imgs/1.jpg);">
-<%--TODO jsp前端页面渲染--%>
+<body style="background-image: url(imgs/1.jpg);">
+
 <!-- 一.用户可以上传一个课程的信息 -->
 <h2><b>Upload Single Course Information</b></h2>
-<form action="insertServlet" method="post"  id="Single Course">
+<form action="insertServlet" method="post" id="Single Course">
 
-    <label for="name">Name:</label><br>
-    <input type="text" id="name" name="name"><br>
+    <label for="courseName">Name:</label><br>
+    <input type="text" id="courseName" name="courseName"><br>
 
     <label for="startWeek">Start Week:</label><br>
     <input type="number" id="startWeek" name="startWeek"><br>
@@ -26,15 +26,17 @@
     <input type="number" id="weekDay" name="weekDay"><br>
 
     <label for="schooltime">School Time:</label><br>
-    <input type="number" id="schoolTime" name="schoolTime"><br>
+    <input type="number" id="schooltime" name="schooltime"><br>
 
     <label for="classroomNumber">Classroom Number:</label><br>
-    <input type="text" id="classroomNumber" name="classroomNumber" value="Enter Classroom Number"><br>
+    <input type="text" id="classroomNumber" name="classroomNumber"><br>
 
     <label for="detail">Detail:</label><br>
     <textarea id="detail" name="detail"></textarea><br>
+
     <input type="submit" value="Submit">
     <p>${upload_message1}</p>
+
 </form>
 
 <!-- 二.用户可以上传一个Excel文件 -->

@@ -59,7 +59,7 @@ public class InsertServlet extends HttpServlet {
         } else {
             Course course = new Course();
             Classroom classroom = new Classroom();
-            String name = request.getParameter("name");
+            String courseName = request.getParameter("courseName");
             String startWeek = request.getParameter("startWeek");
             String endWeek = request.getParameter("endWeek");
             String weekDay = request.getParameter("weekDay");
@@ -67,8 +67,8 @@ public class InsertServlet extends HttpServlet {
             String detail = request.getParameter("detail");
             String classroomNumber = request.getParameter("classroomNumber");
 
-            if (name != null && startWeek != null && endWeek != null && weekDay != null && schooltime != null && classroomNumber != null) {
-                course.setName(name);
+            if (courseName != null && startWeek != null && endWeek != null && weekDay != null && schooltime != null && classroomNumber != null) {
+                course.setName(courseName);
                 course.setStartWeek(Integer.parseInt(startWeek));
                 course.setEndWeek(Integer.parseInt(endWeek));
                 course.setWeekDay(Integer.parseInt(weekDay));
@@ -76,7 +76,7 @@ public class InsertServlet extends HttpServlet {
                 course.setDetail(detail);
                 classroom.setNumber(Integer.parseInt(classroomNumber));
 
-                boolean flag2 = classroomCourseService.insertClassroomCourse1(courseService.insertCourse(course), classroomservice.insertClassroom(classroom));
+                boolean flag2 = classroomCourseService.insertSingleClassroomCourse(courseService.insertCourse(course), classroomservice.insertClassroom(classroom));
                 if (flag2) {
                     request.setAttribute("upload_message1", "Upload Successfully!");
                     request.getRequestDispatcher("/insert.jsp").forward(request, response);

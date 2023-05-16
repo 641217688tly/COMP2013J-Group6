@@ -27,6 +27,8 @@ public class ClassroomService { //在此实现针对Classroom的所有增删改�
     }
 
     public Classroom insertClassroom(Classroom classroom) {
+        //插入成功的情况:插入了已经存在的教室;插入了尚未存在的教室;此时返回一个id不为空的classroom对象
+        //插入失败的情况:classroomNumber这个必须值没有被上传,此时返回null
         try (SqlSession sqlSession = factory.openSession()) {
             ClassroomMapper mapper = sqlSession.getMapper(ClassroomMapper.class);
             Classroom existingClassroom = mapper.selectByNumber(classroom.getNumber());
@@ -42,8 +44,13 @@ public class ClassroomService { //在此实现针对Classroom的所有增删改�
                 boolean status = true;
                 classroom.setStatus(status);
 
-                mapper.insertClassroom(classroom);
-                sqlSession.commit();
+                int i = mapper.insertClassroom(classroom);
+                if (i > 0) { //如果插入成功
+                    sqlSession.commit(); //事务提交
+                } else { //如果插入失败
+                    return null;
+                }
+                sqlSession.close();
                 return classroom;
             }
         }
