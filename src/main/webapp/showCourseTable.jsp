@@ -18,7 +18,8 @@
     <!-- 使用 JSTL 的 forEach 标签遍历课程列表 -->
     <c:forEach var="i" begin="0" end="${coursesList.size()-1}">
         <tr> <!-- 对于每一个课程，创建一行 -->
-            <td>${coursesList[i].name}</td>
+            <!-- 课程名称现在是一个指向 update.jsp 的链接，并将课程 id 作为请求参数 -->
+            <td><a href="update.jsp?courseId=${coursesList[i].id}&classroomId=${classroomsList[i].id}">${coursesList[i].name}</a></td>
             <td>${coursesList[i].startWeek}</td>
             <td>${coursesList[i].endWeek}</td>
             <td>${coursesList[i].weekDay}</td>
@@ -39,7 +40,7 @@
     <a href="?page=${totalPageNumber}">Last</a> <!-- 链接到最后一页 -->
 </div>
 
-<a href="insert.jsp">上传课程信息</a>
-
+<a href="insert.jsp"><h2>上传课程信息</h2></a><br>
+<a href="showClassroomTableServlet"><h2>查看教室信息</h2></a>
 </body>
 </html>

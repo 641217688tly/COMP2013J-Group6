@@ -66,4 +66,26 @@ public class CourseService { //在此实现针对Classroom的所有增删改查�
     }
 
 
+    public List<Course> getCoursesByClassroomId(int classroomId) {
+        try (SqlSession sqlSession = factory.openSession()) {
+            CourseMapper mapper = sqlSession.getMapper(CourseMapper.class);
+            return mapper.selectCoursesByClassroomId(classroomId);
+        }
+    }
+
+    public List<Course> getByClassroomCourses(List<ClassroomCourse> classroomCourses) {
+        try (SqlSession sqlSession = factory.openSession()) {
+            CourseMapper mapper = sqlSession.getMapper(CourseMapper.class);
+            return mapper.selectByClassroomCourses(classroomCourses);
+        }
+    }
+
+    public Course getByCourseId(Integer courseId) {
+        try (SqlSession sqlSession = factory.openSession()) {
+            CourseMapper mapper = sqlSession.getMapper(CourseMapper.class);
+            return mapper.selectById(courseId);
+        }
+    }
+
+
 }

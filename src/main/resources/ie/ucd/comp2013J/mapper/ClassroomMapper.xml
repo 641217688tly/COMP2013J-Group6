@@ -22,7 +22,21 @@
     </select>
 
     <select id="selectById" resultType="Classroom" resultMap="ClassroomResultMap">
-        SELECT * FROM classrooms WHERE id = #{id};
+        SELECT *
+        FROM classrooms
+        WHERE id = #{id};
+    </select>
+
+
+    <select id="selectClassroomsByPage" resultType="Classroom" resultMap="ClassroomResultMap">
+        SELECT *
+        FROM classrooms
+        LIMIT #{startIndex}, #{pageSize}
+    </select>
+
+    <select id="selectTotalClassrooms" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM classrooms;
     </select>
 
 

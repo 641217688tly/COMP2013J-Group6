@@ -13,4 +13,6 @@ public interface ClassroomCourseMapper {
 
     ClassroomCourse selectByCourseIDAndClassroomID(ClassroomCourse classroomCourse);
 
+    List<ClassroomCourse> selectByClassroomId(Integer classroomId);
+
 }

@@ -29,4 +29,9 @@
         </foreach>
     </select>
 
+    <select id="selectByClassroomId" resultType="ClassroomCourse" resultMap="ClassroomCourseResultMap">
+        SELECT * FROM classroom_course WHERE classroom_id = #{classroomId};
+    </select>
+
+
 </mapper>

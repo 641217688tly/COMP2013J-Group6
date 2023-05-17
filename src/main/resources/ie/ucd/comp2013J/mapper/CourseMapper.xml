@@ -14,7 +14,7 @@
     </resultMap>
 
 
-    <insert id="insertCourse" parameterType="Course" useGeneratedKeys="true" keyProperty="id" >
+    <insert id="insertCourse" parameterType="Course" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO courses (name, start_week, end_week, week_day, schooltime, detail)
         VALUES (#{name}, #{startWeek}, #{endWeek}, #{weekDay}, #{schooltime}, #{detail})
     </insert>
@@ -22,11 +22,16 @@
     <select id="selectCourseByNameStartWeekEndWeekWeekDaySchooltime" resultType="Course" resultMap="CourseResult">
         SELECT *
         FROM courses
-        WHERE name = #{name} AND start_week = #{startWeek} AND end_week = #{endWeek} AND week_day = #{weekDay} AND schooltime = #{schooltime}
+        WHERE name = #{name}
+          AND start_week = #{startWeek}
+          AND end_week = #{endWeek}
+          AND week_day = #{weekDay}
+          AND schooltime = #{schooltime}
     </select>
 
-    <select id="selectTotalCourses" resultType="java.lang.Integer" >
-        SELECT COUNT(*) FROM courses;
+    <select id="selectTotalCourses" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM courses;
     </select>
 
     <select id="selectCoursesByPage" resultType="Course" resultMap="CourseResult">
@@ -35,5 +40,24 @@
         LIMIT #{startIndex}, #{pageSize};
     </select>
 
+    <select id="selectCoursesByClassroomId" resultType="Course" resultMap="CourseResult">
+        SELECT courses.*
+        FROM courses
+                 JOIN classroom_course ON courses.id = classroom_course.course_id
+        WHERE classroom_course.classroom_id = #{classroomId}
+    </select>
 
+    <select id="selectByClassroomCourses" resultType="Course" resultMap="CourseResult">
+        SELECT * FROM courses WHERE id IN
+        <foreach item="classroomCourse" collection="classroomCourses" open="(" separator="," close=")">
+            #{classroomCourse.courseId}
+        </foreach>
+    </select>
+
+
+    <select id="selectById" resultType="Course" resultMap="CourseResult">
+        SELECT *
+        FROM courses
+        WHERE id = #{id};
+    </select>
 </mapper>

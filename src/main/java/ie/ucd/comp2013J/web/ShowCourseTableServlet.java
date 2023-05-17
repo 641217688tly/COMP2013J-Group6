@@ -62,9 +62,7 @@ public class ShowCourseTableServlet extends HttpServlet {
         request.setAttribute("totalPageNumber", totalPageNumber);
 
         // 使用请求转发器将请求转发到JSP页面
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/showCourseTable.jsp");
-        dispatcher.forward(request, response);
+        request.getRequestDispatcher("/showCourseTable.jsp").forward(request, response);
     }
-
 
 }

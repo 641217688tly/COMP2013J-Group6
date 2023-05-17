@@ -80,4 +80,30 @@ public class ClassroomService { //在此实现针对Classroom的所有增删改�
             return classroomList;
         }
     }
+
+    //得到第pageNumber页的Classroom对象(每页呈现pageSize个Classroom的信息)
+    public List<Classroom> getClassroomsForPage(int pageNumber, int pageSize) {
+        try (SqlSession sqlSession = factory.openSession()) {
+            ClassroomMapper mapper = sqlSession.getMapper(ClassroomMapper.class);
+            // 计算从哪个索引开始获取教室
+            int startIndex = (pageNumber - 1) * pageSize;
+            return mapper.selectClassroomsByPage(startIndex, pageSize);
+        }
+    }
+
+    //获取所有教室的总数量
+    public int getTotalClassrooms() {
+        try (SqlSession sqlSession = factory.openSession()) {
+            ClassroomMapper mapper = sqlSession.getMapper(ClassroomMapper.class);
+            return mapper.selectTotalClassrooms();
+        }
+    }
+
+    public Classroom getByClassroomId(Integer classroomId){
+        try (SqlSession sqlSession = factory.openSession()) {
+            ClassroomMapper mapper = sqlSession.getMapper(ClassroomMapper.class);
+            return mapper.selectById(classroomId);
+        }
+    }
+
 }

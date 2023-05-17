@@ -80,4 +80,12 @@ public class ClassroomCourseService { //在此实现针对Classroom的所有增�
         }
     }
 
+    public List<ClassroomCourse> getByClassroom(Classroom classroom) {
+        try (SqlSession sqlSession = factory.openSession()) {
+            ClassroomCourseMapper mapper = sqlSession.getMapper(ClassroomCourseMapper.class);
+            return mapper.selectByClassroomId(classroom.getId());
+        }
+    }
+
+
 }

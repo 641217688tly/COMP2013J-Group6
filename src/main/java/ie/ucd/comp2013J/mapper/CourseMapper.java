@@ -1,5 +1,6 @@
 package ie.ucd.comp2013J.mapper;
 
+import ie.ucd.comp2013J.pojo.ClassroomCourse;
 import ie.ucd.comp2013J.pojo.Course;
 import org.apache.ibatis.annotations.Param;
 
@@ -16,4 +17,9 @@ public interface CourseMapper {
 
     Course selectCourseByNameStartWeekEndWeekWeekDaySchooltime(Course course);
 
+    List<Course> selectCoursesByClassroomId(Integer classroomId);
+
+    List<Course> selectByClassroomCourses(@Param("classroomCourses") List<ClassroomCourse> classroomCourses);
+
+    Course selectById(Integer id);
 }

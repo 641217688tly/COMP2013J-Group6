@@ -48,7 +48,7 @@
     <p>${upload_message2}</p>
 </form>
 
-<a href="showCourseTableServlet">返回课程页</a>
+<a href="showCourseTableServlet">返回课程页</a><br>
 <a href="showClassroomTableServlet">返回教室页</a>
 
 
