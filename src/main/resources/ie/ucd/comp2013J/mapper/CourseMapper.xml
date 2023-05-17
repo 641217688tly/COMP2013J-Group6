@@ -60,4 +60,15 @@
         FROM courses
         WHERE id = #{id};
     </select>
+
+    <update id="updateCourse" parameterType="Course">
+        UPDATE courses
+        SET name = #{name},
+            start_week = #{startWeek},
+            end_week = #{endWeek},
+            week_day = #{weekDay},
+            schooltime = #{schooltime},
+            detail = #{detail}
+        WHERE id = #{id}
+    </update>
 </mapper>

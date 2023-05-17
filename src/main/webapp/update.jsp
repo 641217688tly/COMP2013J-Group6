@@ -34,8 +34,9 @@
     <input type="hidden" name="classroomId" value="${classroom.id}">
     <!-- 更新按钮 -->
     <input type="submit" value="更新">
+    <p>${failure_message1}${failure_message2}${failure_message3}${success_message}</p>
 </form>
 <a href="showCourseTableServlet"><h2>返回课程信息页</h2></a><br>
-<a href="showCourseTableServlet"><h2>返回课程信息页</h2></a>
+<a href="showClassroomTableServlet"><h2>返回教室信息页</h2></a>
 </body>
 </html>

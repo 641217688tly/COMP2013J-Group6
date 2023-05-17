@@ -87,5 +87,16 @@ public class ClassroomCourseService { //在此实现针对Classroom的所有增�
         }
     }
 
+    public void deleteByCourseIdAndClassroomId(Integer courseId, Integer classroomId) {
+        try (SqlSession sqlSession = factory.openSession()) {
+            ClassroomCourseMapper mapper = sqlSession.getMapper(ClassroomCourseMapper.class);
+            int i = mapper.deleteByCourseIdAndClassroomId(courseId, classroomId);
+            if (i > 0){
+                sqlSession.commit();
+            }else{
+                //pass
+            }
+        }
+    }
 
 }

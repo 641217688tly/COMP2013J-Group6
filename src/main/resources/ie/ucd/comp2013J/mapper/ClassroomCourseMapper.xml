@@ -30,8 +30,18 @@
     </select>
 
     <select id="selectByClassroomId" resultType="ClassroomCourse" resultMap="ClassroomCourseResultMap">
-        SELECT * FROM classroom_course WHERE classroom_id = #{classroomId};
+        SELECT *
+        FROM classroom_course
+        WHERE classroom_id = #{classroomId};
     </select>
+
+
+    <delete id="deleteByCourseIdAndClassroomId">
+        DELETE
+        FROM classroom_course
+        WHERE course_id = #{courseId}
+          AND classroom_id = #{classroomId}
+    </delete>
 
 
 </mapper>

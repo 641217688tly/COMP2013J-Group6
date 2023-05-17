@@ -65,7 +65,6 @@ public class CourseService { //在此实现针对Classroom的所有增删改查�
         }
     }
 
-
     public List<Course> getCoursesByClassroomId(int classroomId) {
         try (SqlSession sqlSession = factory.openSession()) {
             CourseMapper mapper = sqlSession.getMapper(CourseMapper.class);
@@ -88,4 +87,16 @@ public class CourseService { //在此实现针对Classroom的所有增删改查�
     }
 
 
+    public void updateCourse(Course newCourse) {
+        try (SqlSession sqlSession = factory.openSession()) {
+            CourseMapper mapper = sqlSession.getMapper(CourseMapper.class);
+            int i = mapper.updateCourse(newCourse);
+            if (i > 0) { //更新成功
+                sqlSession.commit();
+            } else { //没有行受到更新
+                //pass
+            }
+        }
+
+    }
 }

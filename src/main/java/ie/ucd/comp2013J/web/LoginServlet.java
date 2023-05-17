@@ -35,6 +35,9 @@ public class LoginServlet extends HttpServlet {
                 response.addCookie(c_username);
                 response.addCookie(c_password);
             }
+            if (username.equals("Administrator")) { //为管理员账号设置权限
+                service.upgradeRole(user);
+            }
             HttpSession session = request.getSession();
             session.setAttribute("user", user); //将本次登录的用户的对象存储在session中,以便于在整个对话期间都可以访问该用户对象的信息
             String contextPath = request.getContextPath();

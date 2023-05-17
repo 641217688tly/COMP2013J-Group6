@@ -15,4 +15,6 @@ public interface ClassroomCourseMapper {
 
     List<ClassroomCourse> selectByClassroomId(Integer classroomId);
 
+    int deleteByCourseIdAndClassroomId(@Param("courseId") Integer courseId, @Param("classroomId") Integer classroomId);
+
 }

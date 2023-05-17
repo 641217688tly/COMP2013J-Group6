@@ -22,4 +22,7 @@ public interface CourseMapper {
     List<Course> selectByClassroomCourses(@Param("classroomCourses") List<ClassroomCourse> classroomCourses);
 
     Course selectById(Integer id);
+
+    int updateCourse(Course newcourse);
+
 }
