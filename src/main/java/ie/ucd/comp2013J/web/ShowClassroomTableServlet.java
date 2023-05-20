@@ -2,6 +2,7 @@ package ie.ucd.comp2013J.web;
 
 import ie.ucd.comp2013J.pojo.Classroom;
 import ie.ucd.comp2013J.pojo.Course;
+import ie.ucd.comp2013J.pojo.Reservation;
 import ie.ucd.comp2013J.pojo.User;
 import ie.ucd.comp2013J.service.ClassroomCourseService;
 import ie.ucd.comp2013J.service.ClassroomService;
@@ -42,6 +43,7 @@ public class ShowClassroomTableServlet extends HttpServlet {
 
         List<Classroom> classroomList = (List<Classroom>) session.getAttribute("classroomList");
         ArrayList<List<Course>> correspondingCourses = (ArrayList<List<Course>>) session.getAttribute("correspondingCourses");
+        ArrayList<List<Reservation>> correspondingReservations = (ArrayList<List<Reservation>>) session.getAttribute("correspondingReservations");
         Integer currentWeek = (Integer) session.getAttribute("currentWeek");
         int currentPage = 1; //默认第一次进入时展示page 1
         if (request.getParameter("currentPage") != null) { //改变page的请求不经由SearchClassroomServlet,而是直接传到此Servlet中
@@ -51,7 +53,8 @@ public class ShowClassroomTableServlet extends HttpServlet {
         }
 
         ArrayList<List<Course>> coursesInCurrentWeek = new ArrayList<>(); //对correspondingCourses中的各个ArrayList<Course>中的Course进行筛选
-        // 筛选出在指定周有课的课程
+        ArrayList<List<Reservation>> reservationsInCurrentWeek = new ArrayList<>();
+        // 筛选出在指定周内教室中的的课程和预约
         for (int i = 0; i < correspondingCourses.size(); i++) {
             ArrayList<Course> tempCourses = new ArrayList<>();
             for (int j = 0; j < correspondingCourses.get(i).size(); j++) {
@@ -61,9 +64,20 @@ public class ShowClassroomTableServlet extends HttpServlet {
             }
             coursesInCurrentWeek.add(i, tempCourses);
         }
+        for (int i = 0; i < correspondingReservations.size(); i++) {
+            ArrayList<Reservation> tempReservations = new ArrayList<>();
+            for (int j = 0; j < correspondingReservations.get(i).size(); j++) {
+                if (correspondingReservations.get(i).get(j).getWeek() == currentWeek) {
+                    tempReservations.add(correspondingReservations.get(i).get(j));
+                }
+            }
+            reservationsInCurrentWeek.add(i, tempReservations);
+        }
+
         request.setAttribute("currentPage", currentPage);
         request.setAttribute("currentWeek", currentWeek);
         request.setAttribute("classroomList", classroomList);
+        request.setAttribute("reservationsInCurrentWeek",reservationsInCurrentWeek);
         request.setAttribute("coursesInCurrentWeek", coursesInCurrentWeek);
 
         // 转发请求到JSP页面

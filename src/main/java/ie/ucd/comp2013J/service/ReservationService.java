@@ -2,7 +2,9 @@ package ie.ucd.comp2013J.service;
 
 import ie.ucd.comp2013J.mapper.ClassroomCourseMapper;
 import ie.ucd.comp2013J.mapper.ReservationMapper;
+import ie.ucd.comp2013J.pojo.Classroom;
 import ie.ucd.comp2013J.pojo.Reservation;
+import ie.ucd.comp2013J.pojo.User;
 import ie.ucd.comp2013J.util.SqlSessionFactoryUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -30,6 +32,13 @@ public class ReservationService { //在此实现针对Classroom的所有增删�
             } else {
                 return false;
             }
+        }
+    }
+
+    public List<Reservation> getReservationsByClassroomId(Integer classroomId) {
+        try (SqlSession sqlSession = factory.openSession()) {
+            ReservationMapper mapper = sqlSession.getMapper(ReservationMapper.class);
+            return mapper.selectByClassroomId(classroomId);
         }
     }
 }

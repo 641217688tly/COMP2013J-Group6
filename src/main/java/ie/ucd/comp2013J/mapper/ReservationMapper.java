@@ -8,7 +8,10 @@ import java.util.List;
 public interface ReservationMapper {
     List<Reservation> selectByClassroomIdWeekSchooltimeWeekDay(@Param("classroomId") Integer classroomId, @Param("week") Integer week, @Param("weekDay") Integer weekDay, @Param("schooltime") Integer schooltime);
 
+    List<Reservation> selectByClassroomId(Integer classroomId);
+
     int insertReservation(Reservation reservation);
+
     //以下方法尚未用到:
 
     int update(Reservation reservation);

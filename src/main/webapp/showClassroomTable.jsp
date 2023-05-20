@@ -62,17 +62,28 @@
                 <c:forEach var="weekDay" begin="1" end="7">
                     <td>
                         <!-- 创建一个变量，用来检查是否找到了对应的课程 -->
-                        <c:set var="foundCourse" value="false"/>
+                        <c:set var="foundCourseAndReservation" value="false"/>
+
                         <!-- 对每个课程进行循环 -->
                         <c:forEach items="${coursesInCurrentWeek.get(currentPage-1)}" var="course">
                             <!-- 如果课程的星期和时段匹配，显示课程名称，并设置foundCourse为true -->
                             <c:if test="${course.weekDay == weekDay && course.schooltime == schooltime}">
                                 <a href="${pageContext.request.contextPath}/update.jsp?courseId=${course.id}&classroomId=${classroomList.get(currentPage-1).id}">${course.name}</a>
-                                <c:set var="foundCourse" value="true"/>
+                                <c:set var="foundCourseAndReservation" value="true"/>
                             </c:if>
                         </c:forEach>
+                        <!-- 对每个预约进行循环 -->
+
+                        <c:forEach items="${reservationsInCurrentWeek.get(currentPage-1)}" var="reservation">
+                            <!-- 如果预约的星期和时段匹配，显示预约的purpose，并设置foundCourse为true -->
+                            <c:if test="${reservation.weekDay == weekDay && reservation.schooltime == schooltime}">
+                                <div>${reservation.purpose}</div>
+                                <c:set var="foundCourseAndReservation" value="true"/>
+                            </c:if>
+                        </c:forEach>
+
                         <!-- 如果没有找到课程,说明此处没有课,则显示预约链接 -->
-                        <c:if test="${!foundCourse}">
+                        <c:if test="${!foundCourseAndReservation}">
                             <a href="${pageContext.request.contextPath}/reservation.jsp?classroomId=${classroomList.get(currentPage-1).id}&classroomNumber=${classroomList.get(currentPage-1).number}&weekDay=${weekDay}&schooltime=${schooltime}&week=${currentWeek}">预约</a>
                         </c:if>
                     </td>

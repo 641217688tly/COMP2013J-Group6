@@ -26,6 +26,9 @@
         VALUES (#{userId}, #{classroomId}, #{week}, #{weekDay}, #{schooltime}, #{purpose})
     </insert>
 
+    <select id="selectByClassroomId" resultType="Reservation" resultMap="ReservationResultMap">
+        SELECT * FROM reservations WHERE classroom_id = #{classroomId};
+    </select>
 
     <!--以下方法尚未用到:-->
 
@@ -56,5 +59,6 @@
         SELECT *
         FROM reservations
     </select>
+
 
 </mapper>
