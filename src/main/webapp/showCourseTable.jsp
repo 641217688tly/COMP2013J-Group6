@@ -41,6 +41,6 @@
 </div>
 
 <a href="insert.jsp"><h2>上传课程信息</h2></a><br>
-<a href="showClassroomTableServlet"><h2>查看教室信息</h2></a>
+<a href="searchClassroomServlet"><h2>查看教室信息</h2></a>
 </body>
 </html>

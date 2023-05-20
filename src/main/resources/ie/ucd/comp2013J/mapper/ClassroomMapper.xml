@@ -39,6 +39,27 @@
         FROM classrooms;
     </select>
 
+    <select id="selectAllClassrooms" resultType="Classroom" resultMap="ClassroomResultMap">
+        SELECT *
+        FROM classrooms;
+    </select>
+
+    <!--用<set>标签代替set关键字避免<if>中语句不被执行导致逗号缺失造成sql语法错误-->
+    <select id="selectClassroomsByFloorCapacityStatus" resultType="Classroom" resultMap="ClassroomResultMap">
+        SELECT *
+        FROM classrooms
+        <where>
+            <if test="floor != null">
+                floor = #{floor} AND
+            </if>
+            <if test="capacity != null">
+                capacity = #{capacity} AND
+            </if>
+            <if test="status != null">
+                status = #{status}
+            </if>
+        </where>
+    </select>
 
 </mapper>
 

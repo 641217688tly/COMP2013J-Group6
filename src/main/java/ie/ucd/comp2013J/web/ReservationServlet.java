@@ -33,40 +33,11 @@ public class ReservationServlet extends HttpServlet {
         request.setCharacterEncoding("utf-8");
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
-        if (user == null) { // 检查用户是否已登录，否则重定向到index.jsp
+        if (user == null) { // 检查用户是否已登录，否则重定向到login.jsp
             response.sendRedirect("login.jsp");
             return;
         }
 
-        // 获取页码参数，默认为1
-        int page = 1;
-        String pageStr = request.getParameter("page");
-        if (pageStr != null && !pageStr.isEmpty()) {
-            page = Integer.parseInt(pageStr);
-        }
 
-        // 获取每页显示的教室数量，默认为1
-        int pageSize = 1;
-        String pageSizeStr = request.getParameter("pageSize");
-        if (pageSizeStr != null && !pageSizeStr.isEmpty()) {
-            pageSize = Integer.parseInt(pageSizeStr);
-        }
-
-
-        // 获取教室信息
-        List<Classroom> classrooms = classroomservice.getClassroomsForPage(page, pageSize); //根据showClassroomTable.jsp上的页码数和每页呈现的教室个数来获取教室
-        if (!classrooms.isEmpty()) {
-            Classroom classroom = classrooms.get(0); // 取出第一个教室
-
-            // 获取教室相关的课程信息
-            List<ClassroomCourse> classroomCourses = classroomCourseService.getByClassroom(classroom);
-            List<Course> courses = courseService.getByClassroomCourses(classroomCourses);
-            request.setAttribute("currentClassroom", classroom);
-            request.setAttribute("courseList", courses);
-            request.setAttribute("totalPages", (classroomservice.getTotalClassrooms() + pageSize - 1) / pageSize); // 计算总页数
-        }
-
-        // 转发请求到JSP页面
-        request.getRequestDispatcher("/showClassroomTable.jsp").forward(request, response);
     }
 }

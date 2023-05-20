@@ -28,11 +28,6 @@ public class InsertServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        this.doGet(request, response);
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
         String contentType = request.getContentType();
         if (contentType != null && contentType.startsWith("multipart/form-data")) {
@@ -45,14 +40,14 @@ public class InsertServlet extends HttpServlet {
                     ArrayList<Classroom> classrooms = classroomservice.insertExcelFile(filePart.getInputStream());
                     boolean flag1 = classroomCourseService.insertExcelFile(courses, classrooms);
                     if (flag1) {
-                        request.setAttribute("upload_message2", "Excel内的所有课程信息都已被正确上传!");
+                        request.setAttribute("success_message2", "Excel内的所有课程信息都已被正确上传!");
                         request.getRequestDispatcher("/insert.jsp").forward(request, response);
                     } else {
-                        request.setAttribute("upload_message2", "抱歉,Excel课表文件解析存在错误,部分课程可能没有被正确上传");
+                        request.setAttribute("failure_message4", "抱歉,Excel课表文件解析存在错误,部分课程可能没有被正确上传");
                         request.getRequestDispatcher("/insert.jsp").forward(request, response);
                     }
                 } else {
-                    request.setAttribute("upload_message2", "The uploaded file format is incorrect, please upload Excel file!");
+                    request.setAttribute("failure_message3", "The uploaded file format is incorrect, please upload Excel file!");
                     request.getRequestDispatcher("/insert.jsp").forward(request, response);
                 }
             }
@@ -67,7 +62,7 @@ public class InsertServlet extends HttpServlet {
             String detail = request.getParameter("detail");
             String classroomNumber = request.getParameter("classroomNumber");
 
-            if (courseName != null && startWeek != null && endWeek != null && weekDay != null && schooltime != null && classroomNumber != null) {
+            if (courseName != null && startWeek != null && endWeek != null && weekDay != null && schooltime != null && classroomNumber != null && !courseName.isEmpty() && !startWeek.isEmpty() && !endWeek.isEmpty() && !weekDay.isEmpty() && !schooltime.isEmpty() && !classroomNumber.isEmpty()) {
                 course.setName(courseName);
                 course.setStartWeek(Integer.parseInt(startWeek));
                 course.setEndWeek(Integer.parseInt(endWeek));
@@ -78,18 +73,21 @@ public class InsertServlet extends HttpServlet {
 
                 boolean flag2 = classroomCourseService.insertSingleClassroomCourse(courseService.insertCourse(course), classroomservice.insertClassroom(classroom));
                 if (flag2) {
-                    request.setAttribute("upload_message1", "Upload Successfully!");
+                    request.setAttribute("success_message1", "Upload Successfully!");
                     request.getRequestDispatcher("/insert.jsp").forward(request, response);
                 } else {
-                    request.setAttribute("upload_message1", "Failed To Upload!");
+                    request.setAttribute("failure_message2", "因服务器内部原因导致上传失败,请联系管理员");
                     request.getRequestDispatcher("/insert.jsp").forward(request, response);
                 }
             } else {
-                request.setAttribute("upload_message1", "Failed To Upload!");
+                request.setAttribute("failure_message1", "必填的信息为空!");
                 request.getRequestDispatcher("/insert.jsp").forward(request, response);
             }
         }
     }
 
-
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        this.doPost(request, response);
+    }
 }

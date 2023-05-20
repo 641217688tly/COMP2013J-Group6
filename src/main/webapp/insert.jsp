@@ -4,10 +4,10 @@
 <html>
 <head>
     <title>Insert Course</title>
-    <meta charset="UTF-8">
-    <link href="css/insert.css" rel="stylesheet">
+    <%--    <meta charset="UTF-8">
+        <link href="css/insert.css" rel="stylesheet">--%>
 </head>
-<body style="background-image: url(imgs/1.jpg);">
+<%--<body style="background-image: url(imgs/1.jpg);">--%>
 
 <!-- 一.用户可以上传一个课程的信息 -->
 <h2><b>Upload Single Course Information</b></h2>
@@ -34,19 +34,21 @@
     <label for="detail">Detail:</label><br>
     <textarea id="detail" name="detail"></textarea><br>
 
+    <input type="hidden" name="formType" value="singleCourse">
     <input type="submit" value="Submit">
-    <p>${upload_message1}</p>
-
 </form>
+<p>${failure_message1}${failure_message2}${success_message1}</p>
 
 <!-- 二.用户可以上传一个Excel文件 -->
 <h2><b>Upload Excel for Multiple Courses</b></h2>
-<form action="insertServlet" method="post" enc-type="multipart/form-data" id="Multiple Course">
+<form action="insertServlet" method="post" enctype="multipart/form-data" id="Multiple Course">
     <label for="file">Select Excel file:</label>
     <input type="file" id="file" name="file" accept=".xls,.xlsx"><br>
+    <input type="hidden" name="formType" value="excelUpload">
     <input type="submit" value="Upload">
-    <p>${upload_message2}</p>
 </form>
+
+<p>${failure_message3}${failure_message4}${success_message2}</p>
 
 <a href="showCourseTableServlet">返回课程页</a><br>
 <a href="showClassroomTableServlet">返回教室页</a>

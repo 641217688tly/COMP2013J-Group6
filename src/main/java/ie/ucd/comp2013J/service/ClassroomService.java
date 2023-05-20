@@ -99,10 +99,24 @@ public class ClassroomService { //在此实现针对Classroom的所有增删改�
         }
     }
 
-    public Classroom getByClassroomId(Integer classroomId){
+    public Classroom getByClassroomId(Integer classroomId) {
         try (SqlSession sqlSession = factory.openSession()) {
             ClassroomMapper mapper = sqlSession.getMapper(ClassroomMapper.class);
             return mapper.selectById(classroomId);
+        }
+    }
+
+    public List<Classroom> getAllClassrooms() {
+        try (SqlSession sqlSession = factory.openSession()) {
+            ClassroomMapper mapper = sqlSession.getMapper(ClassroomMapper.class);
+            return mapper.selectAllClassrooms();
+        }
+    }
+
+    public List<Classroom> getByFloorCapacityStatus(Integer floor, String capacity, boolean status) {
+        try (SqlSession sqlSession = factory.openSession()) {
+            ClassroomMapper mapper = sqlSession.getMapper(ClassroomMapper.class);
+            return mapper.selectClassroomsByFloorCapacityStatus(floor, capacity, status);
         }
     }
 

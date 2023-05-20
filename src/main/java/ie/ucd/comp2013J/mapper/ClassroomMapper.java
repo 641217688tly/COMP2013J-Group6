@@ -16,5 +16,11 @@ public interface ClassroomMapper {
 
     int selectTotalClassrooms();
 
+    List<Classroom> selectAllClassrooms();
+
+
+    List<Classroom> selectClassroomsByFloorCapacityStatus(@Param("floor") Integer floor, @Param("capacity") String capacity, @Param("status") boolean status);
+
+
 
 }
