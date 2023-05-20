@@ -2,66 +2,74 @@
 <%@ page isELIgnored="false" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <html>
-<body>
+<body style = "background-image: url(imgs/1.jpg);">
+
+<!-- 显示链接以上传课程信息和查看课程信息 -->
+<ul class="topnav">
+  <li><a class="active" href="insert.jsp">上传课程信息</a></li>
+  <li><a href="showCourseTableServlet">查看课程信息</a></li>
+</ul>
 
 <!-- 在标题中显示当前教室的信息 -->
 <c:if test="${classroomList.get(currentPage-1).status}">
-    <h2>教室状态: 可用</h2>
+    <h2 align="center" class="title" height="60">教室状态: 可用</h2>
 </c:if>
 <c:if test="${!classroomList.get(currentPage-1).status}">
-    <h2>教室状态: 不可用</h2>
+    <h2 align="center" class="title" height="60">教室状态: 不可用</h2>
 </c:if>
-<h2>
+<h2 align="center" class="title" height="60">
     当前教室: ${classroomList.get(currentPage-1).number} 教室容量: ${classroomList.get(currentPage-1).capacity}
     教室楼层: ${classroomList.get(currentPage-1).floor} 当前教学周:Week${currentWeek}
 </h2>
 
 <!-- 创建一个表单用于提交筛选条件 -->
-<form action="searchClassroomServlet" method="post">
-    Current Week: <select name="currentWeek" required>
-    <c:forEach var="i" begin="1" end="18">
-        <option value="${i}">Week ${i}</option>
-    </c:forEach>
-</select>
-    Floor: <select name="floor">
-    <c:forEach var="i" begin="1" end="9">
-        <option value="${i}">${i}</option>
-    </c:forEach>
-</select>
-    Capacity: <select name="capacity">
-    <option value="大">大</option>
-    <option value="中">中</option>
-    <option value="小">小</option>
-</select>
-    Status: <select name="status">
-    <option value="available">Available</option>
-    <option value="unavailable">Unavailable</option>
-</select>
-    Classroom Number (optional): <input type="number" name="specificNumber" min="0" max="999">
-    <input type="submit" value="Search">
-</form>
-<p>${searchResponse_message}</p>
+<div align="right" height="25">
+    <form action="searchClassroomServlet" method="post">
+        Current Week: <select name="currentWeek" required>
+        <c:forEach var="i" begin="1" end="18">
+            <option value="${i}">Week ${i}</option>
+        </c:forEach>
+    </select>
+        Floor: <select name="floor">
+        <c:forEach var="i" begin="1" end="9">
+            <option value="${i}">${i}</option>
+        </c:forEach>
+    </select>
+        Capacity: <select name="capacity">
+        <option value="大">大</option>
+        <option value="中">中</option>
+        <option value="小">小</option>
+    </select>
+        Status: <select name="status">
+        <option value="available">Available</option>
+        <option value="unavailable">Unavailable</option>
+    </select>
+        Classroom Number (optional): <input type="number" name="specificNumber" min="0" max="999">
+        <input type="submit" value="Search">
+    </form>
+</div>
+<p align="center">${searchResponse_message}</p>
 
 <!-- 如果有搜索结果，显示它们 -->
 <c:if test="${not empty classroomList}">
-    <table border="1">
+    <table border="1" width="100%" class="tabletop" align="center">
         <tr>
             <th></th>
-            <th>星期一</th>
-            <th>星期二</th>
-            <th>星期三</th>
-            <th>星期四</th>
-            <th>星期五</th>
-            <th>星期六</th>
-            <th>星期日</th>
+            <th width="10%" rowspan="2">星期一</th>
+            <th width="10%" rowspan="2">星期二</th>
+            <th width="10%" rowspan="2">星期三</th>
+            <th width="10%" rowspan="2">星期四</th>
+            <th width="10%" rowspan="2">星期五</th>
+            <th width="10%" rowspan="2">星期六</th>
+            <th width="10%" rowspan="2">星期日</th>
         </tr>
         <!-- 对每个时段进行循环 -->
         <c:forEach var="schooltime" begin="1" end="6">
             <tr>
-                <th>时段${schooltime}</th>
+                <th width="7%" class="btbg1">时段${schooltime}</th>
                 <!-- 对每个星期几进行循环 -->
                 <c:forEach var="weekDay" begin="1" end="7">
-                    <td>
+                    <td  width="7%" class="btbg2">
                         <!-- 创建一个变量，用来检查是否找到了对应的课程 -->
                         <c:set var="foundCourseAndReservation" value="false"/>
 
@@ -98,16 +106,13 @@
 <!-- 如果有多于一个的搜索结果，显示分页链接 -->
 <c:if test="${classroomList.size() > 1}">
     <!-- 显示分页链接 -->
-    <div class="pagination">
+    <div align="center">
         <c:forEach var="i" begin="1" end="${classroomList.size()}">
             <a href="showClassroomTableServlet?currentPage=${i}">Page${i}</a>
         </c:forEach>
     </div>
 </c:if>
 
-<!-- 显示链接以上传课程信息和查看课程信息 -->
-<a href="insert.jsp"><h2>上传课程信息</h2></a><br>
-<a href="showCourseTableServlet"><h2>查看课程信息</h2></a>
 
 </body>
 </html>

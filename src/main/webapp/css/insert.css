@@ -35,3 +35,8 @@ Single Course {
     border-style:double;
     border-color:green;
 }
+.button1 {
+width: 50%;
+border: 1px solid green;
+background-color: #04AA6D;
+}
