@@ -9,10 +9,6 @@ import java.util.List;
 
 public interface CourseMapper {
 
-    List<Course> selectCoursesByPage(@Param("startIndex") int startIndex, @Param("pageSize") int pageSize);
-
-    int selectTotalCourses();
-
     int insertCourse(Course course);
 
     Course selectCourseByNameStartWeekEndWeekWeekDaySchooltime(Course course);
@@ -25,4 +21,14 @@ public interface CourseMapper {
 
     int updateCourse(Course newcourse);
 
+    List<Course> selectCoursesBySpecificNameAndPage(@Param("specificName") String specificName, @Param("startIndex") Integer startIndex, @Param("pageSize") Integer pageSize);
+
+    int selectTotalCoursesWithSpecificName(String specificName);
+
+    //没用到的sql语句:
+    List<Course> selectBySpecificName(String name);
+
+    List<Course> selectCoursesByPage(@Param("startIndex") int startIndex, @Param("pageSize") int pageSize);
+
+    int selectTotalCourses();
 }

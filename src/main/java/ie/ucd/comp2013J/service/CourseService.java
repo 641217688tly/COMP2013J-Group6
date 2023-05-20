@@ -5,6 +5,7 @@ import ie.ucd.comp2013J.pojo.ClassroomCourse;
 import ie.ucd.comp2013J.pojo.Course;
 import ie.ucd.comp2013J.util.ExcelFileHandleUtils;
 import ie.ucd.comp2013J.util.SqlSessionFactoryUtils;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
@@ -47,31 +48,6 @@ public class CourseService { //在此实现针对Classroom的所有增删改查�
         }
     }
 
-    //得到第pageNumber页的Course对象(每页呈现pageSize个Course的信息)
-    public List<Course> getCoursesForPage(int pageNumber, int pageSize) {
-        try (SqlSession sqlSession = factory.openSession()) {
-            CourseMapper mapper = sqlSession.getMapper(CourseMapper.class);
-            // 计算从哪个索引开始获取课程
-            int startIndex = (pageNumber - 1) * pageSize;
-            return mapper.selectCoursesByPage(startIndex, pageSize);
-        }
-    }
-
-    //获取所有课程的总数量
-    public int getTotalCourses() {
-        try (SqlSession sqlSession = factory.openSession()) {
-            CourseMapper mapper = sqlSession.getMapper(CourseMapper.class);
-            return mapper.selectTotalCourses();
-        }
-    }
-
-    public List<Course> getCoursesByClassroomId(int classroomId) {
-        try (SqlSession sqlSession = factory.openSession()) {
-            CourseMapper mapper = sqlSession.getMapper(CourseMapper.class);
-            return mapper.selectCoursesByClassroomId(classroomId);
-        }
-    }
-
     public List<Course> getByClassroomCourses(List<ClassroomCourse> classroomCourses) {
         try (SqlSession sqlSession = factory.openSession()) {
             CourseMapper mapper = sqlSession.getMapper(CourseMapper.class);
@@ -97,6 +73,47 @@ public class CourseService { //在此实现针对Classroom的所有增删改查�
                 //pass
             }
         }
-
     }
+
+    public List<Course> getCoursesBySpecificNameAndPage(String specificName, Integer startIndex, Integer pageSize) {
+        try (SqlSession sqlSession = factory.openSession()) {
+            CourseMapper mapper = sqlSession.getMapper(CourseMapper.class);
+            return mapper.selectCoursesBySpecificNameAndPage(specificName, startIndex, pageSize);
+        }
+    }
+
+    public int getTotalCoursesWithSpecificName(String specificName) {
+        try (SqlSession sqlSession = factory.openSession()) {
+            CourseMapper mapper = sqlSession.getMapper(CourseMapper.class);
+            return mapper.selectTotalCoursesWithSpecificName(specificName);
+        }
+    }
+
+    //没用到的sql语句:
+
+    //获取所有课程的总数量
+    public int getTotalCourses() {
+        try (SqlSession sqlSession = factory.openSession()) {
+            CourseMapper mapper = sqlSession.getMapper(CourseMapper.class);
+            return mapper.selectTotalCourses();
+        }
+    }
+
+    //得到第pageNumber页的Course对象(每页呈现pageSize个Course的信息)
+    public List<Course> getCoursesForPage(int pageNumber, int pageSize) {
+        try (SqlSession sqlSession = factory.openSession()) {
+            CourseMapper mapper = sqlSession.getMapper(CourseMapper.class);
+            // 计算从哪个索引开始获取课程
+            int startIndex = (pageNumber - 1) * pageSize;
+            return mapper.selectCoursesByPage(startIndex, pageSize);
+        }
+    }
+
+    public List<Course> getCoursesByClassroomId(int classroomId) {
+        try (SqlSession sqlSession = factory.openSession()) {
+            CourseMapper mapper = sqlSession.getMapper(CourseMapper.class);
+            return mapper.selectCoursesByClassroomId(classroomId);
+        }
+    }
+
 }

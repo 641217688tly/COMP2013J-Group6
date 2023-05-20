@@ -1,10 +1,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!-- 引入 JSTL 标准标签库的核心标签 -->
 <%@ page isELIgnored="false" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 
 <html>
 <body>
+
+<form action="showCourseTableServlet" method="post">
+    Course Name Query: <input type="text" name="specificName" />
+    <input type="submit" value="Search" />
+</form>
+
 <table border="1"> <!-- 创建一个有边框的表格 -->
     <tr> <!-- 创建表头 -->
         <th>Course Name</th>

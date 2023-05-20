@@ -2,14 +2,12 @@ package ie.ucd.comp2013J.web;
 
 
 import ie.ucd.comp2013J.pojo.Classroom;
-import ie.ucd.comp2013J.pojo.ClassroomCourse;
 import ie.ucd.comp2013J.pojo.Course;
 import ie.ucd.comp2013J.pojo.User;
 import ie.ucd.comp2013J.service.ClassroomCourseService;
 import ie.ucd.comp2013J.service.ClassroomService;
 import ie.ucd.comp2013J.service.CourseService;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -41,23 +39,29 @@ public class ShowCourseTableServlet extends HttpServlet {
             response.sendRedirect("login.jsp");
         }
 
-        // 获取请求的页数，默认为1
-        int pageNumber = 1;
-        String pageStr = request.getParameter("page");
-        if (pageStr != null && !pageStr.isEmpty()) {
-            pageNumber = Integer.parseInt(pageStr);
+        String specificName = null;
+        Integer pageNumber = 1;// 获取请求的页数，默认为1
+        if (request.getParameter("specificName") != null) {
+            if (!request.getParameter("specificName").isEmpty()) {
+                specificName = request.getParameter("specificName");
+            }
+        }
+        if (request.getParameter("page") != null) {
+            if (!request.getParameter("page").isEmpty()) {
+                pageNumber = Integer.parseInt(request.getParameter("page"));
+            }
         }
 
         // 获取这一页的课程
-        List<Course> coursesForPage = courseService.getCoursesForPage(pageNumber, 5);
-        List<Classroom> classroomsForPage = classroomservice.getByClassroomCourses(classroomCourseService.getByCourses(coursesForPage));
+        List<Course> coursesForSpecificNameAndPage = courseService.getCoursesBySpecificNameAndPage(specificName, pageNumber, 5);  //获取第pageNumber页(每页呈现5个course)的List<Course>
+        List<Classroom> classroomsForPage = classroomservice.getByClassroomCourses(classroomCourseService.getByCourses(coursesForSpecificNameAndPage));
 
         // 将coursesForPage添加到请求属性中
-        request.setAttribute("coursesList", coursesForPage);
+        request.setAttribute("coursesList", coursesForSpecificNameAndPage);
         request.setAttribute("classroomsList", classroomsForPage);
 
         // 计算总页数并添加到请求属性中
-        int totalCourses = courseService.getTotalCourses();
+        int totalCourses = courseService.getTotalCoursesWithSpecificName(specificName);
         int totalPageNumber = (int) Math.ceil((double) totalCourses / PAGE_SIZE);
         request.setAttribute("totalPageNumber", totalPageNumber);
 

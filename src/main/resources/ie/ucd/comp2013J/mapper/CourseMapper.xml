@@ -29,17 +29,6 @@
           AND schooltime = #{schooltime}
     </select>
 
-    <select id="selectTotalCourses" resultType="java.lang.Integer">
-        SELECT COUNT(*)
-        FROM courses;
-    </select>
-
-    <select id="selectCoursesByPage" resultType="Course" resultMap="CourseResult">
-        SELECT *
-        FROM courses
-        LIMIT #{startIndex}, #{pageSize};
-    </select>
-
     <select id="selectCoursesByClassroomId" resultType="Course" resultMap="CourseResult">
         SELECT courses.*
         FROM courses
@@ -71,4 +60,55 @@
             detail = #{detail}
         WHERE id = #{id}
     </update>
+
+    <select id="selectCoursesBySpecificNameAndPage" resultType="Course" resultMap="CourseResult">
+        <if test="specificName != null">
+            SELECT * FROM (
+            SELECT * FROM courses
+            WHERE name LIKE CONCAT('%', #{specificName}, '%')
+            ) AS sub
+            LIMIT #{startIndex}, #{pageSize}
+        </if>
+        <if test="specificName == null">
+            SELECT * FROM courses
+            LIMIT #{startIndex}, #{pageSize}
+        </if>
+    </select>
+
+    <select id="selectTotalCoursesWithSpecificName" resultType="java.lang.Integer">
+        <if test="specificName != null">
+            SELECT COUNT(*) FROM (
+            SELECT * FROM courses
+            WHERE name LIKE CONCAT('%', #{specificName}, '%')
+            ) AS sub
+        </if>
+        <if test="specificName == null">
+            SELECT COUNT(*)
+            FROM courses;
+        </if>
+    </select>
+
+
+    <!--没用到的sql语句:-->
+
+    <select id="selectCoursesByPage" resultType="Course" resultMap="CourseResult">
+        SELECT *
+        FROM courses
+        LIMIT #{startIndex}, #{pageSize};
+    </select>
+
+    <select id="selectBySpecificName" resultType="Course" resultMap="CourseResult">
+        SELECT * FROM courses
+        <where>
+            <if test="name != null">
+                name LIKE CONCAT('%', #{specificName}, '%')
+            </if>
+        </where>
+    </select>
+
+    <select id="selectTotalCourses" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM courses;
+    </select>
+
 </mapper>

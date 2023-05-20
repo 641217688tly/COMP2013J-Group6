@@ -37,7 +37,7 @@
     <option value="available">Available</option>
     <option value="unavailable">Unavailable</option>
 </select>
-    Classroom Number (optional): <input type="number" name="specifiedNumber" min="0" max="999">
+    Classroom Number (optional): <input type="number" name="specificNumber" min="0" max="999">
     <input type="submit" value="Search">
 </form>
 <p>${searchResponse_message}</p>
