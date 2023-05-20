@@ -22,12 +22,11 @@ public class ExcelFileHandleUtils {
         for (Course[] courseRow : courses) {
             courseList.addAll(Arrays.asList(courseRow));
         }
-
-        ArrayList<Course> coursesArrayList = new ArrayList<>(courseList);
+/*        ArrayList<Course> coursesArrayList = new ArrayList<>(courseList);
         for (int i = 0; i < coursesArrayList.size(); i++) {
             System.out.println(coursesArrayList.get(i).getName());
-        }
-        return coursesArrayList;
+        }*/
+        return new ArrayList<>(courseList);
     }
 
     public ArrayList<Classroom> getClassroomsFromExcel(InputStream inputStream) {
@@ -36,12 +35,11 @@ public class ExcelFileHandleUtils {
         for (Classroom[] classroomRow : classrooms) {
             classroomList.addAll(Arrays.asList(classroomRow));
         }
-
-        ArrayList<Classroom> classroomsArrayList = new ArrayList<>(classroomList);
+/*        ArrayList<Classroom> classroomsArrayList = new ArrayList<>(classroomList);
         for (int i = 0; i < classroomsArrayList.size(); i++) {
             System.out.println(classroomsArrayList.get(i).getNumber());
-        }
-        return classroomsArrayList;
+        }*/
+        return new ArrayList<>(classroomList);
     }
 
     public void handleExcelFile(InputStream inputStream) {
@@ -71,49 +69,55 @@ public class ExcelFileHandleUtils {
     }
 
 
+    private void parseCourseAndClassroomInfo(String cellValue, int row, int col) {
+//TODO start_week为null
+// Split the string by '/' but ignore '/' inside brackets
+        String[] parts = cellValue.split("/(?![^(]*\\))");
 
-/*    private void parseCourseAndClassroomInfo(String cellValue, int row, int col) {
-        Pattern pattern = Pattern.compile("^([^\\/]+)\\/([A-Z0-9]+)[\\/ ]+([^\\/]+)[\\/ ]+([^\\/]+)\\/\\((?:[^)]+)\\)(\\d+)-(\\d+)周\\/(.*)$");
-        Matcher matcher = pattern.matcher(cellValue);
-        if (matcher.find()) {
-            String courseInfo = matcher.group(1).trim() + "/" + matcher.group(2).trim();
+// Create new Course and Classroom objects
+        Course course = new Course();
+        Classroom classroom = new Classroom();
 
-            int startWeek = -1;
-            int endWeek = -1;
-            try {
-                startWeek = Integer.parseInt(matcher.group(5));
-                endWeek = Integer.parseInt(matcher.group(6));
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid week format in: " + cellValue);
-            }
+// Weekday and schooltime are set based on the arguments provided
+        course.setWeekDay(col + 1);
+        course.setSchooltime(row + 1);
 
-            String classroomInfo = matcher.group(4).trim();
-            int roomNumber = -1;
-            if (classroomInfo.matches("\\d+-\\d+")) {
-                String[] split = classroomInfo.split("-");
-                roomNumber = Integer.parseInt(split[1]);
-            }
-            String teacherAndClassInfo = matcher.group(3) + "/" + matcher.group(7);
-            if (!classroomInfo.contains("智慧树平台")) {
-                Classroom classroom = new Classroom();
-                classroom.setNumber(roomNumber);
+// Process each part of the course information
+        for (int i = 0; i < parts.length; i++) {
+            String part = parts[i].trim();
 
-                Course course = new Course();
-                course.setName(courseInfo);
-                course.setStartWeek(startWeek);
-                course.setEndWeek(endWeek);
-                course.setDetail(teacherAndClassInfo);
+            if (i == 0) { // The first part is always the course name
+                course.setName(parts[0].trim());
+            } else if (i == 2) { // Match the week range pattern
+                char[] m = part.toCharArray();
+                //String[] weeks = part.split("-周");
+                String[] stringArray = new String[m.length];
 
-                // Set weekday and schooltime according to the position in the array
-                course.setWeekDay(col + 1);
-                course.setSchooltime(row + 1);
+                for (int n = 0; n < m.length; n++) {
+                    stringArray[n] = String.valueOf(m[i]);
+                }
 
-                courses[row][col] = course;
-                classrooms[row][col] = classroom;
+                course.setStartWeek(Integer.parseInt(stringArray[6]));
+                String a = stringArray[8] + stringArray[9];
+                course.setEndWeek(Integer.parseInt(a));
+            } else if (i == 3) {
+                if (part.startsWith("4-")) {
+                    // If the course is taught in the 4th building
+                    String roomNumber = part.split("-")[3].substring(3, 5); // Get the room number
+                    classroom.setNumber(Integer.parseInt(roomNumber));
+                }
+            } else {
+// Any other part is considered as detail
+                String currentDetail = course.getDetail();
+                if (currentDetail == null) {
+                    course.setDetail(part);
+                } else {
+                    course.setDetail(currentDetail + " " + part);
+                }
             }
         }
-    }*/
 
+/*
     private void parseCourseAndClassroomInfo(String cellValue, int row, int col) {
         //TODO start_week为null
         // Split the string by '/' but ignore '/' inside brackets
@@ -157,6 +161,7 @@ public class ExcelFileHandleUtils {
             classrooms[row][col] = classroom;
         }
     }
+*/
 
 /*    private void parseCourseAndClassroomInfo(String cellValue, int row, int col) {
         // Updated regular expression to match the special cases
@@ -199,4 +204,5 @@ public class ExcelFileHandleUtils {
         }
     }*/
 
+    }
 }

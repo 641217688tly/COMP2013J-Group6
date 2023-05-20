@@ -5,6 +5,7 @@ import ie.ucd.comp2013J.pojo.Classroom;
 import ie.ucd.comp2013J.pojo.ClassroomCourse;
 import ie.ucd.comp2013J.util.ExcelFileHandleUtils;
 import ie.ucd.comp2013J.util.SqlSessionFactoryUtils;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
@@ -113,10 +114,24 @@ public class ClassroomService { //在此实现针对Classroom的所有增删改�
         }
     }
 
+    public List<Classroom> getClassroomsByFilterAndSpecificNumber(Integer floor, String capacity, Boolean status,Integer specificNumber){
+        try (SqlSession sqlSession = factory.openSession()) {
+            ClassroomMapper mapper = sqlSession.getMapper(ClassroomMapper.class);
+            return mapper.selectClassroomsByFilterAndSpecificNumber(floor,capacity,status,specificNumber);
+        }
+    }
+
     public List<Classroom> getByFloorCapacityStatus(Integer floor, String capacity, boolean status) {
         try (SqlSession sqlSession = factory.openSession()) {
             ClassroomMapper mapper = sqlSession.getMapper(ClassroomMapper.class);
             return mapper.selectClassroomsByFloorCapacityStatus(floor, capacity, status);
+        }
+    }
+
+    public List<Classroom> getClassroomsBySpecificNumber(int specificNumber) {
+        try (SqlSession sqlSession = factory.openSession()) {
+            ClassroomMapper mapper = sqlSession.getMapper(ClassroomMapper.class);
+            return mapper.selectBySpecificNumber(specificNumber);
         }
     }
 

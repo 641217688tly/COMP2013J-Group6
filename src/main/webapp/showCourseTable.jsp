@@ -2,7 +2,7 @@
 <!-- 引入 JSTL 标准标签库的核心标签 -->
 <%@ page isELIgnored="false" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
-<!--//TODO 完成筛选功能-->
+
 <html>
 <body>
 <table border="1"> <!-- 创建一个有边框的表格 -->
@@ -39,6 +39,8 @@
     </c:forEach>
     <a href="?page=${totalPageNumber}">Last</a> <!-- 链接到最后一页 -->
 </div>
+
+
 
 <a href="insert.jsp"><h2>上传课程信息</h2></a><br>
 <a href="searchClassroomServlet"><h2>查看教室信息</h2></a>

@@ -28,7 +28,7 @@
         <option value="${i}">${i}</option>
     </c:forEach>
 </select>
-    capacity: <select name="capacity">
+    Capacity: <select name="capacity">
     <option value="大">大</option>
     <option value="中">中</option>
     <option value="小">小</option>
@@ -37,9 +37,10 @@
     <option value="available">Available</option>
     <option value="unavailable">Unavailable</option>
 </select>
+    Classroom Number (optional): <input type="number" name="specifiedNumber" min="0" max="999">
     <input type="submit" value="Search">
 </form>
-<p>${sessionScope.searchResponse_message}</p>
+<p>${searchResponse_message}</p>
 
 <!-- 如果有搜索结果，显示它们 -->
 <c:if test="${not empty classroomList}">

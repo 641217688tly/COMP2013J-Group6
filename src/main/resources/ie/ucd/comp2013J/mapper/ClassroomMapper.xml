@@ -44,6 +44,32 @@
         FROM classrooms;
     </select>
 
+    <select id="selectClassroomsByFilterAndSpecificNumber" resultType="Classroom" resultMap="ClassroomResultMap" >
+        SELECT *
+        FROM (
+        SELECT *
+        FROM classrooms
+        <where>
+            <if test="floor != null">
+                floor = #{floor}
+            </if>
+            <if test="capacity != null">
+                AND capacity = #{capacity}
+            </if>
+            <if test="status != null">
+                AND status = #{status}
+            </if>
+        </where>
+        ) AS filtered_classrooms
+        WHERE (
+        #{specificNumber} IS NULL
+        OR number LIKE CONCAT('%', #{specificNumber}, '%')
+        )
+    </select>
+
+
+   <!--暂未使用的sql语句:-->
+
     <!--用<set>标签代替set关键字避免<if>中语句不被执行导致逗号缺失造成sql语法错误-->
     <select id="selectClassroomsByFloorCapacityStatus" resultType="Classroom" resultMap="ClassroomResultMap">
         SELECT *
@@ -60,6 +86,12 @@
             </if>
         </where>
     </select>
+
+    <select id="selectBySpecificNumber" parameterType="int" resultType="Classroom" resultMap="ClassroomResultMap">
+        SELECT * FROM classrooms
+        WHERE number LIKE CONCAT('%', #{specificNumber}, '%')
+    </select>
+
 
 </mapper>
 

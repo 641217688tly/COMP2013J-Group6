@@ -18,9 +18,12 @@ public interface ClassroomMapper {
 
     List<Classroom> selectAllClassrooms();
 
+    List<Classroom> selectClassroomsByFilterAndSpecificNumber(@Param("floor") Integer floor, @Param("capacity") String capacity, @Param("status") Boolean status, @Param("specificNumber") Integer specificNumber);
 
-    List<Classroom> selectClassroomsByFloorCapacityStatus(@Param("floor") Integer floor, @Param("capacity") String capacity, @Param("status") boolean status);
+    //暂未使用的语句:
+    List<Classroom> selectClassroomsByFloorCapacityStatus(@Param("floor") Integer floor, @Param("capacity") String capacity, @Param("status") Boolean status);
 
+    List<Classroom> selectBySpecificNumber(Integer specificNumber);
 
 
 }

@@ -45,12 +45,15 @@ public class ShowClassroomTableServlet extends HttpServlet {
         ArrayList<List<Course>> correspondingCourses = (ArrayList<List<Course>>) session.getAttribute("correspondingCourses");
         ArrayList<List<Reservation>> correspondingReservations = (ArrayList<List<Reservation>>) session.getAttribute("correspondingReservations");
         Integer currentWeek = (Integer) session.getAttribute("currentWeek");
+
         int currentPage = 1; //默认第一次进入时展示page 1
         if (request.getParameter("currentPage") != null) { //改变page的请求不经由SearchClassroomServlet,而是直接传到此Servlet中
             if (!request.getParameter("currentPage").isEmpty()) {
                 currentPage = Integer.parseInt(request.getParameter("currentPage"));
             }
         }
+
+
 
         ArrayList<List<Course>> coursesInCurrentWeek = new ArrayList<>(); //对correspondingCourses中的各个ArrayList<Course>中的Course进行筛选
         ArrayList<List<Reservation>> reservationsInCurrentWeek = new ArrayList<>();
@@ -64,6 +67,7 @@ public class ShowClassroomTableServlet extends HttpServlet {
             }
             coursesInCurrentWeek.add(i, tempCourses);
         }
+        // 筛选出在指定周内教室中的的课程和预约
         for (int i = 0; i < correspondingReservations.size(); i++) {
             ArrayList<Reservation> tempReservations = new ArrayList<>();
             for (int j = 0; j < correspondingReservations.get(i).size(); j++) {
@@ -77,10 +81,10 @@ public class ShowClassroomTableServlet extends HttpServlet {
         request.setAttribute("currentPage", currentPage);
         request.setAttribute("currentWeek", currentWeek);
         request.setAttribute("classroomList", classroomList);
-        request.setAttribute("reservationsInCurrentWeek",reservationsInCurrentWeek);
+        request.setAttribute("reservationsInCurrentWeek", reservationsInCurrentWeek);
         request.setAttribute("coursesInCurrentWeek", coursesInCurrentWeek);
-
         // 转发请求到JSP页面
+        request.setAttribute("searchResponse_message", request.getAttribute("searchResponse_message"));
         request.getRequestDispatcher("/showClassroomTable.jsp").forward(request, response);
     }
 }

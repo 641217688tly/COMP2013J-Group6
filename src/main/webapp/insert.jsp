@@ -37,7 +37,7 @@
     <input type="hidden" name="formType" value="singleCourse">
     <input type="submit" value="Submit">
 </form>
-<p>${failure_message1}${failure_message2}${success_message1}</p>
+<p>${failure_message5}${failure_message1}${failure_message2}${success_message1}</p>
 
 <!-- 二.用户可以上传一个Excel文件 -->
 <h2><b>Upload Excel for Multiple Courses</b></h2>
@@ -48,7 +48,7 @@
     <input type="submit" value="Upload">
 </form>
 
-<p>${failure_message3}${failure_message4}${success_message2}</p>
+<p>${failure_message5}${failure_message3}${failure_message4}${success_message2}</p>
 
 <a href="showCourseTableServlet">返回课程页</a><br>
 <a href="showClassroomTableServlet">返回教室页</a>
