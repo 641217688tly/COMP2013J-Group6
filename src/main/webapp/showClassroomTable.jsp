@@ -39,7 +39,7 @@
 </select>
     <input type="submit" value="Search">
 </form>
-<p>${response_message}</p>
+<p>${sessionScope.searchResponse_message}</p>
 
 <!-- 如果有搜索结果，显示它们 -->
 <c:if test="${not empty classroomList}">

@@ -25,7 +25,6 @@ public class SearchClassroomServlet extends HttpServlet {
     private final CourseService courseService = new CourseService();
     private final ClassroomCourseService classroomCourseService = new ClassroomCourseService();
 
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         this.doGet(request, response);
@@ -62,7 +61,7 @@ public class SearchClassroomServlet extends HttpServlet {
         HttpSession session = request.getSession();
 
         if (classroomList.size() < 1) { //说明该筛选条件下符合条件的教室数为0
-            session.setAttribute("response_message", "Unable to find a qualified classroom under the current conditions!");
+            session.setAttribute("searchResponse_message", "Unable to find a qualified classroom under the current conditions!");
             request.getRequestDispatcher("/showClassroomTableServlet").forward(request, response);
         } else {
             ArrayList<List<Course>> correspondingCourses = new ArrayList<List<Course>>();
@@ -70,7 +69,7 @@ public class SearchClassroomServlet extends HttpServlet {
                 correspondingCourses.add(i, courseService.getByClassroomCourses(classroomCourseService.getByClassroom(classroomList.get(i))));
             }
             // 将搜索结果保存到请求属性中
-            session.setAttribute("response_message", "Successful query!");
+            session.setAttribute("searchResponse_message", "Successful query!");
             session.setAttribute("classroomList", classroomList);
             session.setAttribute("classroomList", classroomList);
             session.setAttribute("correspondingCourses", correspondingCourses);

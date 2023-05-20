@@ -44,7 +44,7 @@ public class ShowClassroomTableServlet extends HttpServlet {
         ArrayList<List<Course>> correspondingCourses = (ArrayList<List<Course>>) session.getAttribute("correspondingCourses");
         Integer currentWeek = (Integer) session.getAttribute("currentWeek");
         int currentPage = 1; //默认第一次进入时展示page 1
-        if (request.getParameter("currentPage") != null) {
+        if (request.getParameter("currentPage") != null) { //改变page的请求不经由SearchClassroomServlet,而是直接传到此Servlet中
             if (!request.getParameter("currentPage").isEmpty()) {
                 currentPage = Integer.parseInt(request.getParameter("currentPage"));
             }
@@ -61,7 +61,6 @@ public class ShowClassroomTableServlet extends HttpServlet {
             }
             coursesInCurrentWeek.add(i, tempCourses);
         }
-        request.setAttribute("response_message", (String)request.getAttribute("response_message"));
         request.setAttribute("currentPage", currentPage);
         request.setAttribute("currentWeek", currentWeek);
         request.setAttribute("classroomList", classroomList);

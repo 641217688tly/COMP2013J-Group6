@@ -94,7 +94,7 @@ public class ClassroomCourseService { //在此实现针对Classroom的所有增�
             if (i > 0){
                 sqlSession.commit();
             }else{
-                //pass
+                return;
             }
         }
     }

@@ -4,40 +4,55 @@
 
     <resultMap id="ReservationResultMap" type="Reservation">
         <id column="id" property="id"/>
-        <result column="user_id" property="user_id"/>
-        <result column="classroom_id" property="classroom_id"/>
+        <result column="user_id" property="userId"/>
+        <result column="classroom_id" property="classroomId"/>
+        <result column="week" property="week"/>
+        <result column="week_day" property="weekDay"/>
+        <result column="schooltime" property="schooltime"/>
         <result column="purpose" property="purpose"/>
-        <result column="week_day" property="week_day"/>
-        <result column="time" property="time"/>
     </resultMap>
 
-    <insert id="insert" parameterType="Reservation">
-        INSERT INTO reservations (user_id, classroom_id, purpose, week_day, time)
-        VALUES (#{userId}, #{classroomId}, #{purpose}, #{week_day}, #{time})
+    <select id="selectByClassroomIdWeekSchooltimeWeekDay" resultType="Reservation" resultMap="ReservationResultMap">
+        SELECT *
+        FROM reservations
+        WHERE classroom_id = #{classroomId}
+          AND week = #{week}
+          AND week_day = #{weekDay}
+          AND schooltime = #{schooltime};
+    </select>
+
+    <insert id="insertReservation" parameterType="Reservation" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO reservations (user_id, classroom_id, week, week_day, schooltime, purpose)
+        VALUES (#{userId}, #{classroomId}, #{week}, #{weekDay}, #{schooltime}, #{purpose})
     </insert>
+
+
+    <!--以下方法尚未用到:-->
 
     <update id="update" parameterType="Reservation">
         UPDATE reservations
         SET user_id= #{userId},
             classroom_id = #{classroomId},
-            purpose = #{purpose},
-            week_day = #{week_day},
-            time = #{time}
+            week = #{week},
+            week_day = #{weekDay},
+            schooltime = #{schooltime},
+            purpose = #{purpose}
         WHERE id = #{id}
     </update>
+
     <delete id="delete" parameterType="int">
         DELETE
         FROM reservations
         WHERE id = #{id}
     </delete>
 
-    <select id="selectById" parameterType="int" resultMap="ReservationResultMap">
+    <select id="selectById" parameterType="int" resultType="Reservation" resultMap="ReservationResultMap">
         SELECT *
         FROM reservations
         WHERE id = #{id}
     </select>
 
-    <select id="selectAll" resultMap="ReservationResultMap">
+    <select id="selectAll" resultType="Reservation" resultMap="ReservationResultMap">
         SELECT *
         FROM reservations
     </select>

@@ -2,11 +2,10 @@ package ie.ucd.comp2013J.pojo;
 
 public class Reservation {
     private Integer id;
-    private Integer user_id;
-    private Integer classroom_id;
-    private String purpose;
-    private Integer week_day;
-    private Integer time;
+    private Integer userId;
+    private Integer classroomId;
+    private Integer week;
+    private Integer weekDay;
 
     public Integer getId() {
         return id;
@@ -16,20 +15,44 @@ public class Reservation {
         this.id = id;
     }
 
-    public Integer getUser_id() {
-        return user_id;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setUser_id(Integer user_id) {
-        this.user_id = user_id;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
-    public Integer getClassroom_id() {
-        return classroom_id;
+    public Integer getClassroomId() {
+        return classroomId;
     }
 
-    public void setClassroom_id(Integer classroom_id) {
-        this.classroom_id = classroom_id;
+    public void setClassroomId(Integer classroomId) {
+        this.classroomId = classroomId;
+    }
+
+    public Integer getWeek() {
+        return week;
+    }
+
+    public void setWeek(Integer week) {
+        this.week = week;
+    }
+
+    public Integer getWeekDay() {
+        return weekDay;
+    }
+
+    public void setWeekDay(Integer weekDay) {
+        this.weekDay = weekDay;
+    }
+
+    public Integer getSchooltime() {
+        return schooltime;
+    }
+
+    public void setSchooltime(Integer schooltime) {
+        this.schooltime = schooltime;
     }
 
     public String getPurpose() {
@@ -40,19 +63,8 @@ public class Reservation {
         this.purpose = purpose;
     }
 
-    public Integer getWeek_day() {
-        return week_day;
-    }
+    private Integer schooltime;
+    private String purpose;
 
-    public void setWeek_day(Integer week_day) {
-        this.week_day = week_day;
-    }
 
-    public Integer getTime() {
-        return time;
-    }
-
-    public void setTime(Integer time) {
-        this.time = time;
-    }
 }
