@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <link href="css/insert.css" rel="stylesheet">
 </head>
-<body class="horizontal-gradient">
+<body class="simple-linear">
 
 <!-- 显示链接以上传课程信息和查看课程信息 -->
 <ul class="topnav">
@@ -43,18 +43,18 @@
     <input type="hidden" name="formType" value="singleCourse">
     <input type="submit" value="Submit" class="button1">
 </form>
-<p>${failure_message5}${failure_message1}${failure_message2}${success_message1}</p>
+<p align="center">${failure_message5}${failure_message1}${failure_message2}${success_message1}</p>
 
 <!-- 二.用户可以上传一个Excel文件 -->
 <h2 align="center"><b>Upload Excel for Multiple Courses</b></h2>
-<form action="insertServlet" method="post" enctype="multipart/form-data" id="Multiple Course">
+<form action="insertServlet" method="post" enctype="multipart/form-data" id="Multiple Course" align="center">
     <label for="file">Select Excel file:</label>
-    <input type="file" id="file" name="file" accept=".xls,.xlsx" class="button1"><br>
+    <input type="file" id="file" name="file" accept=".xls,.xlsx"><br>
     <input type="hidden" name="formType" value="excelUpload">
-    <input type="submit" value="Upload" class="button1">
+    <input type="submit" value="Upload">
 </form>
 
-<p>${failure_message5}${failure_message3}${failure_message4}${success_message2}</p>
+<p align="center">${failure_message5}${failure_message3}${failure_message4}${success_message2}</p>
 
 </body>
 </html>

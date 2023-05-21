@@ -6,20 +6,20 @@
 <head>
 <link href="css/showCourseTable.css" rel="stylesheet">
 </head>
-<body class="horizontal-gradient">
+<body class="simple-linear">
 
 <!-- 显示链接以上传课程信息和查看课程信息 -->
 <ul class="topnav">
   <li><a class="active" href="insert.jsp">上传课程信息</a></li>
-  <li><a href="showCourseTableServlet">查看课程信息</a></li>
+  <li><a href="showClassroomTableServlet">查看教室信息</a></li>
 </ul>
 
-<form action="showCourseTableServlet" method="post" align="center">
+<form action="showCourseTableServlet" method="post" align="center" class="nextPage">
     Course Name Query: <input type="text" name="specificName" />
     <input type="submit" value="Search" color="blue" />
 </form>
 
-<table border="1" width="100%" class="tabletop" align="center"> <!-- 创建一个有边框的表格 -->
+<table border="0" width="100%" class="tabletop" align="center"> <!-- 创建一个有边框的表格 -->
     <tr> <!-- 创建表头 -->
         <th width="10%" rowspan="2">Course Name</th>
         <th width="10%" rowspan="2">Start Week</th>
@@ -29,6 +29,7 @@
         <th width="10%" rowspan="2">Classroom Number</th>
         <th width="10%" rowspan="2">Detail</th>
     </tr>
+    <br>
     <!-- 使用 JSTL 的 forEach 标签遍历课程列表 -->
     <c:forEach var="i" begin="0" end="${coursesList.size()-1}">
         <tr> <!-- 对于每一个课程，创建一行 -->
@@ -45,7 +46,7 @@
 
 </table>
 <!-- 创建分页导航链接 -->
-<div align="center">
+<div align="center" class="nextPage">
     <a href="?page=1">First</a> <!-- 链接到第一页 -->
     <!-- 遍历所有的页码 -->
     <c:forEach var="i" begin="1" end="${totalPageNumber}">

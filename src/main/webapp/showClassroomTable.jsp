@@ -5,7 +5,7 @@
 <head>
 <link href="css/showClassroomTable.css" rel="stylesheet">
 </head>
-<body class="horizontal-gradient">
+<body class="simple-linear">
 
 <!-- 显示链接以上传课程信息和查看课程信息 -->
 <ul class="topnav">
@@ -20,7 +20,7 @@
 <c:if test="${!classroomList.get(currentPage-1).status}">
     <h2 align="center" class="title" height="60">教室状态: 不可用</h2>
 </c:if>
-<h2 align="center" class="title" height="60">
+<h2 align="center" height="60">
     当前教室: ${classroomList.get(currentPage-1).number} 教室容量: ${classroomList.get(currentPage-1).capacity}
     教室楼层: ${classroomList.get(currentPage-1).floor} 当前教学周:Week${currentWeek}
 </h2>

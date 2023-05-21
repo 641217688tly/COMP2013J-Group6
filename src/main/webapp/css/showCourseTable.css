@@ -32,7 +32,11 @@ ul.topnav li.right {float: right;}
 	background-color:#ffffff;
 	height:25px;
 	line-height:150%;
+	font-size: 16px;
 }
-.horizontal-gradient {
-  background: linear-gradient(to right, blue, pink);
+.simple-linear {
+  background: linear-gradient(blue, white);
+}
+.nextPage{
+    font-size: 16px;
 }

@@ -40,6 +40,6 @@ ul.topnav li.right {float: right;}
 }
 .btbg1{background:#f2fbfe !important;}
 .btbg2{background:#f3f3f3 !important;}
-.horizontal-gradient {
-  background: linear-gradient(to right, blue, pink);
+.simple-linear {
+  background: linear-gradient(blue, white);
 }
