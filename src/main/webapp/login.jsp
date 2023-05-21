@@ -21,7 +21,7 @@ ${register_msg}
     <link href="css/login.css" rel="stylesheet">
 </head>
 
-<body style = "background-image: url(imgs/1.jpg);">>
+<body>
 <div id="loginDiv" style="height: 350px">
     <form action="loginServlet" id="form">
         <h1 id="loginMsg"><b>LOGIN IN</b></h1>

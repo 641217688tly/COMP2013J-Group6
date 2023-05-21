@@ -2,7 +2,10 @@
 <%@ page isELIgnored="false" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <html>
-<body style = "background-image: url(imgs/1.jpg);">
+<head>
+<link href="css/showClassroomTable.css" rel="stylesheet">
+</head>
+<body class="horizontal-gradient">
 
 <!-- 显示链接以上传课程信息和查看课程信息 -->
 <ul class="topnav">

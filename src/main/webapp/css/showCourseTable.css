@@ -33,3 +33,6 @@ ul.topnav li.right {float: right;}
 	height:25px;
 	line-height:150%;
 }
+.horizontal-gradient {
+  background: linear-gradient(to right, blue, pink);
+}

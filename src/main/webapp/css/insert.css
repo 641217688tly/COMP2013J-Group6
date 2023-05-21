@@ -1,42 +1,10 @@
-* {
-    margin: 0;
-    padding: 0;
-}
 
-html {
-    height: 100%;
-    width: 100%;
-    overflow: hidden;
-    margin: 0;
-    padding: 0;
-    background: url(../imgs/Desert1.jpg) no-repeat 0px 0px;
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    -moz-background-size: 100% 100%;
-}
-
-body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-}
-
-Single Course {
-    position:absolute;
-    left:100px;
-    top:100px;
-    border-style:double;
-    border-color:red;
-}
-
-Single Course {
-    position:absolute;
-    border-style:double;
-    border-color:green;
-}
 .button1 {
 width: 50%;
 border: 1px solid green;
-background-color: #04AA6D;
+background-color: green;
+}
+.groove {border-style:groove;}
+.horizontal-gradient {
+  background: linear-gradient(to right, blue, pink);
 }

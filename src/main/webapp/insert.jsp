@@ -4,10 +4,10 @@
 <html>
 <head>
     <title>Insert Course</title>
-    <%--    <meta charset="UTF-8">
-        <link href="css/insert.css" rel="stylesheet">--%>
+    <meta charset="UTF-8">
+    <link href="css/insert.css" rel="stylesheet">
 </head>
-<body style = "background-image: url(imgs/1.jpg);">
+<body class="horizontal-gradient">
 
 <!-- 显示链接以上传课程信息和查看课程信息 -->
 <ul class="topnav">
@@ -20,22 +20,22 @@
 <form action="insertServlet" method="post" id="Single Course" align="center">
 
     <label for="courseName">Name:</label><br>
-    <input type="text" id="courseName" name="courseName"><br>
+    <input type="text" id="groove" name="courseName"><br>
 
     <label for="startWeek">Start Week:</label><br>
-    <input type="number" id="startWeek" name="startWeek"><br>
+    <input type="number" id="groove" name="startWeek"><br>
 
     <label for="endWeek">End Week:</label><br>
-    <input type="number" id="endWeek" name="endWeek"><br>
+    <input type="number" id="groove" name="endWeek"><br>
 
     <label for="weekDay">Week Day:</label><br>
-    <input type="number" id="weekDay" name="weekDay"><br>
+    <input type="number" id="groove" name="weekDay"><br>
 
     <label for="schooltime">School Time:</label><br>
-    <input type="number" id="schooltime" name="schooltime"><br>
+    <input type="number" id="groove" name="schooltime"><br>
 
     <label for="classroomNumber">Classroom Number:</label><br>
-    <input type="text" id="classroomNumber" name="classroomNumber"><br>
+    <input type="text" id="groove" name="classroomNumber"><br>
 
     <label for="detail">Detail:</label><br>
     <textarea id="detail" name="detail"></textarea><br>
