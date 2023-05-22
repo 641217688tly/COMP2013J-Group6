@@ -53,17 +53,17 @@ public class ShowCourseTableServlet extends HttpServlet {
         }
 
         // 获取这一页的课程
-        List<Course> coursesForSpecificNameAndPage = courseService.getCoursesBySpecificNameAndPage(specificName, pageNumber, 5);  //获取第pageNumber页(每页呈现5个course)的List<Course>
+        List<Course> coursesForSpecificNameAndPage = courseService.getCoursesBySpecificNameAndPage(specificName, pageNumber, PAGE_SIZE);  //获取第pageNumber页(每页呈现5个course)的List<Course>
         List<Classroom> classroomsForPage = classroomservice.getByClassroomCourses(classroomCourseService.getByCourses(coursesForSpecificNameAndPage));
-
-        // 将coursesForPage添加到请求属性中
-        request.setAttribute("coursesList", coursesForSpecificNameAndPage);
-        request.setAttribute("classroomsList", classroomsForPage);
 
         // 计算总页数并添加到请求属性中
         int totalCourses = courseService.getTotalCoursesWithSpecificName(specificName);
         int totalPageNumber = (int) Math.ceil((double) totalCourses / PAGE_SIZE);
+
+        // 将coursesForPage添加到请求属性中
         request.setAttribute("totalPageNumber", totalPageNumber);
+        request.setAttribute("coursesList", coursesForSpecificNameAndPage);
+        request.setAttribute("classroomsList", classroomsForPage);
 
         // 使用请求转发器将请求转发到JSP页面
         request.getRequestDispatcher("/showCourseTable.jsp").forward(request, response);
