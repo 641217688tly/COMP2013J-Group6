@@ -6,6 +6,9 @@
 <%@ page import="ie.ucd.comp2013J.pojo.Course" %>
 <%@ page import="ie.ucd.comp2013J.pojo.Classroom" %>
 <html>
+<head>
+    <title>Update Course</title>
+</head>
 <body>
 <div class="simple-linear">
 <%

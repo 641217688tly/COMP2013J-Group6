@@ -32,8 +32,3 @@ ul.topnav li.right {float: right;}
 .simple-linear {
   background: linear-gradient(#66CCFF, white);
 }
-.tabletop {
-	height:50px;
-	line-height:300%;
-	font-size: 16px;
-}
