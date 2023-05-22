@@ -1,4 +1,16 @@
-@charset "utf-8";
+
+.button1 {
+    width: 10%;
+    border: 1px solid green;
+    background-color: green;
+    font-family: 微软雅黑;
+	font-size: 16px;
+	font-weight: bold;
+}
+.groove {border-style:groove;}
+.simple-linear {
+  background: linear-gradient(#66CCFF, white);
+}
 ul.topnav {
     list-style-type: none;
     margin: 0;
@@ -25,15 +37,4 @@ ul.topnav li.right {float: right;}
 @media screen and (max-width: 600px){
     ul.topnav li.right,
     ul.topnav li {float: none;}
-}
-.nextPage{
-     font-size: 16px;
-}
-.simple-linear {
-  background: linear-gradient(#66CCFF, white);
-}
-.tabletop {
-	height:50px;
-	line-height:300%;
-	font-size: 16px;
 }

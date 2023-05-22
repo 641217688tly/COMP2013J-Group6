@@ -55,7 +55,7 @@
 
 <!-- 如果有搜索结果，显示它们 -->
 <c:if test="${not empty classroomList}">
-    <table border="1">
+    <table border="1" width="100%" class="tabletop" align="center">
         <tr>
             <th></th>
             <th>星期一</th>
