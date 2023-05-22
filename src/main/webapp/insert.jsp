@@ -54,7 +54,7 @@
     <input type="submit" value="Upload">
 </form>
 
-<p align="center">${failure_message5}${failure_message3}${failure_message4}${success_message2}</p>
+<p>${failure_message5}${failure_message3}${failure_message4}${success_message2}</p>
 
 </body>
 </html>

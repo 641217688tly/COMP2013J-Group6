@@ -19,7 +19,7 @@
     <input type="submit" value="Search" color="blue" />
 </form>
 
-<table border="0" width="100%" class="tabletop" align="center"> <!-- 创建一个有边框的表格 -->
+<table border="0" width="100%" class="tabletop"> <!-- 创建一个有边框的表格 -->
     <tr> <!-- 创建表头 -->
         <th width="10%" rowspan="2">Course Name</th>
         <th width="10%" rowspan="2">Start Week</th>
@@ -29,7 +29,6 @@
         <th width="10%" rowspan="2">Classroom Number</th>
         <th width="10%" rowspan="2">Detail</th>
     </tr>
-    <br>
     <!-- 使用 JSTL 的 forEach 标签遍历课程列表 -->
     <c:forEach var="i" begin="0" end="${coursesList.size()-1}">
         <tr> <!-- 对于每一个课程，创建一行 -->

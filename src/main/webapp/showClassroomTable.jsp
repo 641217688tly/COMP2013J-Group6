@@ -26,7 +26,7 @@
 </h2>
 
 <!-- 创建一个表单用于提交筛选条件 -->
-<div align="right" height="25">
+<div align="center" height="25">
     <form action="searchClassroomServlet" method="post">
         Current Week: <select name="currentWeek" required>
         <c:forEach var="i" begin="1" end="18">
@@ -55,16 +55,16 @@
 
 <!-- 如果有搜索结果，显示它们 -->
 <c:if test="${not empty classroomList}">
-    <table border="1" width="100%" class="tabletop" align="center">
+    <table border="1" width="100%">
         <tr>
             <th></th>
-            <th width="10%" rowspan="2">星期一</th>
-            <th width="10%" rowspan="2">星期二</th>
-            <th width="10%" rowspan="2">星期三</th>
-            <th width="10%" rowspan="2">星期四</th>
-            <th width="10%" rowspan="2">星期五</th>
-            <th width="10%" rowspan="2">星期六</th>
-            <th width="10%" rowspan="2">星期日</th>
+            <th>星期一</th>
+            <th>星期二</th>
+            <th>星期三</th>
+            <th>星期四</th>
+            <th>星期五</th>
+            <th>星期六</th>
+            <th>星期日</th>
         </tr>
         <!-- 对每个时段进行循环 -->
         <c:forEach var="schooltime" begin="1" end="6">
@@ -109,7 +109,7 @@
 <!-- 如果有多于一个的搜索结果，显示分页链接 -->
 <c:if test="${classroomList.size() > 1}">
     <!-- 显示分页链接 -->
-    <div align="center">
+    <div align="center" class="nextPage">
         <c:forEach var="i" begin="1" end="${classroomList.size()}">
             <a href="showClassroomTableServlet?currentPage=${i}">Page${i}</a>
         </c:forEach>

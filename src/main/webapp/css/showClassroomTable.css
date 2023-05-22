@@ -26,20 +26,9 @@ ul.topnav li.right {float: right;}
     ul.topnav li.right,
     ul.topnav li {float: none;}
 }
-.title{
-	font-family: 微软雅黑;
-	font-size: 26px;
-	font-weight: bold;
-	border-bottom:1px dashed #CCCCCC;
-	color: #255e95;
+.nextPage{
+     font-size: 16px;
 }
-.tabletop {
-	background-color:#ffffff;
-	height:25px;
-	line-height:150%;
-}
-.btbg1{background:#f2fbfe !important;}
-.btbg2{background:#f3f3f3 !important;}
 .simple-linear {
-  background: linear-gradient(blue, white);
+  background: linear-gradient(#66CCFF, white);
 }

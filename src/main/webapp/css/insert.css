@@ -9,7 +9,7 @@
 }
 .groove {border-style:groove;}
 .simple-linear {
-  background: linear-gradient(blue, pink);
+  background: linear-gradient(#66CCFF, white);
 }
 ul.topnav {
     list-style-type: none;
