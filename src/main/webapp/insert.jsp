@@ -7,8 +7,8 @@
     <meta charset="UTF-8">
     <link href="css/insert.css" rel="stylesheet">
 </head>
-<body class="simple-linear">
-
+<body>
+<div class="simple-linear">
 <!-- 显示链接以上传课程信息和查看课程信息 -->
 <ul class="topnav">
   <li><a class="active" href="showCourseTableServlet">返回课程页</a></li>
@@ -55,6 +55,6 @@
 </form>
 
 <p>${failure_message5}${failure_message3}${failure_message4}${success_message2}</p>
-
+</div>
 </body>
 </html>

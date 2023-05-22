@@ -72,7 +72,7 @@
                 <th width="7%" class="btbg1">时段${schooltime}</th>
                 <!-- 对每个星期几进行循环 -->
                 <c:forEach var="weekDay" begin="1" end="7">
-                    <td  width="7%" class="btbg2">
+                    <td width="7%" class="btbg2">
                         <!-- 创建一个变量，用来检查是否找到了对应的课程 -->
                         <c:set var="foundCourseAndReservation" value="false"/>
 
