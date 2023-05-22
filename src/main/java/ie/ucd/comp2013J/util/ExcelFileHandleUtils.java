@@ -8,7 +8,8 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ExcelFileHandleUtils {
 
@@ -22,10 +23,6 @@ public class ExcelFileHandleUtils {
         for (Course[] courseRow : courses) {
             courseList.addAll(Arrays.asList(courseRow));
         }
-/*        ArrayList<Course> coursesArrayList = new ArrayList<>(courseList);
-        for (int i = 0; i < coursesArrayList.size(); i++) {
-            System.out.println(coursesArrayList.get(i).getName());
-        }*/
         return new ArrayList<>(courseList);
     }
 
@@ -35,14 +32,10 @@ public class ExcelFileHandleUtils {
         for (Classroom[] classroomRow : classrooms) {
             classroomList.addAll(Arrays.asList(classroomRow));
         }
-/*        ArrayList<Classroom> classroomsArrayList = new ArrayList<>(classroomList);
-        for (int i = 0; i < classroomsArrayList.size(); i++) {
-            System.out.println(classroomsArrayList.get(i).getNumber());
-        }*/
         return new ArrayList<>(classroomList);
     }
 
-    public void handleExcelFile(InputStream inputStream) {
+    public  void handleExcelFile(InputStream inputStream) {
         try {
             // 创建Workbook，用于读取Excel文件
             Workbook workbook = WorkbookFactory.create(inputStream);
@@ -68,107 +61,10 @@ public class ExcelFileHandleUtils {
         }
     }
 
-
     private void parseCourseAndClassroomInfo(String cellValue, int row, int col) {
-//TODO start_week为null
-// Split the string by '/' but ignore '/' inside brackets
-        String[] parts = cellValue.split("/(?![^(]*\\))");
-
-// Create new Course and Classroom objects
-        Course course = new Course();
-        Classroom classroom = new Classroom();
-
-// Weekday and schooltime are set based on the arguments provided
-        course.setWeekDay(col + 1);
-        course.setSchooltime(row + 1);
-
-// Process each part of the course information
-        for (int i = 0; i < parts.length; i++) {
-            String part = parts[i].trim();
-
-            if (i == 0) { // The first part is always the course name
-                course.setName(parts[0].trim());
-            } else if (i == 2) { // Match the week range pattern
-                char[] m = part.toCharArray();
-                //String[] weeks = part.split("-周");
-                String[] stringArray = new String[m.length];
-
-                for (int n = 0; n < m.length; n++) {
-                    stringArray[n] = String.valueOf(m[i]);
-                }
-
-                course.setStartWeek(Integer.parseInt(stringArray[6]));
-                String a = stringArray[8] + stringArray[9];
-                course.setEndWeek(Integer.parseInt(a));
-            } else if (i == 3) {
-                if (part.startsWith("4-")) {
-                    // If the course is taught in the 4th building
-                    String roomNumber = part.split("-")[3].substring(3, 5); // Get the room number
-                    classroom.setNumber(Integer.parseInt(roomNumber));
-                }
-            } else {
-// Any other part is considered as detail
-                String currentDetail = course.getDetail();
-                if (currentDetail == null) {
-                    course.setDetail(part);
-                } else {
-                    course.setDetail(currentDetail + " " + part);
-                }
-            }
-        }
-
-/*
-    private void parseCourseAndClassroomInfo(String cellValue, int row, int col) {
-        //TODO start_week为null
-        // Split the string by '/' but ignore '/' inside brackets
-        String[] parts = cellValue.split("/(?![^(]*\\))");
-
-        // Create new Course and Classroom objects
-        Course course = new Course();
-        Classroom classroom = new Classroom();
-
-        // Weekday and schooltime are set based on the arguments provided
-        course.setWeekDay(col + 1);
-        course.setSchooltime(row + 1);
-
-        // Process each part of the course information
-        for (int i = 0; i < parts.length; i++) {
-            String part = parts[i].trim();
-
-            if (i == 0) { // The first part is always the course name
-                course.setName(part);
-            } else if (part.matches(".*\\d+-\\d+周")) { // Match the week range pattern
-                String[] weeks = part.split("-|周");
-                course.setStartWeek(Integer.parseInt(weeks[0]));
-                course.setEndWeek(Integer.parseInt(weeks[1]));
-            } else if (part.startsWith("4-")) { // If the course is taught in the 4th building
-                String roomNumber = part.split("-")[1].substring(0, 3); // Get the room number
-                classroom.setNumber(Integer.parseInt(roomNumber));
-            } else {
-                // Any other part is considered as detail
-                String currentDetail = course.getDetail();
-                if (currentDetail == null) {
-                    course.setDetail(part);
-                } else {
-                    course.setDetail(currentDetail + " " + part);
-                }
-            }
-        }
-
-        // Add the created Course and Classroom objects to the arrays
-        if (classroom.getNumber() != null) { // Only add if the course is in the 4th building
-            courses[row][col] = course;
-            classrooms[row][col] = classroom;
-        }
-    }
-*/
-
-/*    private void parseCourseAndClassroomInfo(String cellValue, int row, int col) {
         // Updated regular expression to match the special cases
         //Pattern pattern = Pattern.compile("(.+?)/(\\w+)/(\\(\\d+-\\d+节\\)\\d+-\\d+周)(.*?)(?:/(.*))?/(.*)?");
-        //Pattern pattern = Pattern.compile("(.+?)/(\\w+)/(\\(\\d+-\\d+节\\)\\d+-\\d+周)/(.+?)/(.+?)/(.+)");
-        Pattern pattern = Pattern.compile(("^([^\\/]+)\\/([A-Z0-9]+)[\\/ ]+([^\\/]+)[\\/ ]+([^\\/]+)\\/\\(([^)]+)\\)(\\d+)-(\\d+)周\\/(.*)$"));
-        //Pattern pattern = Pattern.compile(("^([^\\/]+)\\/([A-Z0-9]+)[\\/ ]+([^\\/]+)[\\/ ]+([^\\/]+)\\/\\((?:[^)]+)\\)(\\d+)-(\\d+)周\\/(.*)$"));
+        Pattern pattern = Pattern.compile("(.+?)/(\\w+)/(\\(\\d+-\\d+节\\)\\d+-\\d+周)/(.+?)/(.+?)/(.+)");
         Matcher matcher = pattern.matcher(cellValue);
         //TODO 正则表达式存在BUG,会导致Course的name无法被正确提取而产生null,最后在sql语句中造成报错
         if (matcher.find()) {
@@ -202,7 +98,5 @@ public class ExcelFileHandleUtils {
                 classrooms[row][col] = classroom;
             }
         }
-    }*/
-
     }
 }
