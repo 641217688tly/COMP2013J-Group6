@@ -4,14 +4,15 @@
 
 <html>
 <head>
+    <title>Courses Table</title>
     <link href="css/showCourseTable.css" rel="stylesheet">
 </head>
 <body class="simple-linear">
 
-<!-- 显示链接以上传课程信息和查看课程信息 -->
+<!-- Display links to upload course information and view classroom information -->
 <ul class="topnav">
-    <li><a class="active" href="insert.jsp">上传课程信息</a></li>
-    <li><a href="searchClassroomServlet">查看教室信息</a></li>
+    <li><a class="active" href="insert.jsp">Upload Course Information</a></li>
+    <li><a href="searchClassroomServlet">View Classroom Information</a></li>
 </ul>
 
 <form action="showCourseTableServlet" method="post" align="center" class="nextPage">
@@ -19,20 +20,20 @@
     <input type="submit" value="Search" color="blue"/>
 </form>
 
-<table border="0" width="100%" class="tabletop"> <!-- 创建一个有边框的表格 -->
-    <tr> <!-- 创建表头 -->
-        <th width="10%" >Course Name</th>
-        <th width="10%" >Start Week</th>
-        <th width="10%" >End Week</th>
-        <th width="10%" >Week Day</th>
-        <th width="10%" >School Time</th>
-        <th width="10%" >Classroom Number</th>
-        <th width="10%" >Detail</th>
+<table border="0" width="100%" class="tabletop">  <!-- Create a table with borders -->
+    <tr><!-- Create table headers -->
+        <th width="10%">Course Name</th>
+        <th width="10%">Start Week</th>
+        <th width="10%">End Week</th>
+        <th width="10%">Week Day</th>
+        <th width="10%">School Time</th>
+        <th width="10%">Classroom Number</th>
+        <th width="10%">Detail</th>
     </tr>
-    <!-- 使用 JSTL 的 forEach 标签遍历课程列表 -->
+    <!-- Use JSTL forEach tag to iterate over the course list -->
     <c:forEach var="i" begin="0" end="${coursesList.size()-1}">
-        <tr> <!-- 对于每一个课程，创建一行 -->
-            <!-- 课程名称现在是一个指向 update.jsp 的链接，并将课程 id 作为请求参数 -->
+        <tr> <!-- Create a row for each course -->
+            <!-- Course name is now a link to update.jsp with the course id as a request parameter -->
             <td width="10%" class="btbg1"><a
                     href="update.jsp?courseId=${coursesList[i].id}&classroomId=${classroomsList[i].id}">${coursesList[i].name}</a>
             </td>
@@ -46,14 +47,14 @@
     </c:forEach>
 
 </table>
-<!-- 创建分页导航链接 -->
+<!-- Create pagination navigation links -->
 <div align="center" class="nextPage">
-    <a href="?page=1">First</a> <!-- 链接到第一页 -->
-    <!-- 遍历所有的页码 -->
+    <a href="?page=1">First</a> <!-- Link to the first page -->
+    <!-- Iterate over all page numbers -->
     <c:forEach var="i" begin="1" end="${totalPageNumber}">
-        <a href="?page=${i}">${i}</a> <!-- 创建一个链接到对应页码的链接 -->
+        <a href="?page=${i}">${i}</a> <!-- Create a link to the corresponding page number -->
     </c:forEach>
-    <a href="?page=${totalPageNumber}">Last</a> <!-- 链接到最后一页 -->
+    <a href="?page=${totalPageNumber}">Last</a> <!-- Link to the last page -->
 </div>
 </body>
 </html>

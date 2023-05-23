@@ -38,13 +38,13 @@ public class SearchClassroomServlet extends HttpServlet {
         request.setCharacterEncoding("utf-8");
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
-        if (user == null) { // 检查用户是否已登录，否则重定向到index.jsp
+        if (user == null) { // Check if the user is logged in, otherwise redirect to login.jsp
             response.sendRedirect("login.jsp");
             return;
         }
 
-        // 从请求中获取搜索条件
-        Integer currentWeek = 1; //默认第一次进入时访问week1
+        // Retrieve search criteria from the request
+        Integer currentWeek = 1; // Default to week 1 for the first visit
         Integer floor = null;
         String capacity = null;
         Boolean status = true;
@@ -72,10 +72,10 @@ public class SearchClassroomServlet extends HttpServlet {
                 specificNumber = Integer.parseInt(request.getParameter("specificNumber"));
             }
         }
-        // 根据搜索条件从数据库中检索教室
+        // search classrooms from the database based on the search criteria
         List<Classroom> classroomList = classroomservice.getClassroomsByFilterAndSpecificNumber(floor, capacity, status, specificNumber);
 
-        if (classroomList.size() < 1) { //说明该筛选条件下符合条件的教室数为0
+        if (classroomList.size() < 1) { // No qualified classroom found under the given conditions
             request.setAttribute("searchResponse_message", "Unable to find a qualified classroom under the current conditions!");
             request.getRequestDispatcher("/showClassroomTableServlet").forward(request, response);
         } else {
@@ -87,12 +87,12 @@ public class SearchClassroomServlet extends HttpServlet {
             for (int i = 0; i < classroomList.size(); i++) {
                 correspondingReservations.add(i, reservationService.getReservationsByClassroomId(classroomList.get(i).getId()));
             }
-            // 将搜索结果保存到请求属性中
+            // Save the search results to request attributes
             session.setAttribute("classroomList", classroomList);
             session.setAttribute("correspondingReservations", correspondingReservations);
             session.setAttribute("correspondingCourses", correspondingCourses);
             session.setAttribute("currentWeek", currentWeek);
-            // 将请求转发回showClassroomTable.jsp页面
+            // Forward the request to showClassroomTable.jsp page
             request.setAttribute("searchResponse_message", "Successful query!");
             request.getRequestDispatcher("/showClassroomTableServlet").forward(request, response);
         }

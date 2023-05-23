@@ -1,5 +1,6 @@
 <%@ page isELIgnored="false" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,52 +10,52 @@
 </head>
 <body>
 <div class="simple-linear">
-<!-- 显示链接以上传课程信息和查看课程信息 -->
-<ul class="topnav">
-  <li><a class="active" href="showCourseTableServlet">返回课程页</a></li>
-  <li><a href="showClassroomTableServlet">返回教室页</a></li>
-</ul>
+    <!-- 显示链接以上传课程信息和查看课程信息 -->
+    <ul class="topnav">
+        <li><a class="active" href="showCourseTableServlet">返回课程页</a></li>
+        <li><a href="showClassroomTableServlet">返回教室页</a></li>
+    </ul>
 
-<!-- 一.用户可以上传一个课程的信息 -->
-<h2 align="center"><b>Upload Single Course Information</b></h2>
-<form action="insertServlet" method="post" id="Single Course" align="center">
+    <!-- 一.用户可以上传一个课程的信息 -->
+    <h2 align="center"><b>Upload Single Course Information</b></h2>
+    <form action="insertServlet" method="post" id="Single Course" align="center">
 
-    <label for="courseName">Name:</label><br>
-    <input type="text" id="groove" name="courseName"><br>
+        <label for="courseName">Name:</label><br>
+        <input type="text" id="courseName" class="groove" name="courseName"><br>
 
-    <label for="startWeek">Start Week:</label><br>
-    <input type="number" id="groove" name="startWeek"><br>
+        <label for="startWeek">Start Week:</label><br>
+        <input type="number" id="startWeek" class="groove" name="startWeek"><br>
 
-    <label for="endWeek">End Week:</label><br>
-    <input type="number" id="groove" name="endWeek"><br>
+        <label for="endWeek">End Week:</label><br>
+        <input type="number" id="endWeek" class="groove" name="endWeek"><br>
 
-    <label for="weekDay">Week Day:</label><br>
-    <input type="number" id="groove" name="weekDay"><br>
+        <label for="weekDay">Week Day:</label><br>
+        <input type="number" id="weekDay" class="groove" name="weekDay"><br>
 
-    <label for="schooltime">School Time:</label><br>
-    <input type="number" id="groove" name="schooltime"><br>
+        <label for="schooltime">School Time:</label><br>
+        <input type="number" id="schooltime" class="groove" name="schooltime"><br>
 
-    <label for="classroomNumber">Classroom Number:</label><br>
-    <input type="text" id="groove" name="classroomNumber"><br>
+        <label for="classroomNumber">Classroom Number:</label><br>
+        <input type="text" id="classroomNumber" class="groove" name="classroomNumber"><br>
 
-    <label for="detail">Detail:</label><br>
-    <textarea id="detail" name="detail"></textarea><br>
+        <label for="detail">Detail:</label><br>
+        <textarea id="detail" name="detail"></textarea><br>
 
-    <input type="hidden" name="formType" value="singleCourse">
-    <input type="submit" value="Submit" class="button1">
-</form>
-<p align="center">${failure_message5}${failure_message1}${failure_message2}${success_message1}</p>
+        <input type="hidden" name="formType" value="singleCourse">
+        <input type="submit" value="Submit" class="button1">
+    </form>
+    <p align="center">${failure_message5}${failure_message1}${failure_message2}${success_message1}</p>
 
-<!-- 二.用户可以上传一个Excel文件 -->
-<h2 align="center"><b>Upload Excel for Multiple Courses</b></h2>
-<form action="insertServlet" method="post" enctype="multipart/form-data" id="Multiple Course" align="center">
-    <label for="file">Select Excel file:</label>
-    <input type="file" id="file" name="file" accept=".xls,.xlsx"><br>
-    <input type="hidden" name="formType" value="excelUpload">
-    <input type="submit" value="Upload">
-</form>
+    <!-- 二.用户可以上传一个Excel文件 -->
+    <h2 align="center"><b>Upload Excel for Multiple Courses</b></h2>
+    <form action="insertServlet" method="post" enctype="multipart/form-data" id="Multiple Course" align="center">
+        <label for="file">Select Excel file:</label>
+        <input type="file" id="file" name="file" accept=".xls,.xlsx"><br>
+        <input type="hidden" name="formType" value="excelUpload">
+        <input type="submit" value="Upload">
+    </form>
 
-<p>${failure_message5}${failure_message3}${failure_message4}${success_message2}</p>
+    <p>${failure_message5}${failure_message3}${failure_message4}${success_message2}</p>
 </div>
 </body>
 </html>

@@ -1,6 +1,5 @@
 package ie.ucd.comp2013J.web;
 
-
 import ie.ucd.comp2013J.pojo.Classroom;
 import ie.ucd.comp2013J.pojo.Course;
 import ie.ucd.comp2013J.pojo.User;
@@ -17,13 +16,13 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
-//该Servlet用于向前端页面发送一个List<Course>或者List<Classroom>
+// This Servlet is used to send the List<Course> and List<Classroom> to the front-end page
 @WebServlet(urlPatterns = "/showCourseTableServlet")
 public class ShowCourseTableServlet extends HttpServlet {
     private final ClassroomService classroomservice = new ClassroomService();
     private final CourseService courseService = new CourseService();
     private final ClassroomCourseService classroomCourseService = new ClassroomCourseService();
-    private static final int PAGE_SIZE = 5;  // 定义一个常量，用于表示每页的大小
+    private static final int PAGE_SIZE = 5;  // Define a constant that represents the size of each page
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -35,12 +34,12 @@ public class ShowCourseTableServlet extends HttpServlet {
         request.setCharacterEncoding("utf-8");
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
-        if (user == null) { // 检查用户是否已登录，否则重定向到index.jsp
+        if (user == null) { // // Check if the user is logged in, otherwise redirect to index.jsp
             response.sendRedirect("login.jsp");
         }
 
         String specificName = null;
-        Integer pageNumber = 1;// 获取请求的页数，默认为1
+        Integer pageNumber = 1; // Get the requested page number, default is 1
         if (request.getParameter("specificName") != null) {
             if (!request.getParameter("specificName").isEmpty()) {
                 specificName = request.getParameter("specificName");
@@ -52,20 +51,20 @@ public class ShowCourseTableServlet extends HttpServlet {
             }
         }
 
-        // 获取这一页的课程
-        List<Course> coursesForSpecificNameAndPage = courseService.getCoursesBySpecificNameAndPage(specificName, pageNumber, PAGE_SIZE);  //获取第pageNumber页(每页呈现5个course)的List<Course>
+        // Get the courses for this page
+        List<Course> coursesForSpecificNameAndPage = courseService.getCoursesBySpecificNameAndPage(specificName, pageNumber, PAGE_SIZE);  //Retrieve the List<Course> for the pageNumber (with 5 courses displayed per page)
         List<Classroom> classroomsForPage = classroomservice.getByClassroomCourses(classroomCourseService.getByCourses(coursesForSpecificNameAndPage));
 
-        // 计算总页数并添加到请求属性中
+        // Calculate the total number of pages and add it to the request attribute
         int totalCourses = courseService.getTotalCoursesWithSpecificName(specificName);
         int totalPageNumber = (int) Math.ceil((double) totalCourses / PAGE_SIZE);
 
-        // 将coursesForPage添加到请求属性中
+        // Add coursesForPage to the request attributes
         request.setAttribute("totalPageNumber", totalPageNumber);
         request.setAttribute("coursesList", coursesForSpecificNameAndPage);
         request.setAttribute("classroomsList", classroomsForPage);
 
-        // 使用请求转发器将请求转发到JSP页面
+        // Use request dispatcher to forward the request to the JSP page
         request.getRequestDispatcher("/showCourseTable.jsp").forward(request, response);
     }
 

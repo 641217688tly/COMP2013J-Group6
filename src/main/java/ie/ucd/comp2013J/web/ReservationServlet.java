@@ -35,7 +35,7 @@ public class ReservationServlet extends HttpServlet {
         request.setCharacterEncoding("utf-8");
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
-        if (user == null) { // 检查用户是否已登录，否则重定向到login.jsp
+        if (user == null) { // Check if the user is logged in, otherwise redirect to login.jsp
             response.sendRedirect("login.jsp");
             return;
         }
@@ -46,7 +46,7 @@ public class ReservationServlet extends HttpServlet {
         int schooltime = Integer.parseInt(request.getParameter("schooltime"));
         int userId = user.getId();
         String purpose = null;
-        if (!request.getParameter("purpose").isEmpty() && request.getParameter("purpose") != null) {//purpose已经正确收到
+        if (!request.getParameter("purpose").isEmpty() && request.getParameter("purpose") != null) {// The purpose has been correctly received
             purpose = request.getParameter("purpose");
         } else {
             request.setAttribute("appointmentResponse_message", "Necessary information is missing!");
@@ -62,23 +62,23 @@ public class ReservationServlet extends HttpServlet {
         reservation.setSchooltime(schooltime);
         reservation.setPurpose(purpose);
 
-        //先复查该时段是否有课/预约,如果有则返回预约失败消息
+        // First, check if there are any classes or reservations during the specified time slot. If there are, return a message indicating that the appointment failed
         Classroom classroom = classroomService.getByClassroomId(classroomId);
         List<Course> relatedCourses = courseService.getByClassroomCourses(classroomCourseService.getByClassroom(classroom));
         List<Reservation> relatedReservations = reservationService.getByClassroomIdWeekSchooltimeWeekDay(classroomId, week, weekDay, schooltime);
-        if (relatedReservations.size() == 0) { //该时段没有被预约
-            if (relatedCourses.size() != 0) { //该教室有课
+        if (relatedReservations.size() == 0) { // The time slot is not booked
+            if (relatedCourses.size() != 0) { // There are classes scheduled in the classroom
                 for (int i = 0; i < relatedCourses.size(); i++) {
-                    if (relatedCourses.get(i).getSchooltime() == schooltime && relatedCourses.get(i).getWeekDay() == weekDay) { //星期和时段相同
+                    if (relatedCourses.get(i).getSchooltime() == schooltime && relatedCourses.get(i).getWeekDay() == weekDay) { // The weekday and time slot match
                         if (relatedCourses.get(i).getStartWeek() <= week && relatedCourses.get(i).getEndWeek() >= week) {
-                            //预约失败
+                            // Appointment failed
                             request.setAttribute("appointmentResponse_message", "Appointment failed! There are classes at that time!");
                             request.getRequestDispatcher("/reservation.jsp").forward(request, response);
                             return;
                         }
                     }
                 }
-                //预约成功,虽然这个教室有课,但所有的课都与预约不冲突
+                //Appointment successful, although the classroom has classes, there are no conflicts with the reservation.
                 boolean flag = reservationService.makeAppointment(reservation);
                 if (flag) {
                     request.setAttribute("appointmentResponse_message", "The appointment is successful!");
@@ -88,7 +88,7 @@ public class ReservationServlet extends HttpServlet {
                     request.getRequestDispatcher("/reservation.jsp").forward(request, response);
                 }
             } else {
-                //该教室没有课,预约成功
+                //Appointment successful. The classroom is available and there are no classes scheduled during the requested time slot.
                 boolean flag = reservationService.makeAppointment(reservation);
                 if (flag) {
                     request.setAttribute("appointmentResponse_message", "The appointment is successful!");
@@ -99,7 +99,7 @@ public class ReservationServlet extends HttpServlet {
                 }
             }
         } else {
-            //预约失败
+            // Appointment failed
             request.setAttribute("appointmentResponse_message", "Appointment failed! The time slot has been booked!");
             request.getRequestDispatcher("/reservation.jsp").forward(request, response);
         }

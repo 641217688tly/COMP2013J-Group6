@@ -1,23 +1,11 @@
 <%@ page isELIgnored="false" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
-<%--
-该jsp页面有如下变量需要转发给/registerServlet:
-username
-email
-password
-
-需呈现的EL表达式变量有:
-${register_msg}
---%>
-
-
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>欢迎注册</title>
+    <title>register</title>
     <link href="css/register.css" rel="stylesheet">
 
 </head>
@@ -25,15 +13,15 @@ ${register_msg}
 
 <div class="form-div">
     <div class="reg-content">
-        <h1><b>欢迎注册</b></h1>
-        <span>已有帐号？</span> <a href="login.jsp">登录</a>
+        <h1><b>Welcome to register</b></h1>
+        <span>Already have an account?</span> <a href="login.jsp">Log in</a>
     </div>
     <form id="reg-form" action="registerServlet" method="post">
 
         <table>
 
             <tr>
-                <td>用户名</td>
+                <td>User Name</td>
                 <td class="inputs">
                     <input name="username" type="text" id="username">
                     <br>
@@ -42,7 +30,7 @@ ${register_msg}
             </tr>
 
             <tr>
-                <td>邮箱</td>
+                <td>Email</td>
                 <td class="inputs">
                     <input name="email" type="email" id="email">
                     <br>
@@ -51,7 +39,7 @@ ${register_msg}
             </tr>
 
             <tr>
-                <td>密码</td>
+                <td>Password</td>
                 <td class="inputs">
                     <input name="password" type="password" id="password">
                     <br>
@@ -59,20 +47,10 @@ ${register_msg}
                 </td>
             </tr>
 
-            <%--验证码功能尚未实现--%>
-            <%--<tr>
-                <td>验证码</td>
-                <td class="inputs">
-                    <input name="checkCode" type="text" id="checkCode">
-                    <img src="imgs/a.jpg">
-                    <a href="#" id="changeImg">看不清？</a>
-                </td>
-            </tr>--%>
-
         </table>
 
         <div class="buttons">
-            <input value="注 册" type="submit" id="reg_btn">
+            <input value="register" type="submit" id="reg_btn">
         </div>
         <br class="clear">
     </form>

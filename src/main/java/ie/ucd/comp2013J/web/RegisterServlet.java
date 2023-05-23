@@ -27,18 +27,18 @@ public class RegisterServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String email = request.getParameter("email");
-        String role = "user"; //默认新注册的用户都不是管理员身份
+        String role = "user"; // By default, newly registered users are not assigned the administrator role.
         User user = new User();
         user.setUsername(username);
         user.setPassword(password);
         user.setEmail(email);
         user.setRole(role);
         boolean flag = service.register(user);
-        if (flag) { //注册成功
-            request.setAttribute("register_msg", "注册成功,请登录");
+        if (flag) { // Registration successful
+            request.setAttribute("register_msg", "Registration successful. Please login");
             request.getRequestDispatcher("/login.jsp").forward(request, response);
-        } else { //注册失败
-            request.setAttribute("register_msg", "注册失败,用户名已存在");
+        } else { //Registration failed
+            request.setAttribute("register_msg", "Registration failed. The username already exists");
             request.getRequestDispatcher("/register.jsp").forward(request, response);
         }
 

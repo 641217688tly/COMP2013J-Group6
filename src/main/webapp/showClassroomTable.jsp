@@ -3,29 +3,30 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <html>
 <head>
-<link href="css/showClassroomTable.css" rel="stylesheet">
+    <title>Classrooms Table</title>
+    <link href="css/showClassroomTable.css" rel="stylesheet">
 </head>
 <body class="simple-linear">
 
-<!-- 显示链接以上传课程信息和查看课程信息 -->
+<!-- Display links to upload course information and view course information -->
 <ul class="topnav">
-  <li><a class="active" href="insert.jsp">上传课程信息</a></li>
-  <li><a href="showCourseTableServlet">查看课程信息</a></li>
+    <li><a class="active" href="insert.jsp">Upload Course Information</a></li>
+    <li><a href="showCourseTableServlet">View Course Information</a></li>
 </ul>
 
-<!-- 在标题中显示当前教室的信息 -->
+<!-- Display the information of the current classroom in the title -->
 <c:if test="${classroomList.get(currentPage-1).status}">
-    <h2 align="center" class="title" height="60">教室状态: 可用</h2>
+    <h2 align="center" class="title" height="60">Classroom status: Available</h2>
 </c:if>
 <c:if test="${!classroomList.get(currentPage-1).status}">
-    <h2 align="center" class="title" height="60">教室状态: 不可用</h2>
+    <h2 align="center" class="title" height="60">Classroom status: Unavailable</h2>
 </c:if>
 <h2 align="center" height="60">
-    当前教室: ${classroomList.get(currentPage-1).number} 教室容量: ${classroomList.get(currentPage-1).capacity}
-    教室楼层: ${classroomList.get(currentPage-1).floor} 当前教学周:Week${currentWeek}
+    Current classroom: ${classroomList.get(currentPage-1).number} Classroom capacity: ${classroomList.get(currentPage-1).capacity}
+    Classroom floor: ${classroomList.get(currentPage-1).floor} Current Teaching Week: Week${currentWeek}
 </h2>
 
-<!-- 创建一个表单用于提交筛选条件 -->
+<!-- Create a form to submit filter conditions -->
 <div align="center" height="25">
     <form action="searchClassroomServlet" method="post">
         Current Week: <select name="currentWeek" required>
@@ -39,9 +40,9 @@
         </c:forEach>
     </select>
         Capacity: <select name="capacity">
-        <option value="大">大</option>
-        <option value="中">中</option>
-        <option value="小">小</option>
+        <option value="大">Large</option>
+        <option value="中">Medium</option>
+        <option value="小">Small</option>
     </select>
         Status: <select name="status">
         <option value="available">Available</option>
@@ -53,50 +54,50 @@
 </div>
 <p align="center">${searchResponse_message}</p>
 
-<!-- 如果有搜索结果，显示它们 -->
+<!-- If there are search results, display them -->
 <c:if test="${not empty classroomList}">
     <table border="1" width="100%" class="tabletop" align="center">
         <tr>
             <th></th>
-            <th>星期一</th>
-            <th>星期二</th>
-            <th>星期三</th>
-            <th>星期四</th>
-            <th>星期五</th>
-            <th>星期六</th>
-            <th>星期日</th>
+            <th>Monday</th>
+            <th>Tuesday</th>
+            <th>Wednesday</th>
+            <th>Thursday</th>
+            <th>Friday</th>
+            <th>Saturday</th>
+            <th>Sunday</th>
         </tr>
-        <!-- 对每个时段进行循环 -->
+        <!-- Loop through each time slot -->
         <c:forEach var="schooltime" begin="1" end="6">
             <tr>
-                <th>时段${schooltime}</th>
-                <!-- 对每个星期几进行循环 -->
+                <th>Schooltime${schooltime}</th>
+                <!-- Loop through each day of the week -->
                 <c:forEach var="weekDay" begin="1" end="7">
                     <td>
-                        <!-- 创建一个变量，用来检查是否找到了对应的课程 -->
+                        <!-- Create a variable to check if the corresponding course is found -->
                         <c:set var="foundCourseAndReservation" value="false"/>
 
-                        <!-- 对每个课程进行循环 -->
+                        <!-- Loop through each course -->
                         <c:forEach items="${coursesInCurrentWeek.get(currentPage-1)}" var="course">
-                            <!-- 如果课程的星期和时段匹配，显示课程名称，并设置foundCourse为true -->
+                            <!-- If the course's week day and time slot match, display the course name and set foundCourseAndReservation to true -->
                             <c:if test="${course.weekDay == weekDay && course.schooltime == schooltime}">
                                 <a href="${pageContext.request.contextPath}/update.jsp?courseId=${course.id}&classroomId=${classroomList.get(currentPage-1).id}">${course.name}</a>
                                 <c:set var="foundCourseAndReservation" value="true"/>
                             </c:if>
                         </c:forEach>
-                        <!-- 对每个预约进行循环 -->
 
+                        <!-- Loop through each reservation -->
                         <c:forEach items="${reservationsInCurrentWeek.get(currentPage-1)}" var="reservation">
-                            <!-- 如果预约的星期和时段匹配，显示预约的purpose，并设置foundCourse为true -->
+                            <!-- If the reservation's week day and time slot match, display the reservation's purpose and set foundCourseAndReservation to true -->
                             <c:if test="${reservation.weekDay == weekDay && reservation.schooltime == schooltime}">
                                 <div>${reservation.purpose}</div>
                                 <c:set var="foundCourseAndReservation" value="true"/>
                             </c:if>
                         </c:forEach>
 
-                        <!-- 如果没有找到课程,说明此处没有课,则显示预约链接 -->
+                        <!-- If no course is found, it means there is no class scheduled, so display the reservation link -->
                         <c:if test="${!foundCourseAndReservation}">
-                            <a href="${pageContext.request.contextPath}/reservation.jsp?classroomId=${classroomList.get(currentPage-1).id}&classroomNumber=${classroomList.get(currentPage-1).number}&weekDay=${weekDay}&schooltime=${schooltime}&week=${currentWeek}">预约</a>
+                            <a href="${pageContext.request.contextPath}/reservation.jsp?classroomId=${classroomList.get(currentPage-1).id}&classroomNumber=${classroomList.get(currentPage-1).number}&weekDay=${weekDay}&schooltime=${schooltime}&week=${currentWeek}">Book</a>
                         </c:if>
                     </td>
                 </c:forEach>
@@ -104,18 +105,16 @@
         </c:forEach>
     </table>
 </c:if>
-<!-- 创建一个表格显示课程表 -->
 
-<!-- 如果有多于一个的搜索结果，显示分页链接 -->
+<!-- If there are more than one search results, display the pagination links -->
 <c:if test="${classroomList.size() > 1}">
-    <!-- 显示分页链接 -->
+    <!-- Display the pagination links -->
     <div align="center" class="nextPage">
         <c:forEach var="i" begin="1" end="${classroomList.size()}">
             <a href="showClassroomTableServlet?currentPage=${i}">Page${i}</a>
         </c:forEach>
     </div>
 </c:if>
-
 
 </body>
 </html>

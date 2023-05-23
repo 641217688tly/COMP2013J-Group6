@@ -36,7 +36,8 @@ public class ShowClassroomTableServlet extends HttpServlet {
         request.setCharacterEncoding("utf-8");
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
-        if (user == null) { // 检查用户是否已登录，否则重定向到index.jsp
+        if (user == null) { // Check if the user is logged in, otherwise redirect to index.jsp
+            response.sendRedirect("login.jsp");
             response.sendRedirect("login.jsp");
             return;
         }
@@ -46,18 +47,16 @@ public class ShowClassroomTableServlet extends HttpServlet {
         ArrayList<List<Reservation>> correspondingReservations = (ArrayList<List<Reservation>>) session.getAttribute("correspondingReservations");
         Integer currentWeek = (Integer) session.getAttribute("currentWeek");
 
-        int currentPage = 1; //默认第一次进入时展示page 1
-        if (request.getParameter("currentPage") != null) { //改变page的请求不经由SearchClassroomServlet,而是直接传到此Servlet中
+        int currentPage = 1; // Default to page 1 when first entering
+        if (request.getParameter("currentPage") != null) { // Change page request doesn't go through SearchClassroomServlet, but directly passed to this Servlet
             if (!request.getParameter("currentPage").isEmpty()) {
                 currentPage = Integer.parseInt(request.getParameter("currentPage"));
             }
         }
 
-
-
-        ArrayList<List<Course>> coursesInCurrentWeek = new ArrayList<>(); //对correspondingCourses中的各个ArrayList<Course>中的Course进行筛选
+        ArrayList<List<Course>> coursesInCurrentWeek = new ArrayList<>(); // Filter the courses in each ArrayList<Course> in correspondingCourses
         ArrayList<List<Reservation>> reservationsInCurrentWeek = new ArrayList<>();
-        // 筛选出在指定周内教室中的的课程和预约
+        // Filter the courses and reservations in the specified week for each classroom
         for (int i = 0; i < correspondingCourses.size(); i++) {
             ArrayList<Course> tempCourses = new ArrayList<>();
             for (int j = 0; j < correspondingCourses.get(i).size(); j++) {
@@ -67,7 +66,7 @@ public class ShowClassroomTableServlet extends HttpServlet {
             }
             coursesInCurrentWeek.add(i, tempCourses);
         }
-        // 筛选出在指定周内教室中的的课程和预约
+        // Filter the courses and reservations in the specified week for each classroom
         for (int i = 0; i < correspondingReservations.size(); i++) {
             ArrayList<Reservation> tempReservations = new ArrayList<>();
             for (int j = 0; j < correspondingReservations.get(i).size(); j++) {
@@ -83,7 +82,7 @@ public class ShowClassroomTableServlet extends HttpServlet {
         request.setAttribute("classroomList", classroomList);
         request.setAttribute("reservationsInCurrentWeek", reservationsInCurrentWeek);
         request.setAttribute("coursesInCurrentWeek", coursesInCurrentWeek);
-        // 转发请求到JSP页面
+        // Forward the request to the JSP page
         request.setAttribute("searchResponse_message", request.getAttribute("searchResponse_message"));
         request.getRequestDispatcher("/showClassroomTable.jsp").forward(request, response);
     }

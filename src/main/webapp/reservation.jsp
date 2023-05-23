@@ -25,19 +25,19 @@
     request.setAttribute("user", user);
 %>
 
-<!-- 显示链接以上传课程信息和查看课程信息 -->
+<!-- display links to upload information and view the course information -->
 <ul class="topnav">
-    <li><a class="active" href="searchClassroomServlet">返回教室页</a></li>
-    <li><a href="showCourseTableServlet">返回课程页</a></li>
+    <li><a class="active" href="searchClassroomServlet">View Classroom Information</a></li>
+    <li><a href="showCourseTableServlet">View Course Information</a></li>
 </ul>
 
 <form action="reservationServlet" method="post" align="center">
-    User Name: <input type="text" name="userName" id="groove" value="<%=user.getUsername()%>" readonly><br>
-    Classroom Number: <input type="text" name="classroomNumber" id="groove" value="<%=classroomNumber%>" readonly><br>
-    Teaching Week: <input type="text" name="week" id="groove" value="<%=week%>" readonly><br>
-    Day Of The Week: <input type="text" name="weekDay" id="groove" value="<%=weekDay%>" readonly><br>
-    Schooltime: <input type="text" name="schooltime" id="groove" value="<%=schooltime%>" readonly><br>
-    Purpose of Appointment: <input type="text" id="groove" name="purpose" required><br>
+    User Name: <input type="text" name="userName"  value="<%=user.getUsername()%>" readonly><br>
+    Classroom Number: <input type="text" name="classroomNumber"  value="<%=classroomNumber%>" readonly><br>
+    Teaching Week: <input type="text" name="week"  value="<%=week%>" readonly><br>
+    Day Of The Week: <input type="text" name="weekDay"  value="<%=weekDay%>" readonly><br>
+    Schooltime: <input type="text" name="schooltime" value="<%=schooltime%>" readonly><br>
+    Purpose of Appointment: <input type="text"  name="purpose" required><br>
     <input type="hidden" name="classroomId" value="<%=classroomId%>">
     <input type="submit" value="Submit" class="button1">
 </form>

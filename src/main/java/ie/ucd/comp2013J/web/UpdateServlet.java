@@ -23,14 +23,14 @@ public class UpdateServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
-        // 获取user对象
+        // Get the user object
         User user = (User) request.getSession().getAttribute("user");
-        // 获取参数
+        // Get the parameters
         int courseId = Integer.parseInt(request.getParameter("courseId"));
         int classroomId = Integer.parseInt(request.getParameter("classroomId"));
-        // 判断用户角色
+        // Check user role
         if (user != null && "administrator".equals(user.getRole())) {
-            // 获取参数
+            // Get the parameters
             String name = request.getParameter("name");
             String startWeek = request.getParameter("startWeek");
             String endWeek = request.getParameter("endWeek");
@@ -38,13 +38,13 @@ public class UpdateServlet extends HttpServlet {
             String schooltime = request.getParameter("schooltime");
             String classroomNumber = request.getParameter("classroomNumber");
             String detail = request.getParameter("detail");
-            // 判断参数是否为空
+            // Check if the parameters are empty
             if (name != null && startWeek != null && endWeek != null && weekDay != null && schooltime != null && classroomNumber != null && !name.isEmpty() && !startWeek.isEmpty() && !endWeek.isEmpty() && !weekDay.isEmpty() && !schooltime.isEmpty() && !classroomNumber.isEmpty()) {
-                // 获取旧的course和classroom
+                // Get the old course and classroom
                 Course oldCourse = courseService.getByCourseId(courseId);
                 Classroom oldClassroom = classroomService.getByClassroomId(classroomId);
 
-                // 更新course
+                // Update the course
                 Course newCourse = new Course();
                 newCourse.setId(courseId);
                 newCourse.setName(name);
@@ -55,44 +55,44 @@ public class UpdateServlet extends HttpServlet {
                 newCourse.setDetail(detail);
                 courseService.updateCourse(newCourse);
 
-                // 如果教室号发生变化
+                // If the classroom number has changed
                 if (!(Integer.parseInt(classroomNumber) == oldClassroom.getNumber())) { //classroom number也被更新
-                    // 删除旧的关系
+                    // Delete the old relationship
                     classroomCourseService.deleteByCourseIdAndClassroomId(courseId, classroomId);
-                    // 插入新的教室
+                    // Insert the new classroom
                     Classroom newClassroom = new Classroom();
                     newClassroom.setNumber(Integer.parseInt(classroomNumber));
-                    newClassroom = classroomService.insertClassroom(newClassroom); //如果新的教室号对应的教室已经存在,则classroomService.insertClassroom(newClassroom)会返回已存在的classroom对象
-                    // 重新在classroom_course表中建立关系
+                    newClassroom = classroomService.insertClassroom(newClassroom); // If the classroom corresponding to the new classroom number already exists, classroomService.insertClassroom(newClassroom) will return the existing classroom object
+                    // Re-establish the relationship in the classroom_course table
                     boolean flag = classroomCourseService.insertSingleClassroomCourse(newCourse, newClassroom);
                     if (flag) {
                         request.setAttribute("courseId", courseId);
                         request.setAttribute("classroomId", newClassroom.getId());
-                        request.setAttribute("success_message", "更新成功!");
+                        request.setAttribute("success_message", "Update successful!");
                         request.getRequestDispatcher("/update.jsp").forward(request, response);
                     } else {
                         request.setAttribute("courseId", courseId);
                         request.setAttribute("classroomId", classroomId);
-                        request.setAttribute("failure_message3", "未知的原因导致更新失败,请联系管理员!");
+                        request.setAttribute("failure_message3", "Unknown reason caused the update to fail, please contact the administrator!");
                         request.getRequestDispatcher("/update.jsp").forward(request, response);
                     }
                 }
                 request.setAttribute("courseId", courseId);
                 request.setAttribute("classroomId", classroomId);
-                request.setAttribute("success_message", "更新成功!");
+                request.setAttribute("success_message", "Update successful!");
                 request.getRequestDispatcher("/update.jsp").forward(request, response);
             } else {
-                // 必填的参数为空
+                // Required parameters are empty
                 request.setAttribute("courseId", courseId);
                 request.setAttribute("classroomId", classroomId);
-                request.setAttribute("failure_message2", "更新失败,必要的信息没有被提交");
+                request.setAttribute("failure_message2", "Update failed, necessary information not submitted!");
                 request.getRequestDispatcher("/update.jsp").forward(request, response);
             }
         } else {
-            // 用户不是管理员
+            // User is not an administrator
             request.setAttribute("courseId", courseId);
             request.setAttribute("classroomId", classroomId);
-            request.setAttribute("failure_message1", "更新失败,你没有管理员权限!");
+            request.setAttribute("failure_message1", "Update failed, you do not have administrator privileges!");
             request.getRequestDispatcher("/update.jsp").forward(request, response);
         }
     }

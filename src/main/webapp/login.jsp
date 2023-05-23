@@ -1,17 +1,6 @@
 <%@ page isELIgnored="false" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<%--
-该jsp页面有如下变量需要转发给/loginServlet:
-username
-password
-remember
-
-需呈现的EL表达式变量有:
-${login_msg}
-${register_msg}
---%>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -33,7 +22,7 @@ ${register_msg}
         <div id="subDiv">
             <input type="submit" class="button" value="login up">
             <input type="reset" class="button" value="reset">&nbsp;&nbsp;&nbsp;
-            <a href="register.jsp" color='white'>没有账号？</a>
+            <a href="register.jsp" color='white'>Click here to register</a>
         </div>
     </form>
 </div>
