@@ -140,7 +140,7 @@
     <!-- Display the pagination links -->
     <div align="center" class="nextPage">
         <c:forEach var="i" begin="1" end="${classroomList.size()}">
-            <a href="showClassroomTableServlet?currentPage=${i}">Page${i}</a>
+            <a href="showClassroomTableServlet?currentPage=${i}">[Page${i}]</a>
         </c:forEach>
     </div>
 </c:if>

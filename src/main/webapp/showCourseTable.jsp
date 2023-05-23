@@ -51,12 +51,12 @@
 
 <!-- Create pagination navigation links -->
 <div align="center" class="nextPage">
-    <a href="showCourseTableServlet?page=1">First</a> <!-- Link to the first page -->
+    <a href="showCourseTableServlet?page=1">[First]</a> <!-- Link to the first page -->
     <!-- Iterate over all page numbers -->
     <c:forEach var="i" begin="1" end="${totalPageNumber}">
-        <a href="showCourseTableServlet?page=${i}">${i}</a> <!-- Create a link to the corresponding page number -->
+        <a href="showCourseTableServlet?page=${i}">[Page${i}]</a> <!-- Create a link to the corresponding page number -->
     </c:forEach>
-    <a href="showCourseTableServlet?page=${totalPageNumber}">Last</a> <!-- Link to the last page -->
+    <a href="showCourseTableServlet?page=${totalPageNumber}">[Last]</a> <!-- Link to the last page -->
 </div>
 
 </body>

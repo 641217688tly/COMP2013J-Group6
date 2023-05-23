@@ -25,8 +25,8 @@
 
     <!-- Display links to upload course information and view course information -->
 <ul class="topnav">
-  <li><a class="active" href="showCourseTableServlet">Return to Courses Table Page</a></li>
-  <li><a href="showClassroomTableServlet">Return to Classrooms Table Page</a></li>
+  <li><a class="active" href="showCourseTableServlet">Return to Course Information Page</a></li>
+  <li><a href="showClassroomTableServlet">Return to Classrooms Information Page</a></li>
 </ul>
 
 <!-- Create a form to submit data to UpdateServlet -->

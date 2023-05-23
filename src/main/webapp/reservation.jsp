@@ -27,8 +27,8 @@
 
 <!-- display links to upload information and view the course information -->
 <ul class="topnav">
-    <li><a class="active" href="searchClassroomServlet">View Classroom Information</a></li>
-    <li><a href="showCourseTableServlet">View Course Information</a></li>
+    <li><a class="active" href="showCourseTableServlet">Return to Course Information Page</a></li>
+    <li><a href="searchClassroomServlet">Return to Classrooms Information Page</a></li>
 </ul>
 
 <form action="reservationServlet" method="post" align="center">
