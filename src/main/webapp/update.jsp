@@ -8,6 +8,7 @@
 <html>
 <head>
     <title>Update Course</title>
+    <link href="css/update.css" rel="stylesheet">
 </head>
 <body>
 <div class="simple-linear">
