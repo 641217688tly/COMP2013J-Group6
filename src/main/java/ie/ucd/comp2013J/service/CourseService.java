@@ -74,9 +74,10 @@ public class CourseService {
     }
 
     // Get courses by specific name and page
-    public List<Course> getCoursesBySpecificNameAndPage(String specificName, Integer startIndex, Integer pageSize) {
+    public List<Course> getCoursesBySpecificNameAndPage(String specificName, Integer pageNumber, Integer pageSize) {
         try (SqlSession sqlSession = factory.openSession()) {
             CourseMapper mapper = sqlSession.getMapper(CourseMapper.class);
+            int startIndex = (pageNumber - 1) * pageSize; // In mysql, query begin with 0 rows
             return mapper.selectCoursesBySpecificNameAndPage(specificName, startIndex, pageSize);
         }
     }

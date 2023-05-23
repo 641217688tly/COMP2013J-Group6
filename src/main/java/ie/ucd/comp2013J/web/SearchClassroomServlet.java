@@ -43,6 +43,8 @@ public class SearchClassroomServlet extends HttpServlet {
             return;
         }
 
+        session.removeAttribute("specificName"); // remove session.specificName to null so that all courses will be reloaded after entering the showCourseTable.jsp page
+
         // Retrieve search criteria from the request
         Integer currentWeek = 1; // Default to week 1 for the first visit
         Integer floor = null;

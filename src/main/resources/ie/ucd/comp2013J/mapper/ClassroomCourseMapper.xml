@@ -23,11 +23,16 @@
 
     <select id="selectClassroomCoursesByCourseIds" resultType="ClassroomCourse" resultMap="ClassroomCourseResultMap">
         SELECT * FROM classroom_course
-        WHERE course_id IN
-        <foreach collection="courseList" item="course" open="(" separator="," close=")">
-            #{course.id}
-        </foreach>
+        <where>
+            <if test="courseList != null and courseList.size() > 0">
+                course_id IN
+                <foreach collection="courseList" item="course" open="(" separator="," close=")">
+                    #{course.id}
+                </foreach>
+            </if>
+        </where>
     </select>
+
 
     <select id="selectByClassroomId" resultType="ClassroomCourse" resultMap="ClassroomCourseResultMap">
         SELECT *

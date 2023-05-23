@@ -37,11 +37,17 @@
     </select>
 
     <select id="selectByClassroomCourses" resultType="Course" resultMap="CourseResult">
-        SELECT * FROM courses WHERE id IN
-        <foreach item="classroomCourse" collection="classroomCourses" open="(" separator="," close=")">
-            #{classroomCourse.courseId}
-        </foreach>
+        SELECT * FROM courses
+        <where>
+            <if test="classroomCourses != null and classroomCourses.size() > 0">
+                id IN
+                <foreach item="classroomCourse" collection="classroomCourses" open="(" separator="," close=")">
+                    #{classroomCourse.courseId}
+                </foreach>
+            </if>
+        </where>
     </select>
+
 
 
     <select id="selectById" resultType="Course" resultMap="CourseResult">

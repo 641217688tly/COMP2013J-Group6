@@ -14,6 +14,7 @@ import javax.servlet.http.*;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 
 
 @WebServlet(urlPatterns = "/insertServlet")
@@ -76,12 +77,32 @@ public class InsertServlet extends HttpServlet {
                     course.setDetail(detail);
                     classroom.setNumber(Integer.parseInt(classroomNumber));
 
-                    boolean flag2 = classroomCourseService.insertSingleClassroomCourse(courseService.insertCourse(course), classroomservice.insertClassroom(classroom));
+                    classroom = classroomservice.insertClassroom(classroom);
+                    List<Course> existingCourses = courseService.getByClassroomCourses(classroomCourseService.getByClassroom(classroom));
+
+                    boolean flag2 = true; // judge if the existing course have a time conflict with new course
+                    if (existingCourses != null) {
+                        if (existingCourses.size() != 0) {
+                            for (int i = 0; i < existingCourses.size(); i++) {
+                                if (existingCourses.get(i).getWeekDay() == course.getWeekDay() && existingCourses.get(i).getSchooltime() == course.getSchooltime()) {
+                                    if ((existingCourses.get(i).getStartWeek() <= course.getStartWeek() && existingCourses.get(i).getEndWeek() >= course.getStartWeek()) || (existingCourses.get(i).getStartWeek() <= course.getEndWeek() && existingCourses.get(i).getEndWeek() >= course.getEndWeek())) {
+                                        flag2 = false;
+                                    }
+                                }
+                            }
+                        }
+                    }
                     if (flag2) {
-                        request.setAttribute("success_message1", "Upload Successfully!");
-                        request.getRequestDispatcher("/insert.jsp").forward(request, response);
+                        boolean flag3 = classroomCourseService.insertSingleClassroomCourse(courseService.insertCourse(course), classroom);
+                        if (flag3) {
+                            request.setAttribute("success_message1", "Upload Successfully!");
+                            request.getRequestDispatcher("/insert.jsp").forward(request, response);
+                        } else {
+                            request.setAttribute("failure_message2", "Due to internal server issues, the upload has failed. Please contact the administrator for assistance.");
+                            request.getRequestDispatcher("/insert.jsp").forward(request, response);
+                        }
                     } else {
-                        request.setAttribute("failure_message2", "Due to internal server issues, the upload has failed. Please contact the administrator for assistance.");
+                        request.setAttribute("failure_message6", "The schedule of the course to be inserted conflicts with the schedule of the existing course!");
                         request.getRequestDispatcher("/insert.jsp").forward(request, response);
                     }
                 } else {

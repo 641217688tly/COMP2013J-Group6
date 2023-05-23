@@ -46,6 +46,7 @@
     <span style="color: green;">Current Teaching Week:</span> week ${currentWeek}
 </h3>
 
+
 <!-- Create a form to submit filter conditions -->
 <div align="center" height="25">
     <form action="searchClassroomServlet" method="post">
@@ -53,26 +54,33 @@
         <c:forEach var="i" begin="1" end="18">
             <option value="${i}">Week ${i}</option>
         </c:forEach>
+
     </select>
         Floor: <select name="floor">
+        <option value="" selected>Please select</option>
         <c:forEach var="i" begin="1" end="9">
             <option value="${i}">${i}</option>
         </c:forEach>
+
     </select>
         Capacity: <select name="capacity">
+        <option value="" selected>Please select</option>
         <option value="大">Large</option>
         <option value="中">Medium</option>
         <option value="小">Small</option>
+
     </select>
         Status: <select name="status">
         <option value="available">Available</option>
         <option value="unavailable">Unavailable</option>
+
     </select>
         Classroom Number (optional): <input type="number" name="specificNumber" min="0" max="999">
         <input type="submit" value="Search">
     </form>
 </div>
 <p align="center">${searchResponse_message}</p>
+
 
 <!-- If there are search results, display them -->
 <c:if test="${not empty classroomList}">

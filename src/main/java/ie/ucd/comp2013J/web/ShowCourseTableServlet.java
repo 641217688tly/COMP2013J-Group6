@@ -22,7 +22,7 @@ public class ShowCourseTableServlet extends HttpServlet {
     private final ClassroomService classroomservice = new ClassroomService();
     private final CourseService courseService = new CourseService();
     private final ClassroomCourseService classroomCourseService = new ClassroomCourseService();
-    private static final int PAGE_SIZE = 5;  // Define a constant that represents the size of each page
+    private static final int PAGE_SIZE = 4;  // Define a constant that represents the size of each page
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -38,13 +38,15 @@ public class ShowCourseTableServlet extends HttpServlet {
             response.sendRedirect("login.jsp");
         }
 
-        String specificName = null;
-        Integer pageNumber = 1; // Get the requested page number, default is 1
+        String specificName = (String) session.getAttribute("specificName");  //it is null when firstly enter this servlet
         if (request.getParameter("specificName") != null) {
             if (!request.getParameter("specificName").isEmpty()) {
                 specificName = request.getParameter("specificName");
             }
         }
+        session.setAttribute("specificName",specificName);
+
+        Integer pageNumber = 1; // Get the requested page number, default is 1
         if (request.getParameter("page") != null) {
             if (!request.getParameter("page").isEmpty()) {
                 pageNumber = Integer.parseInt(request.getParameter("page"));
@@ -52,7 +54,7 @@ public class ShowCourseTableServlet extends HttpServlet {
         }
 
         // Get the courses for this page
-        List<Course> coursesForSpecificNameAndPage = courseService.getCoursesBySpecificNameAndPage(specificName, pageNumber, PAGE_SIZE);  //Retrieve the List<Course> for the pageNumber (with 5 courses displayed per page)
+        List<Course> coursesForSpecificNameAndPage = courseService.getCoursesBySpecificNameAndPage(specificName, pageNumber, PAGE_SIZE);  //Retrieve the List<Course> for the pageNumber (with 4 courses displayed per page)
         List<Classroom> classroomsForPage = classroomservice.getByClassroomCourses(classroomCourseService.getByCourses(coursesForSpecificNameAndPage));
 
         // Calculate the total number of pages and add it to the request attribute

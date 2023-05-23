@@ -12,7 +12,7 @@
 
 <body>
 <div id="loginDiv" style="height: 350px">
-    <form action="loginServlet" id="form">
+    <form action="loginServlet" id="form" method="post">
         <h1 id="loginMsg"><b>LOGIN IN</b></h1>
         <div id="errorMsg">${login_msg} ${register_msg}</div>
         <p>Username:<input id="username" name="username" value="${cookie.username.value}" type="text"></p>
@@ -21,7 +21,6 @@
         <p>Remember:<input id="remember" name="remember" value="1" type="checkbox"></p>
         <div id="subDiv">
             <input type="submit" class="button" value="login up">
-            <input type="reset" class="button" value="reset">&nbsp;&nbsp;&nbsp;
             <a href="register.jsp" color='white'>Click here to register</a>
         </div>
     </form>
