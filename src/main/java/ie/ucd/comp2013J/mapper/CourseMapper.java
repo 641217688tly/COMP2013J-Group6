@@ -4,7 +4,6 @@ import ie.ucd.comp2013J.pojo.ClassroomCourse;
 import ie.ucd.comp2013J.pojo.Course;
 import org.apache.ibatis.annotations.Param;
 
-
 import java.util.List;
 
 public interface CourseMapper {
