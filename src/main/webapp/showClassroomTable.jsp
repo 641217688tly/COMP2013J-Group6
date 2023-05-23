@@ -13,6 +13,7 @@
 <ul class="topnav">
     <li><a class="active" href="insert.jsp">Upload Course Information</a></li>
     <li><a href="showCourseTableServlet">View Course Information</a></li>
+    <li><a href="login.jsp">Switch Account</a></li>
 </ul>
 
 <!-- Display the information of the current classroom in the title -->

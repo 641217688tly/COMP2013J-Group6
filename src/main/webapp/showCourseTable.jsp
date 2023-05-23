@@ -13,6 +13,7 @@
 <ul class="topnav">
     <li><a class="active" href="insert.jsp">Upload Course Information</a></li>
     <li><a href="searchClassroomServlet">View Classroom Information</a></li>
+    <li><a href="login.jsp">Switch Account</a></li>
 </ul>
 
 <form action="showCourseTableServlet" method="post" align="center" class="nextPage">
