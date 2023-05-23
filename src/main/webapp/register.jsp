@@ -17,9 +17,7 @@
         <span>Already have an account?</span> <a href="login.jsp">Log in</a>
     </div>
     <form id="reg-form" action="registerServlet" method="post">
-
         <table>
-
             <tr>
                 <td>User Name</td>
                 <td class="inputs">
@@ -28,25 +26,22 @@
                     <span id="username_err" class="err_msg">${register_msg}</span>
                 </td>
             </tr>
-
             <tr>
                 <td>Email</td>
                 <td class="inputs">
                     <input name="email" type="email" id="email">
                     <br>
-                    <span id="email_err" class="err_msg" style="display: none">邮箱格式有误</span>
+                    <span id="email_err" class="err_msg" style="display: none">Incorrect email format</span>
                 </td>
             </tr>
-
             <tr>
                 <td>Password</td>
                 <td class="inputs">
                     <input name="password" type="password" id="password">
                     <br>
-                    <span id="password_err" class="err_msg" style="display: none">密码格式有误</span>
+                    <span id="password_err" class="err_msg" style="display: none">Incorrect password format</span>
                 </td>
             </tr>
-
         </table>
 
         <div class="buttons">

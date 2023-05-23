@@ -10,13 +10,13 @@
 </head>
 <body>
 <div class="simple-linear">
-    <!-- 显示链接以上传课程信息和查看课程信息 -->
+    <!-- Display link to upload course information and view course information -->
     <ul class="topnav">
-        <li><a class="active" href="showCourseTableServlet">返回课程页</a></li>
-        <li><a href="showClassroomTableServlet">返回教室页</a></li>
+        <li><a class="active" href="showCourseTableServlet">View Course Information</a></li>
+        <li><a href="showClassroomTableServlet">View Classroom Information</a></li>
     </ul>
 
-    <!-- 一.用户可以上传一个课程的信息 -->
+    <!-- 1. Users can upload information for a single course -->
     <h2 align="center"><b>Upload Single Course Information</b></h2>
     <form action="insertServlet" method="post" id="Single Course" align="center">
 
@@ -46,7 +46,7 @@
     </form>
     <p align="center">${failure_message5}${failure_message1}${failure_message2}${success_message1}</p>
 
-    <!-- 二.用户可以上传一个Excel文件 -->
+    <!-- 2. Users can upload an Excel file -->
     <h2 align="center"><b>Upload Excel for Multiple Courses</b></h2>
     <form action="insertServlet" method="post" enctype="multipart/form-data" id="Multiple Course" align="center">
         <label for="file">Select Excel file:</label>

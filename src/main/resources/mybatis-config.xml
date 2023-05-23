@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 
-    <!--利用包扫描法为pojo类下的所有类起别名-->
+    <!-- Using package scanning to assign aliases to all classes under the pojo package -->
     <typeAliases>
        <!-- <package name="ie/ucd/comp2013J/pojo"/>-->
         <package name="ie.ucd.comp2013J.pojo"/>
@@ -25,7 +25,7 @@
     </environments>
 
     <mappers>
-        <!--扫描mapper-->
+        <!-- Scanning for mappers -->
         <package name="ie/ucd/comp2013J/mapper"/>
     </mappers>
 

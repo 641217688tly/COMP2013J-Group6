@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page isELIgnored="false" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
+
 <html>
 <head>
     <title>Classrooms Table</title>
@@ -15,16 +16,35 @@
 </ul>
 
 <!-- Display the information of the current classroom in the title -->
-<c:if test="${classroomList.get(currentPage-1).status}">
-    <h2 align="center" class="title" height="60">Classroom status: Available</h2>
-</c:if>
-<c:if test="${!classroomList.get(currentPage-1).status}">
-    <h2 align="center" class="title" height="60">Classroom status: Unavailable</h2>
-</c:if>
-<h2 align="center" height="60">
-    Current classroom: ${classroomList.get(currentPage-1).number} Classroom capacity: ${classroomList.get(currentPage-1).capacity}
-    Classroom floor: ${classroomList.get(currentPage-1).floor} Current Teaching Week: Week${currentWeek}
-</h2>
+
+<h3 align="center" height="60">
+    <%--Classroom status--%>
+    <c:if test="${classroomList.get(currentPage-1).status}">
+        <span style="color: green;">Classroom status:</span> Available
+    </c:if>
+    <c:if test="${!classroomList.get(currentPage-1).status}">
+        <span style="color: green;">Classroom status:</span> Unavailable
+    </c:if>
+
+    <%--Current classroom--%>
+    <span style="color: green;">Current classroom:</span> ${classroomList.get(currentPage-1).number}
+
+    <%--Classroom capacity--%>
+    <c:if test="${classroomList.get(currentPage-1).capacity.equals('大')}">
+       <span style="color: green;">Classroom capacity:</span> Large
+    </c:if>
+    <c:if test="${classroomList.get(currentPage-1).capacity.equals('中')}">
+        <span style="color: green;">Classroom capacity:</span> Medium
+    </c:if>
+    <c:if test="${classroomList.get(currentPage-1).capacity.equals('小')}">
+       <span style="color: green;">Classroom capacity:</span> Small
+    </c:if>
+    <%--Classroom floor--%>
+    <span style="color: green;">Classroom floor:</span> ${classroomList.get(currentPage-1).floor}
+
+    <%--Current Teaching Week--%>
+    <span style="color: green;">Current Teaching Week:</span> week ${currentWeek}
+</h3>
 
 <!-- Create a form to submit filter conditions -->
 <div align="center" height="25">

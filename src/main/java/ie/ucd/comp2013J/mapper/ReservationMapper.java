@@ -12,8 +12,7 @@ public interface ReservationMapper {
 
     int insertReservation(Reservation reservation);
 
-    //以下方法尚未用到:
-
+    // Unused methods:
     int update(Reservation reservation);
 
     int delete(Integer id);

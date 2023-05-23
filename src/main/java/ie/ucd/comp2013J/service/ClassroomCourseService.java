@@ -11,13 +11,12 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-//pojo实体类
-public class ClassroomCourseService { //在此实现针对Classroom的所有增删改查的方法
+public class ClassroomCourseService {
     SqlSessionFactory factory = SqlSessionFactoryUtils.getSqlSessionFactory();
 
     public boolean insertExcelFile(ArrayList<Course> courses, ArrayList<Classroom> classrooms) {
         if (courses.size() != classrooms.size()) {
-            throw new IllegalArgumentException("Excel课表文件解析存在错误");
+            throw new IllegalArgumentException("There are errors in parsing the Excel timetable file.");
         }
         try {
             for (int i = 0; i < courses.size(); i++) {
@@ -30,7 +29,7 @@ public class ClassroomCourseService { //在此实现针对Classroom的所有增�
         }
     }
 
-    private ClassroomCourse insertClassroomCourse(Course course, Classroom classroom) { //该insert方法为insertExcelFile提供调用
+    private ClassroomCourse insertClassroomCourse(Course course, Classroom classroom) { //The insert method provides insertExcelFile calls
         try (SqlSession sqlSession = factory.openSession()) {
             ClassroomCourseMapper mapper = sqlSession.getMapper(ClassroomCourseMapper.class);
 
@@ -39,9 +38,9 @@ public class ClassroomCourseService { //在此实现针对Classroom的所有增�
             classroomCourse.setClassroomId(classroom.getId());
 
             ClassroomCourse existingClassroomCourse = mapper.selectByCourseIDAndClassroomID(classroomCourse);
-            if (existingClassroomCourse != null) { //已经存在该课程
+            if (existingClassroomCourse != null) { // The database already exists for the course
                 return existingClassroomCourse;
-            } else { //尚未存在该课程
+            } else { // The course does not yet exist
                 mapper.insertClassroomCourse(classroomCourse);
                 sqlSession.commit();
                 return classroomCourse;
@@ -49,22 +48,22 @@ public class ClassroomCourseService { //在此实现针对Classroom的所有增�
         }
     }
 
-    public boolean insertSingleClassroomCourse(Course course, Classroom classroom) { //该insert方法在插入单个课表信息时被调用
+    public boolean insertSingleClassroomCourse(Course course, Classroom classroom) { // The insert method is called when the information for a single class schedule is inserted
         try (SqlSession sqlSession = factory.openSession()) {
             ClassroomCourseMapper mapper = sqlSession.getMapper(ClassroomCourseMapper.class);
 
             ClassroomCourse classroomCourse = new ClassroomCourse();
-            if (course == null || classroom == null) { //course或classroom插入失败
+            if (course == null || classroom == null) { // course or classroom insertion failed
                 return false;
             }
             classroomCourse.setCourseId(course.getId());
             classroomCourse.setClassroomId(classroom.getId());
 
             ClassroomCourse existingClassroomCourse = mapper.selectByCourseIDAndClassroomID(classroomCourse);
-            if (existingClassroomCourse != null) { //已经存在该课程
-                //不插入
+            if (existingClassroomCourse != null) { // The course already exists
+                // No insertion
                 return true;
-            } else { //尚未存在该课程
+            } else { // The course does not yet exist
                 mapper.insertClassroomCourse(classroomCourse);
                 sqlSession.commit();
                 sqlSession.close();

@@ -6,10 +6,10 @@ import ie.ucd.comp2013J.util.SqlSessionFactoryUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
-//pojo实体类
-public class UserService { //在此实现针对Classroom的所有增删改查的方法
+public class UserService {
     SqlSessionFactory factory = SqlSessionFactoryUtils.getSqlSessionFactory();
 
+    // User login method
     public User login(String username, String password) {
         SqlSession sqlSession = factory.openSession();
         UserMapper mapper = sqlSession.getMapper(UserMapper.class);
@@ -18,29 +18,30 @@ public class UserService { //在此实现针对Classroom的所有增删改查的
         return user;
     }
 
+    // User registration method
     public boolean register(User user) {
         SqlSession sqlSession = factory.openSession();
         UserMapper mapper = sqlSession.getMapper(UserMapper.class);
         User checkedUser = mapper.selectByUserName(user.getUsername());
         if (checkedUser == null) {
             mapper.addUser(user);
-            sqlSession.commit(); //提交事务
+            sqlSession.commit();
         }
         sqlSession.close();
         return checkedUser == null;
     }
 
-    public boolean upgradeRole(User user) { //可以将普通用户的身份升级为管理员
+    // Upgrade user role method
+    public boolean upgradeRole(User user) { // Can upgrade the status of ordinary users as an administrator
         SqlSession sqlSession = factory.openSession();
         UserMapper mapper = sqlSession.getMapper(UserMapper.class);
-        User checkedUser = mapper.selectByUserName(user.getUsername()); //检查将要被授予管理员权限的用户是否存在
+        User checkedUser = mapper.selectByUserName(user.getUsername()); // Check will be awarded the administrator privileges user exists
         if (checkedUser != null) {
             user.setRole("administrator");
             mapper.upgradeRole(user);
-            sqlSession.commit(); //提交事务
+            sqlSession.commit(); // Commit transaction
         }
         sqlSession.close();
         return checkedUser != null;
     }
-
 }

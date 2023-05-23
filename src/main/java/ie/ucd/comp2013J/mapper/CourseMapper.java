@@ -25,7 +25,7 @@ public interface CourseMapper {
 
     int selectTotalCoursesWithSpecificName(String specificName);
 
-    //没用到的sql语句:
+    // Unused methods:
     List<Course> selectBySpecificName(String name);
 
     List<Course> selectCoursesByPage(@Param("startIndex") int startIndex, @Param("pageSize") int pageSize);

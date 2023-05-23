@@ -30,7 +30,7 @@
         SELECT * FROM reservations WHERE classroom_id = #{classroomId};
     </select>
 
-    <!--以下方法尚未用到:-->
+    <!-- Unused SQL statements: -->
 
     <update id="update" parameterType="Reservation">
         UPDATE reservations

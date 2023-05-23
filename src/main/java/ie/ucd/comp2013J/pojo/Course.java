@@ -3,10 +3,10 @@ package ie.ucd.comp2013J.pojo;
 public class Course {
     private Integer id;
     private String name;
-    private Integer startWeek;//第几周开始
-    private Integer endWeek; //第几周结束
-    private Integer weekDay; //星期几的课
-    private Integer schooltime; //教学时段
+    private Integer startWeek;//Start of the week
+    private Integer endWeek; //End of the week
+    private Integer weekDay; //Day of the week for classes
+    private Integer schooltime; //Teaching time period
     private String detail;
 
     public Integer getId() {

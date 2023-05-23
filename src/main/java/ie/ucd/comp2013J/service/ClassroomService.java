@@ -5,7 +5,6 @@ import ie.ucd.comp2013J.pojo.Classroom;
 import ie.ucd.comp2013J.pojo.ClassroomCourse;
 import ie.ucd.comp2013J.util.ExcelFileHandleUtils;
 import ie.ucd.comp2013J.util.SqlSessionFactoryUtils;
-import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
@@ -13,29 +12,28 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-//pojo实体类
-public class ClassroomService { //在此实现针对Classroom的所有增删改查的方法
+public class ClassroomService {
     SqlSessionFactory factory = SqlSessionFactoryUtils.getSqlSessionFactory();
     ExcelFileHandleUtils excelFileHandleUtil = new ExcelFileHandleUtils();
 
+    // Insert classrooms from Excel file
     public ArrayList<Classroom> insertExcelFile(InputStream inputStream) {
         ArrayList<Classroom> classrooms = excelFileHandleUtil.getClassroomsFromExcel(inputStream);
         for (int i = 0; i < classrooms.size(); i++) {
             Classroom updatedIDClassroom = this.insertClassroom(classrooms.get(i));
-            classrooms.set(i, updatedIDClassroom); //使得列表中的Course对象的id都有具体的值,这样可以用于之后的ClassroomCourse表的插入
+            classrooms.set(i, updatedIDClassroom); // Make the ids of Course objects in the list have specific values, which can be used for later ClassroomCourse table insertions
         }
-        return classrooms;//此时的classrooms都已经获得了ID
+        return classrooms; // Classrooms are obtained ID at this time
     }
 
+    // Insert a classroom
     public Classroom insertClassroom(Classroom classroom) {
-        //插入成功的情况:插入了已经存在的教室;插入了尚未存在的教室;此时返回一个id不为空的classroom对象
-        //插入失败的情况:classroomNumber这个必须值没有被上传,此时返回null
         try (SqlSession sqlSession = factory.openSession()) {
             ClassroomMapper mapper = sqlSession.getMapper(ClassroomMapper.class);
             Classroom existingClassroom = mapper.selectByNumber(classroom.getNumber());
-            if (existingClassroom != null) {//该教室已经存在
+            if (existingClassroom != null) { // The classroom already exists
                 return existingClassroom;
-            } else { //该教室尚未存在
+            } else { // The classroom does not yet exist
                 int floor = (classroom.getNumber() / 100) % 10;
                 classroom.setFloor(floor);
 
@@ -46,9 +44,9 @@ public class ClassroomService { //在此实现针对Classroom的所有增删改�
                 classroom.setStatus(status);
 
                 int i = mapper.insertClassroom(classroom);
-                if (i > 0) { //如果插入成功
-                    sqlSession.commit(); //事务提交
-                } else { //如果插入失败
+                if (i > 0) { // If you insert a successful
+                    sqlSession.commit(); // Transaction commit
+                } else { //If failed to insert
                     return null;
                 }
                 sqlSession.close();
@@ -71,6 +69,7 @@ public class ClassroomService { //在此实现针对Classroom的所有增删改�
         }
     }
 
+    // Get classrooms by classroom courses
     public List<Classroom> getByClassroomCourses(List<ClassroomCourse> classroomCourseList) {
         try (SqlSession sqlSession = factory.openSession()) {
             ClassroomMapper mapper = sqlSession.getMapper(ClassroomMapper.class);
@@ -82,17 +81,16 @@ public class ClassroomService { //在此实现针对Classroom的所有增删改�
         }
     }
 
-    //得到第pageNumber页的Classroom对象(每页呈现pageSize个Classroom的信息)
+    // Get the Classroom object on page pageNumber (information about pageSize classrooms per page)
     public List<Classroom> getClassroomsForPage(int pageNumber, int pageSize) {
         try (SqlSession sqlSession = factory.openSession()) {
             ClassroomMapper mapper = sqlSession.getMapper(ClassroomMapper.class);
-            // 计算从哪个索引开始获取教室
             int startIndex = (pageNumber - 1) * pageSize;
             return mapper.selectClassroomsByPage(startIndex, pageSize);
         }
     }
 
-    //获取所有教室的总数量
+    // Get total number of classrooms
     public int getTotalClassrooms() {
         try (SqlSession sqlSession = factory.openSession()) {
             ClassroomMapper mapper = sqlSession.getMapper(ClassroomMapper.class);
@@ -100,6 +98,7 @@ public class ClassroomService { //在此实现针对Classroom的所有增删改�
         }
     }
 
+    // Get classroom by classroom ID
     public Classroom getByClassroomId(Integer classroomId) {
         try (SqlSession sqlSession = factory.openSession()) {
             ClassroomMapper mapper = sqlSession.getMapper(ClassroomMapper.class);
@@ -107,6 +106,7 @@ public class ClassroomService { //在此实现针对Classroom的所有增删改�
         }
     }
 
+    // Get all classrooms
     public List<Classroom> getAllClassrooms() {
         try (SqlSession sqlSession = factory.openSession()) {
             ClassroomMapper mapper = sqlSession.getMapper(ClassroomMapper.class);
@@ -114,13 +114,15 @@ public class ClassroomService { //在此实现针对Classroom的所有增删改�
         }
     }
 
-    public List<Classroom> getClassroomsByFilterAndSpecificNumber(Integer floor, String capacity, Boolean status,Integer specificNumber){
+    // Get classrooms by filter and specific number
+    public List<Classroom> getClassroomsByFilterAndSpecificNumber(Integer floor, String capacity, Boolean status, Integer specificNumber) {
         try (SqlSession sqlSession = factory.openSession()) {
             ClassroomMapper mapper = sqlSession.getMapper(ClassroomMapper.class);
-            return mapper.selectClassroomsByFilterAndSpecificNumber(floor,capacity,status,specificNumber);
+            return mapper.selectClassroomsByFilterAndSpecificNumber(floor, capacity, status, specificNumber);
         }
     }
 
+    // Get classrooms by floor, capacity, and status
     public List<Classroom> getByFloorCapacityStatus(Integer floor, String capacity, boolean status) {
         try (SqlSession sqlSession = factory.openSession()) {
             ClassroomMapper mapper = sqlSession.getMapper(ClassroomMapper.class);
@@ -128,11 +130,11 @@ public class ClassroomService { //在此实现针对Classroom的所有增删改�
         }
     }
 
+    // Get classrooms by specific number
     public List<Classroom> getClassroomsBySpecificNumber(int specificNumber) {
         try (SqlSession sqlSession = factory.openSession()) {
             ClassroomMapper mapper = sqlSession.getMapper(ClassroomMapper.class);
             return mapper.selectBySpecificNumber(specificNumber);
         }
     }
-
 }

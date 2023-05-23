@@ -89,7 +89,7 @@
     </select>
 
 
-    <!--没用到的sql语句:-->
+    <!-- Unused SQL statements: -->
 
     <select id="selectCoursesByPage" resultType="Course" resultMap="CourseResult">
         SELECT *

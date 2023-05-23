@@ -12,7 +12,7 @@ public class SqlSessionFactoryUtils {
     private static SqlSessionFactory sqlSessionFactory;
 
     static {
-        //静态代码块会随着类的加载而自动执行，且只执行一次
+        //The static block is automatically executed when the class is loaded, and it is executed only once.
         try {
             String resource = "mybatis-config.xml";
             InputStream inputStream = Resources.getResourceAsStream(resource);

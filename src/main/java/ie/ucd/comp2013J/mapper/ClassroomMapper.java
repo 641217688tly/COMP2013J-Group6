@@ -20,7 +20,7 @@ public interface ClassroomMapper {
 
     List<Classroom> selectClassroomsByFilterAndSpecificNumber(@Param("floor") Integer floor, @Param("capacity") String capacity, @Param("status") Boolean status, @Param("specificNumber") Integer specificNumber);
 
-    //暂未使用的语句:
+    // Unused methods:
     List<Classroom> selectClassroomsByFloorCapacityStatus(@Param("floor") Integer floor, @Param("capacity") String capacity, @Param("status") Boolean status);
 
     List<Classroom> selectBySpecificNumber(Integer specificNumber);

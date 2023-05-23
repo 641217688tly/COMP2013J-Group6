@@ -1,6 +1,5 @@
 package ie.ucd.comp2013J.web;
 
-
 import ie.ucd.comp2013J.pojo.Classroom;
 import ie.ucd.comp2013J.pojo.Course;
 import ie.ucd.comp2013J.pojo.User;
@@ -29,12 +28,12 @@ public class InsertServlet extends HttpServlet {
         request.setCharacterEncoding("utf-8");
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
-        if (user == null) { // 检查用户是否已登录，否则重定向到index.jsp
+        if (user == null) { // Check if the user is logged in, otherwise redirect to index.jsp.
             response.sendRedirect("login.jsp");
             return;
         }
 
-        if ("administrator".equals(user.getRole())) { //只有管理员身份的用户才能够添加新的课程信息
+        if ("administrator".equals(user.getRole())) { // Only users with an administrator role can add new course information.
             String contentType = request.getContentType();
             if (contentType != null && contentType.startsWith("multipart/form-data")) {
                 Part filePart = request.getPart("file");
@@ -46,10 +45,10 @@ public class InsertServlet extends HttpServlet {
                         ArrayList<Classroom> classrooms = classroomservice.insertExcelFile(filePart.getInputStream());
                         boolean flag1 = classroomCourseService.insertExcelFile(courses, classrooms);
                         if (flag1) {
-                            request.setAttribute("success_message2", "Excel内的所有课程信息都已被正确上传!");
+                            request.setAttribute("success_message2", "All course information in the Excel has been successfully uploaded!");
                             request.getRequestDispatcher("/insert.jsp").forward(request, response);
                         } else {
-                            request.setAttribute("failure_message4", "抱歉,Excel课表文件解析存在错误,部分课程可能没有被正确上传");
+                            request.setAttribute("failure_message4", "Sorry, there was an error in parsing the Excel timetable file, and some courses may not have been uploaded correctly.");
                             request.getRequestDispatcher("/insert.jsp").forward(request, response);
                         }
                     } else {
@@ -82,20 +81,21 @@ public class InsertServlet extends HttpServlet {
                         request.setAttribute("success_message1", "Upload Successfully!");
                         request.getRequestDispatcher("/insert.jsp").forward(request, response);
                     } else {
-                        request.setAttribute("failure_message2", "因服务器内部原因导致上传失败,请联系管理员");
+                        request.setAttribute("failure_message2", "Due to internal server issues, the upload has failed. Please contact the administrator for assistance.");
                         request.getRequestDispatcher("/insert.jsp").forward(request, response);
                     }
                 } else {
-                    request.setAttribute("failure_message1", "必填的信息为空!");
+                    request.setAttribute("failure_message1", "Required information is empty!");
                     request.getRequestDispatcher("/insert.jsp").forward(request, response);
                 }
             }
         } else {
-            // 用户不是管理员
-            request.setAttribute("failure_message5", "更新失败,你没有管理员权限!");
+            //The user is not an administrator.
+            request.setAttribute("failure_message5", "Update failed, you do not have administrator privileges!");
             request.getRequestDispatcher("/insert.jsp").forward(request, response);
         }
     }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         this.doPost(request, response);
