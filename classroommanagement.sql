@@ -31,7 +31,7 @@ CREATE TABLE `classroom_course` (
   KEY `course_id` (`course_id`),
   CONSTRAINT `classroom_course_ibfk_1` FOREIGN KEY (`classroom_id`) REFERENCES `classrooms` (`id`),
   CONSTRAINT `classroom_course_ibfk_2` FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +40,7 @@ CREATE TABLE `classroom_course` (
 
 LOCK TABLES `classroom_course` WRITE;
 /*!40000 ALTER TABLE `classroom_course` DISABLE KEYS */;
-INSERT INTO `classroom_course` VALUES (2,2,2),(3,3,3),(4,1,4),(5,4,5),(6,5,6),(7,6,7),(8,3,8),(9,7,9),(10,8,10),(12,1,1);
+INSERT INTO `classroom_course` VALUES (2,2,2),(3,3,3),(4,1,4),(5,4,5),(6,5,6),(7,6,7),(8,3,8),(9,7,9),(10,8,10),(12,1,1),(13,1,11),(14,5,12),(15,7,13);
 /*!40000 ALTER TABLE `classroom_course` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -87,7 +87,7 @@ CREATE TABLE `courses` (
   `schooltime` int NOT NULL,
   `detail` text COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -96,7 +96,7 @@ CREATE TABLE `courses` (
 
 LOCK TABLES `courses` WRITE;
 /*!40000 ALTER TABLE `courses` DISABLE KEYS */;
-INSERT INTO `courses` VALUES (1,'数据结构与算法II Data Structs & Algs II (S/E)/COMP2014J',1,15,1,1,'LILLIS David John/2021软件工程1班;2021软件工程2班;2021软件工程3班'),(2,'特殊用途英语 English for Spec Acad Purposes/BDIC2007J',1,16,2,1,'Jessica Black/2021软件工程3班'),(3,'计算机网络 Computer Networks (S/E)/COMP2009J',3,15,2,2,'Alzubair Hassan/2021软件工程1班;2021软件工程2班;2021软件工程3班(Week3开始lab)'),(4,'数据库和信息系统 Databases and Info Sys (S/E)/COMP2013J',1,15,2,3,'Dong Ruihai/2021软件工程1班;2021软件工程2班;2021软件工程3班(face to face)'),(5,'计算机网络 Computer Networks (S/E)/COMP2009J',1,15,3,1,'Alzubair Hassan/2021软件工程1班;2021软件工程2班;2021软件工程3班(face to face)'),(6,'数据结构与算法II Data Structs & Algs II (S/E)/COMP2014J',3,15,3,2,'LILLIS David John/2021软件工程1班;2021软件工程2班;2021软件工程3班(lab)'),(7,'特殊用途英语 English for Spec Acad Purposes/BDIC2007J',1,16,4,3,'Jessica Black/2021软件工程3班'),(8,'软件工程课设1 Software EngProject 1 (B)/COMP2008J',3,15,4,4,'Alzubair Hassan/2021软件工程1班;2021软件工程2班;2021软件工程3班(lab)'),(9,'软件工程课设1 Software EngProject 1 (B)/COMP2008J',1,15,5,1,'Alzubair Hassan/2021软件工程1班;2021软件工程2班;2021软件工程3班(face to face)'),(10,'离散数学 Discrete Mathematics/BDIC2002J',1,16,5,4,'王少帆/2021软件工程1班;2021软件工程2班;2021软件工程3班');
+INSERT INTO `courses` VALUES (1,'数据结构与算法II Data Structs & Algs II (S/E)/COMP2014J',1,15,1,1,'LILLIS David John/2021软件工程1班;2021软件工程2班;2021软件工程3班'),(2,'特殊用途英语 English for Spec Acad Purposes/BDIC2007J',1,16,2,1,'Jessica Black/2021软件工程3班'),(3,'计算机网络 Computer Networks (S/E)/COMP2009J',3,15,2,2,'Alzubair Hassan/2021软件工程1班;2021软件工程2班;2021软件工程3班(Week3开始lab)'),(4,'数据库和信息系统 Databases and Info Sys (S/E)/COMP2013J',1,15,2,3,'Dong Ruihai/2021软件工程1班;2021软件工程2班;2021软件工程3班(face to face)'),(5,'计算机网络 Computer Networks (S/E)/COMP2009J',1,15,3,1,'Alzubair Hassan/2021软件工程1班;2021软件工程2班;2021软件工程3班(face to face)'),(6,'数据结构与算法II Data Structs & Algs II (S/E)/COMP2014J',3,15,3,2,'LILLIS David John/2021软件工程1班;2021软件工程2班;2021软件工程3班(lab)'),(7,'特殊用途英语 English for Spec Acad Purposes/BDIC2007J',1,16,4,3,'Jessica Black/2021软件工程3班'),(8,'软件工程课设1 Software EngProject 1 (B)/COMP2008J',3,15,4,4,'Alzubair Hassan/2021软件工程1班;2021软件工程2班;2021软件工程3班(lab)'),(9,'软件工程课设1 Software EngProject 1 (B)/COMP2008J',1,15,5,1,'Alzubair Hassan/2021软件工程1班;2021软件工程2班;2021软件工程3班(face to face)'),(10,'离散数学 Discrete Mathematics/BDIC2002J',1,16,5,4,'王少帆/2021软件工程1班;2021软件工程2班;2021软件工程3班'),(11,'数据库和信息系统 Databases and Info Sys (S/E)/COMP2013J',1,15,2,4,'Dong Ruihai/2021软件工程1班;2021软件工程2班;2021软件工程3班(lab)'),(12,'中级宏观经济学 Intermediate Macroeconomics/ECON2002J',2,14,2,5,'Fabrice Kampfen/2021金融学1班;2021金融学2班;2021金融学3班;2021金融学4班'),(13,'软件工程课设2 Software Engineering Project/COMP3030J',1,15,1,2,'BECKER Brett Arthur,MOONEY Catherine Louise/2020软件工程1班;2020软件工程2班;2020软件工程3班');
 /*!40000 ALTER TABLE `courses` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -120,7 +120,7 @@ CREATE TABLE `reservations` (
   KEY `user_id` (`user_id`),
   CONSTRAINT `reservations_ibfk_1` FOREIGN KEY (`classroom_id`) REFERENCES `classrooms` (`id`),
   CONSTRAINT `reservations_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -129,7 +129,7 @@ CREATE TABLE `reservations` (
 
 LOCK TABLES `reservations` WRITE;
 /*!40000 ALTER TABLE `reservations` DISABLE KEYS */;
-INSERT INTO `reservations` VALUES (1,3,1,1,1,2,'Scheduled functional testing'),(2,3,1,1,7,1,'	 Scheduled functional testing');
+INSERT INTO `reservations` VALUES (1,3,1,1,1,2,'Scheduled functional testing'),(2,3,1,1,7,1,'	 Scheduled functional testing'),(3,3,3,1,6,3,'Reservation function attempt'),(4,3,5,1,7,1,'Scheduled functional testing'),(5,1,1,18,7,1,'Reservation function attempt'),(6,1,1,18,7,6,'Reservation function attempt'),(7,3,1,1,6,1,'test');
 /*!40000 ALTER TABLE `reservations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -171,4 +171,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-05-21  0:07:23
+-- Dump completed on 2023-05-26 17:13:52
